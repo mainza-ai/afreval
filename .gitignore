@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Editors / IDEs
+.idea/
+.vscode/
+
+# Obsidian (user-specific workspace state)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Node
+node_modules/
+dist/

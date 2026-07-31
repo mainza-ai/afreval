@@ -3,28 +3,44 @@
 # run end-to-end, per-language pre/post-filter row counts and edit-distance QA results
 # are recorded, and the corpus is checksummed. A raw, un-audited pull does NOT satisfy
 # the Phase 0 gate.
+#
+# Hub ground truth (verified 2026-07-31, repo sha e0a62aa):
+#   - google/WaxalNLP is organized per-language, per-task as configs ({lang}_asr, {lang}_tts).
+#   - Each _asr config ships train / validation / test (labeled; every row carries
+#     'transcription') PLUS a large 'unlabeled' split (rows have transcription == "").
+#   - Transcribed-vs-untranscribed is separated BY SPLIT, not by a filter inside the
+#     labeled data. Acquire labeled splits only; the QA/edit-distance pass is the real
+#     filtering work (per the galsenai/WaxalNLP community fork).
 substrate: waxal
 variant: asr   # image-prompted spontaneous speech; TTS excluded unless a subsystem needs it
 pinned_version: TBD   # set when acquired & QA'd
 hf_repo: google/WaxalNLP
-hf_revision: TBD      # exact dataset revision/commit pulled
+hf_revision: e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2   # verified repo revision (2026-07-31)
 upstream: https://github.com/Waxal-Multilingual/speech-data
 paper: https://arxiv.org/abs/2602.02734
 pinned_date: 2026-07-31
 status: pending-freeze   # acquisition & QA required before freeze
+structure:
+  configs: per-language, per-task ({lang}_asr / {lang}_tts)
+  asr_config_count: 19
+  asr_languages: [ach, aka, amh, dag, dga, ewe, ful, kpo, lin, lug, mas, mlg, nyn, orm, sid, sna, sog, tir, wal]
+  labeled_splits: [train, validation, test]   # every row carries 'transcription'
+  unlabeled_split: unlabeled                  # transcription == ""; NOT acquired
+  schema: [id, speaker_id, transcription, language, gender, audio]
+  audio_format: mp3
 scale:
   asr_hours: "~1250 transcribed (pin exact paper revision)"
-  tts_hours: "~180-235 (varies by paper revision — pin exact)"
-  language_count: "21-27 depending on release (pin exact set; Research doc says 24)"
+  tts_hours: "~180-235 (varies by paper revision — pin exact; TTS configs excluded from harness)"
+  note: "the paper's '~10% of collected audio transcribed' describes pre-release collection; on the Hub the transcribed subset is train/val/test and the remainder ships as the unlabeled split"
 collection:
   method: image-prompted speech in natural environments
   min_clip_seconds: 15
   metadata: speaker age/gender/language/environment
-  transcribed_ratio: "~10%, by paid local linguistic experts"
-qa_required:   # §2.1.1
-  step1_pull_by_config: per-language {lang}_asr shards, no blind tree clone
-  step2_empty_transcription_audit: per-language empty/null rate logged, filtered before pin
-  step3_second_pass_edit_distance: re-transcribe sample/full, flag high-divergence rows
-  step4_checksum_and_freeze: checksummed filtered corpus + provenance record in README
+  transcribed_by: paid local linguistic experts, local scripts where available
+qa_required:   # §2.1.1, corrected for split-separated labels
+  step1_pull_by_config: "pull {lang}_asr configs, LABELED splits only; allow_patterns never match *-unlabeled-*"
+  step2_empty_transcription_audit: "verify empties are (near-)absent in labeled splits; filter only if >0.1% (don't assume)"
+  step3_qa_pass: "second-ASR edit distance is the REAL filter — flag/drop high-divergence + unreadable/corrupt audio"
+  step4_checksum_and_freeze: "checksummed filtered corpus + provenance record in README"
 acquisition_script: scripts/acquire_waxal.py
 checksums: []

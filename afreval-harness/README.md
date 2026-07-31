@@ -79,14 +79,24 @@ same two-method protocol (`.id`, `.count`).
 
 ## WAXAL acquisition runbook (§2.1.1)
 
+Hub ground truth (verified 2026-07-31): `google/WaxalNLP` is per-language,
+per-task configs. Each `{lang}_asr` config ships **labeled splits
+`train`/`validation`/`test`** (every row carries `transcription`) plus a large
+**`unlabeled`** split (`transcription == ""`). Transcribed-vs-untranscribed is
+separated by split — so acquire labeled splits only; the QA/edit-distance pass
+is the real filtering work, not a hunt for an untranscribed-vs-transcribed
+split inside the labeled data.
+
 ```bash
-# 1. Plan only (no download):
+# 1. Plan only (resolves the 19 ASR configs from the dataset card, no download):
 python scripts/acquire_waxal.py --dry-run
-# 2. Full acquisition + empty/null audit + filter:
-python scripts/acquire_waxal.py --out data/waxal
-# 3. QA pass — re-transcribe a sample with a second ASR, compute edit distance
-#    against the shipped transcriptions, flag high-divergence rows (see §2.1.1
-#    and the galsenai/WaxalNLP technique it replicates).
+# 2. Full acquisition — labeled splits only (train+validation+test), empty/null
+#    audit, optional audio-integrity check:
+python scripts/acquire_waxal.py --out data/waxal --audio-check
+# 3. QA pass (the REAL filter) — re-transcribe with a second ASR, compute edit
+#    distance against the shipped transcriptions, drop high-divergence rows and
+#    unreadable files. harness.waxal_eval.wer/cer provide the deterministic
+#    scoring; the second-ASR model is supplied by the operator.
 # 4. Freeze (writes checksums/ + provenance; only valid after 1–3 pass):
 python scripts/freeze_checksums.py --pin waxal.yaml
 ```

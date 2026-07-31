@@ -26,7 +26,7 @@ Both documents agree on: the Context Score's three vectors; WAXAL's ~1,250h ASR 
 
 | Item | Bible (§) | Research | afri-fertility repo | Action needed |
 |---|---|---|---|---|
-| WAXAL language count | "21–27 languages depending on release" (§2.1) | "24 Sub-Saharan African languages" | — | Pin the exact revision at Phase 0 (§2.1.1) |
+| WAXAL language count | "21–27 languages depending on release" (§2.1) | "24 Sub-Saharan African languages" | Hub publishes **19 `_asr` configs** (verified 2026-07-31) — matching the WAXAL-NET set; `_tts` configs add more (hau, ibo, swa, yor, …). Pin the 19 ASR configs; the 21–27 figure spans ASR+TTS across releases |
 | WAXAL TTS hours | "~180–235 hours, varies by revision" (§2.1) | "over 235 hours" | — | Pin exact paper revision |
 | afri-fertility corpus size | "pinned 20-language/3-script table" (§3.1) | "20 languages, five language families, three scripts" (table) | 23 languages / 5 tiers in README; 22 in `languages.yaml` | Reconcile: is the harness corpus 20, 22, or 23? |
 | Code-mixing metrics | "weighted toward code-switching robustness" (§3.2) — no formulas | Full CMI / I-index / M-index formulations (§"Mathematical Quantification of Code-Mixing") | — | **Gap:** the Bible's Linguistic Fidelity spec does not formalize the Research doc's code-mixing math. Decide whether CMI forms part of the harness or is deferred. |

@@ -32,10 +32,14 @@ AfrEval integrates **character error rate (CER) alongside WER**: for syllabary-s
 
 ## §2.1.1 Acquisition & QA task list (Phase 0 blocking, agent-executable)
 
-1. **Pull by config, not by tree.** For each pinned language: `load_dataset("google/WaxalNLP", "{lang}_asr")` or `snapshot_download(... allow_patterns="*_asr/*.parquet")` — ASR shards only, TTS excluded unless a subsystem needs it.
-2. **Empty/null transcription audit.** Count and log per-language empty/null `transcription` rates; filter (`.filter(lambda x: len(x["transcription"]) > 0)`) before pinning. Don't assume presence — verify.
-3. **Transcription-quality QA pass.** Re-transcribe a sample (or full set, budget permitting) with a second ASR pass; compute edit distance per clip; flag/exclude high-divergence or corrupted rows. Replicates the `galsenai/WaxalNLP` community fork's technique for catching misaligned transcriptions.
-4. **Checksum and freeze.** Checksum the filtered corpus; commit as the Phase 0 harness artifact. Record the HF revision/commit hash, language codes, and per-language pre/post-filter row counts in the harness README — the provenance record that makes a Context Score defensible.
+**Hub ground truth (verified 2026-07-31, repo sha `e0a62aa`):** `google/WaxalNLP` is organized per-language, per-task as configs (`{lang}_asr`, `{lang}_tts`). Each `_asr` config ships **labeled splits `train`/`validation`/`test`** — every row carries a `transcription` field — plus a large **`unlabeled`** split whose rows have `transcription == ""`. So transcribed-vs-untranscribed is separated **by split**, not by a filter inside the labeled data: the paper's "~10% of collected audio was transcribed" describes pre-release collection; the untranscribed remainder ships on the Hub as the `unlabeled` split. 19 languages publish an `_asr` config.
+
+1. **Pull by config, labeled splits only.** For each pinned language: `load_dataset("google/WaxalNLP", "{lang}_asr", split="train+validation+test")`, or `snapshot_download(... allow_patterns="data/ASR/*/*-{train,validation,test}-*.parquet")` — **never** `*-unlabeled-*` shards; TTS configs excluded unless a subsystem needs them. A blind `tree/main` clone is forbidden.
+2. **Empty/null transcription verification.** Confirm empties are (near-)absent in labeled splits and record the per-language rate; filter (`.filter(lambda x: len(x["transcription"]) > 0)`) only if a config's rate is non-trivial (>0.1%). Don't assume — verify.
+3. **QA pass — the real filter.** Re-transcribe with a second ASR pass, compute edit distance against the shipped transcription per clip, flag/drop high-divergence rows and **unreadable/corrupted audio files** (replicates the `galsenai/WaxalNLP` community fork's technique; `harness.waxal_eval` provides deterministic WER/CER).
+4. **Checksum and freeze.** Checksum the filtered corpus; commit as the Phase 0 harness artifact. Record the HF revision (`e0a62aa…`), language codes, and per-language pre/post-filter row counts in the harness README — the provenance record that makes a Context Score defensible.
+
+Implemented in `afreval-harness/scripts/acquire_waxal.py` (dry-run resolves the 19 configs from the dataset card; `--audio-check` catches corrupted files).
 
 ## Related
 

@@ -55,8 +55,13 @@ acquisition_records:   # Stage A run, verified 2026-07-31
   loader_caveat: "datasets.load_dataset() materializes the whole config incl. unlabeled — do NOT use it for acquisition; the script reads local parquet via pyarrow"
 qa_findings:   # 2026-07-31 second-ASR QA investigation
   finding: "Corpus-level audio issue: sampled clips (150 across all 19 languages) are 33-68% silent with sparse periodic broadband pulses and clean -80dB background — NOT continuous speech. 75% of clips >35% silence; 95% pulse-dominated (normal speech ~4-10% silence)."
-  evidence: "Whisper (large-v3-turbo, both ctranslate2 and MLX impls) fully degenerates on these clips while transcribing known-good English TTS perfectly; decoders (soundfile/ffmpeg) agree exactly on valid 128kbps mp3s; local Qwen3.6-35B VLM spectrogram analysis confirms discrete pulses, no formant structure; EN control is normal speech through the same pipeline."
-  implications: "Audio does not match its long image-description transcription. Likely misaligned/incorrect audio in the HF release (same failure class galsenai/WaxalNLP fork reported) OR genuinely sparse recording. WAXAL harness CANNOT be frozen on trust; needs human listening check + corpus-source investigation."
+  evidence:
+    whisper_ctranslate2: "large-v3/large-v3-turbo: infinite repeated-character degeneration on WAXAL clips; perfect on known-good English TTS"
+    whisper_mlx: "mlx-whisper large-v3-turbo: identical degeneration; perfect on English TTS"
+    meta_mms_ctc: "facebook/mms-1b-all (CTC, covers amh, cannot loop): random character garbage, WER 1.0 on amh clip; perfect on English control — a third independent ASR failing = NOT a Whisper version/model issue"
+    vlm_spectrogram: "local Qwen3.6-35B VLM: discrete periodic broadband pulses in clean -80dB silence, no formant structure; EN control reads as normal speech through same pipeline"
+    decoders: "valid 128kbps mp3s; soundfile and ffmpeg decode agree exactly (corr=1.0)"
+  implications: "Audio does not match its long image-description transcription. Confirmed across 3 independent ASR families + spectrogram analysis. Likely misaligned/incorrect audio in the google/WaxalNLP HF release (same failure class galsenai/WaxalNLP fork reported) OR a genuinely non-speech recording protocol. WAXAL harness CANNOT be frozen on trust."
   next_steps: ["human/linguist listening check on a stratified sample", "compare against paper methodology + alternate mirrors (galsenai fork, Waxal-Multilingual/speech-data)", "verify audio-transcription alignment independently"]
 qa_required:   # §2.1.1, corrected for split-separated labels
   step1_pull_by_config: "pull {lang}_asr configs, requested splits only; allow_patterns never match *-unlabeled-*"

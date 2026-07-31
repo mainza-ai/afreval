@@ -1,0 +1,22 @@
+{
+  "configs": [
+    {
+      "config": "amh_asr",
+      "rows": 4,
+      "median_wer": 0.2626,
+      "adaptive_high": 0.5356,
+      "flagged": 0,
+      "flagged_ids": []
+    },
+    {
+      "config": "ach_asr",
+      "rows": 4,
+      "median_wer": 0.2296,
+      "adaptive_high": 0.7927,
+      "flagged": 0,
+      "flagged_ids": []
+    }
+  ],
+  "total_rows": 8,
+  "total_flagged": 0
+}

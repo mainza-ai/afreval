@@ -25,3 +25,8 @@ dist/
 # git tracks manifests + checksums only)
 afreval-harness/data/waxal/raw/
 afreval-harness/data/waxal/audio/
+
+# WAXAL QA per-clip outputs + transient state (regenerable; keep summaries)
+afreval-harness/data/waxal/*_qa2.jsonl
+afreval-harness/data/waxal/*_qa2_state.json
+afreval-harness/data/waxal/qa2_*.log

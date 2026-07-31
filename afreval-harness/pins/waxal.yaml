@@ -43,7 +43,7 @@ acquisition_strategy:   # two-stage, eval-first (NOT a full ~1,250h pull)
   never: "unlabeled split (pretraining-only; AfrEval does not pretrain) and the full 1,250h materialization"
   default_splits: [validation, test]
 acquisition_records:   # Stage A run, verified 2026-07-31
-  status: acquired-awaiting-QA   # QA (second-ASR edit distance) then freeze completes Phase 0
+  status: QA-BLOCKED   # QA pass found a corpus-level audio issue; DO NOT freeze until resolved
   date: 2026-07-31
   revision: e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2
   configs_acquired: 19
@@ -53,6 +53,11 @@ acquisition_records:   # Stage A run, verified 2026-07-31
   raw_parquet_bytes: "~18 GB local (data/waxal/raw/ — not committed to git)"
   method: snapshot_download allow_patterns="data/ASR/*/*-{validation,test}-*.parquet" (never unlabeled/TTS/train)
   loader_caveat: "datasets.load_dataset() materializes the whole config incl. unlabeled — do NOT use it for acquisition; the script reads local parquet via pyarrow"
+qa_findings:   # 2026-07-31 second-ASR QA investigation
+  finding: "Corpus-level audio issue: sampled clips (150 across all 19 languages) are 33-68% silent with sparse periodic broadband pulses and clean -80dB background — NOT continuous speech. 75% of clips >35% silence; 95% pulse-dominated (normal speech ~4-10% silence)."
+  evidence: "Whisper (large-v3-turbo, both ctranslate2 and MLX impls) fully degenerates on these clips while transcribing known-good English TTS perfectly; decoders (soundfile/ffmpeg) agree exactly on valid 128kbps mp3s; local Qwen3.6-35B VLM spectrogram analysis confirms discrete pulses, no formant structure; EN control is normal speech through the same pipeline."
+  implications: "Audio does not match its long image-description transcription. Likely misaligned/incorrect audio in the HF release (same failure class galsenai/WaxalNLP fork reported) OR genuinely sparse recording. WAXAL harness CANNOT be frozen on trust; needs human listening check + corpus-source investigation."
+  next_steps: ["human/linguist listening check on a stratified sample", "compare against paper methodology + alternate mirrors (galsenai fork, Waxal-Multilingual/speech-data)", "verify audio-transcription alignment independently"]
 qa_required:   # §2.1.1, corrected for split-separated labels
   step1_pull_by_config: "pull {lang}_asr configs, requested splits only; allow_patterns never match *-unlabeled-*"
   step2_materialize: "decode each clip; corrupt/unreadable audio raises and never enters the harness"

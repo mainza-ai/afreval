@@ -48,3 +48,7 @@ Both documents agree on: the Context Score's three vectors; WAXAL's ~1,250h ASR 
 3. "The African Language Tax" PDF already in `dev-docs/` (`2606.24460v1.pdf`) — verify the §3.1 corpus scope.
 4. agent-airlock upstream releases (security feed, per §3.5) — the Mobile MCP `mobile_open_url` preset pattern.
 5. AU Continental AI Strategy implementation progress — to anchor §3.6 citation-currency checks.
+
+## Blocking issue (Phase 0)
+
+**WAXAL eval audio suspected misaligned/degraded (QA-BLOCKED).** The second-ASR QA pass cannot validate the corpus: Whisper degenerates on the clips (both engines), and spectrogram analysis (local Qwen3.6 VLM + quantitative scan of 150 clips across all 19 languages) shows 33–68% silence with sparse periodic pulses and clean −80dB background — not continuous speech, and inconsistent with the long image-description transcriptions. This blocks freezing the WAXAL harness until a human listening check / corpus-source investigation resolves it ([waxal.md](substrates/waxal.md), pin `qa_findings`).

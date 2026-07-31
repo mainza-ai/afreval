@@ -63,3 +63,9 @@ Discovered the background pull was downloading `unlabeled` shards: `datasets.loa
 ## [2026-07-31] impl | WAXAL Stage A acquisition complete
 
 Ran the corrected Stage A pull end-to-end: **all 19 `_asr` configs, `validation`+`test`, 76,107 rows, 0 empty transcriptions**, ~21GB audio materialized in `data/waxal/audio/` (decode-verified per clip), 0 unlabeled / 0 train downloaded. Manifests + audit committed; heavy artifacts gitignored (re-pullable from pinned revision `e0a62aa`). Phase 0 remaining: second-ASR QA pass, then `freeze_checksums.py --pin waxal.yaml` closes the gate.
+
+## [2026-07-31] qa | WAXAL corpus-level audio anomaly — QA-BLOCKED
+
+The second-ASR QA pass exposed a corpus-wide problem instead of validating the data: **Whisper (large-v3-turbo, both ctranslate2 and MLX implementations) fully degenerates on WAXAL clips** (infinite repeated-character loops) while transcribing known-good English TTS perfectly. Diagnosed via: (1) audio integrity — valid 128kbps mp3s, soundfile/ffmpeg decoders agree exactly, real voiced-band energy; (2) local **Qwen3.6-35B VLM** spectrogram analysis (via the user's `omlx` server, port 8787) — clips show **discrete periodic broadband pulses in clean −80dB silence, no formant structure**, vs normal speech for the EN control; (3) quantitative scan of 150 clips across all 19 languages — **median silence 33–68%**, 75% of clips >35% silence, 95% pulse-dominated (normal speech ~4–10%).
+
+Conclusion: the eval-split audio does not match its long image-description transcriptions — same failure class the galsenai/WaxalNLP fork reported (misaligned audio). **WAXAL is QA-BLOCKED; the harness must not be frozen on trust.** Next steps: human/linguist listening check on a stratified sample + corpus-source investigation (paper methodology, alternate mirrors). Note: this is exactly what §2.1.1 step 3 exists to catch — the "don't assume, verify" discipline just earned its keep.

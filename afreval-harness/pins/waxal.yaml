@@ -42,6 +42,17 @@ acquisition_strategy:   # two-stage, eval-first (NOT a full ~1,250h pull)
   stage_b: "Phase 4 (deferred): acquire labeled train per language as the WAXAL-NET fine-tuning substrate, on-demand; still excludes unlabeled"
   never: "unlabeled split (pretraining-only; AfrEval does not pretrain) and the full 1,250h materialization"
   default_splits: [validation, test]
+acquisition_records:   # Stage A run, verified 2026-07-31
+  status: acquired-awaiting-QA   # QA (second-ASR edit distance) then freeze completes Phase 0
+  date: 2026-07-31
+  revision: e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2
+  configs_acquired: 19
+  total_rows: 76107
+  empty_transcriptions: 0   # verified; no filter needed (audit log: data/waxal/transcription_audit.json)
+  audio_bytes: "~21 GB local (data/waxal/audio/ — not committed to git; re-pullable from pinned revision)"
+  raw_parquet_bytes: "~18 GB local (data/waxal/raw/ — not committed to git)"
+  method: snapshot_download allow_patterns="data/ASR/*/*-{validation,test}-*.parquet" (never unlabeled/TTS/train)
+  loader_caveat: "datasets.load_dataset() materializes the whole config incl. unlabeled — do NOT use it for acquisition; the script reads local parquet via pyarrow"
 qa_required:   # §2.1.1, corrected for split-separated labels
   step1_pull_by_config: "pull {lang}_asr configs, requested splits only; allow_patterns never match *-unlabeled-*"
   step2_materialize: "decode each clip; corrupt/unreadable audio raises and never enters the harness"

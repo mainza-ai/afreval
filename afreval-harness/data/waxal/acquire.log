@@ -1,0 +1,99 @@
+[1] downloading validation, test splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 65 files:   0%|          | 0/65 [00:00<?, ?it/s]Fetching 65 files:   2%|▏         | 1/65 [00:00<00:09,  6.45it/s]Fetching 65 files:   5%|▍         | 3/65 [00:08<03:21,  3.24s/it]Fetching 65 files:   6%|▌         | 4/65 [03:00<1:02:22, 61.36s/it]Fetching 65 files:   8%|▊         | 5/65 [04:23<1:08:40, 68.67s/it]Fetching 65 files:   9%|▉         | 6/65 [04:26<46:54, 47.71s/it]  Fetching 65 files:  11%|█         | 7/65 [04:27<31:45, 32.85s/it]Fetching 65 files:  12%|█▏        | 8/65 [04:28<22:02, 23.19s/it]Fetching 65 files:  14%|█▍        | 9/65 [04:29<15:06, 16.19s/it]Fetching 65 files:  17%|█▋        | 11/65 [04:29<07:48,  8.68s/it]Fetching 65 files:  18%|█▊        | 12/65 [04:37<07:23,  8.37s/it]Fetching 65 files:  20%|██        | 13/65 [06:06<25:45, 29.72s/it]Fetching 65 files:  22%|██▏       | 14/65 [06:21<21:49, 25.68s/it]Fetching 65 files:  23%|██▎       | 15/65 [07:27<30:51, 37.02s/it]Fetching 65 files:  25%|██▍       | 16/65 [08:12<32:12, 39.43s/it]Fetching 65 files:  26%|██▌       | 17/65 [08:16<23:17, 29.11s/it]Fetching 65 files:  28%|██▊       | 18/65 [08:40<21:34, 27.55s/it]Fetching 65 files:  29%|██▉       | 19/65 [09:20<24:01, 31.33s/it]Fetching 65 files:  31%|███       | 20/65 [09:24<17:13, 22.97s/it]Fetching 65 files:  32%|███▏      | 21/65 [09:49<17:21, 23.67s/it]Fetching 65 files:  34%|███▍      | 22/65 [10:04<15:10, 21.18s/it]Fetching 65 files:  35%|███▌      | 23/65 [10:20<13:39, 19.52s/it]Fetching 65 files:  37%|███▋      | 24/65 [10:26<10:30, 15.39s/it]Fetching 65 files:  38%|███▊      | 25/65 [10:32<08:33, 12.84s/it]Fetching 65 files:  40%|████      | 26/65 [11:00<11:08, 17.14s/it]Fetching 65 files:  42%|████▏     | 27/65 [11:39<15:05, 23.82s/it]Fetching 65 files:  43%|████▎     | 28/65 [11:55<13:08, 21.32s/it]Fetching 65 files:  45%|████▍     | 29/65 [12:17<12:57, 21.61s/it]Fetching 65 files:  46%|████▌     | 30/65 [12:21<09:32, 16.37s/it]Fetching 65 files:  48%|████▊     | 31/65 [13:08<14:32, 25.66s/it]Fetching 65 files:  49%|████▉     | 32/65 [13:09<09:58, 18.14s/it]Fetching 65 files:  51%|█████     | 33/65 [13:20<08:32, 16.01s/it]Fetching 65 files:  52%|█████▏    | 34/65 [14:08<13:12, 25.58s/it]Fetching 65 files:  54%|█████▍    | 35/65 [14:38<13:27, 26.93s/it]Fetching 65 files:  55%|█████▌    | 36/65 [14:39<09:14, 19.14s/it]Fetching 65 files:  57%|█████▋    | 37/65 [14:55<08:26, 18.10s/it]Fetching 65 files:  58%|█████▊    | 38/65 [15:31<10:38, 23.63s/it]Fetching 65 files:  60%|██████    | 39/65 [15:43<08:43, 20.13s/it]Fetching 65 files:  62%|██████▏   | 40/65 [16:58<15:12, 36.50s/it]Fetching 65 files:  63%|██████▎   | 41/65 [17:17<12:33, 31.38s/it]Fetching 65 files:  65%|██████▍   | 42/65 [17:30<09:55, 25.88s/it]Fetching 65 files:  66%|██████▌   | 43/65 [17:43<08:05, 22.09s/it]Fetching 65 files:  68%|██████▊   | 44/65 [17:51<06:09, 17.60s/it]Fetching 65 files:  69%|██████▉   | 45/65 [17:52<04:12, 12.62s/it]Fetching 65 files:  71%|███████   | 46/65 [17:52<02:49,  8.93s/it]Fetching 65 files:  72%|███████▏  | 47/65 [17:53<01:59,  6.61s/it]Fetching 65 files:  74%|███████▍  | 48/65 [19:23<08:59, 31.71s/it]Fetching 65 files:  75%|███████▌  | 49/65 [19:51<08:09, 30.62s/it]Fetching 65 files:  77%|███████▋  | 50/65 [21:51<14:17, 57.15s/it]Fetching 65 files:  78%|███████▊  | 51/65 [21:57<09:47, 41.98s/it]Fetching 65 files:  80%|████████  | 52/65 [22:01<06:37, 30.54s/it]Fetching 65 files:  82%|████████▏ | 53/65 [22:03<04:25, 22.14s/it]Fetching 65 files:  83%|████████▎ | 54/65 [22:10<03:12, 17.48s/it]Fetching 65 files:  85%|████████▍ | 55/65 [22:11<02:05, 12.57s/it]Fetching 65 files:  86%|████████▌ | 56/65 [22:12<01:20,  8.90s/it]Fetching 65 files:  88%|████████▊ | 57/65 [22:12<00:52,  6.51s/it]Fetching 65 files:  89%|████████▉ | 58/65 [24:21<05:01, 43.00s/it]Fetching 65 files:  91%|█████████ | 59/65 [25:17<04:42, 47.05s/it]Fetching 65 files:  92%|█████████▏| 60/65 [25:27<02:58, 35.77s/it]Fetching 65 files:  94%|█████████▍| 61/65 [25:41<01:57, 29.27s/it]Fetching 65 files:  95%|█████████▌| 62/65 [25:41<01:01, 20.60s/it]Fetching 65 files:  98%|█████████▊| 64/65 [25:43<00:11, 11.57s/it]Fetching 65 files: 100%|██████████| 65/65 [25:44<00:00,  8.90s/it]Fetching 65 files: 100%|██████████| 65/65 [25:44<00:00, 23.76s/it]
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[2] materializing ach_asr (['validation', 'test']) ...
+    {'language': 'ach_asr', 'total': 1047, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 1047 rows -> data/waxal/ach_asr.jsonl (sha256=33660155d8bc8895...)
+[2] materializing aka_asr (['validation', 'test']) ...
+    {'language': 'aka_asr', 'total': 2645, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 2645 rows -> data/waxal/aka_asr.jsonl (sha256=940b2f30ab19ff8f...)
+[2] materializing amh_asr (['validation', 'test']) ...
+    {'language': 'amh_asr', 'total': 6332, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 6332 rows -> data/waxal/amh_asr.jsonl (sha256=8e873750222cd314...)
+[2] materializing dag_asr (['validation', 'test']) ...
+    {'language': 'dag_asr', 'total': 3588, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 3588 rows -> data/waxal/dag_asr.jsonl (sha256=8e0d0ff60d51fdf6...)
+[2] materializing dga_asr (['validation', 'test']) ...
+    {'language': 'dga_asr', 'total': 3803, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 3803 rows -> data/waxal/dga_asr.jsonl (sha256=c463b3919d5a17e9...)
+[2] materializing ewe_asr (['validation', 'test']) ...
+    {'language': 'ewe_asr', 'total': 3807, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 3807 rows -> data/waxal/ewe_asr.jsonl (sha256=a8eec3137f3a4bd5...)
+[2] materializing ful_asr (['validation', 'test']) ...
+    {'language': 'ful_asr', 'total': 4749, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 4749 rows -> data/waxal/ful_asr.jsonl (sha256=9afd14117bc96aad...)
+[2] materializing kpo_asr (['validation', 'test']) ...
+    {'language': 'kpo_asr', 'total': 3605, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 3605 rows -> data/waxal/kpo_asr.jsonl (sha256=dba7d70300bba5f6...)
+[2] materializing lin_asr (['validation', 'test']) ...
+    {'language': 'lin_asr', 'total': 3710, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 3710 rows -> data/waxal/lin_asr.jsonl (sha256=42ccbda27bcf2d84...)
+[2] materializing lug_asr (['validation', 'test']) ...
+    {'language': 'lug_asr', 'total': 1302, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 1302 rows -> data/waxal/lug_asr.jsonl (sha256=92af7e683b032460...)
+[2] materializing mas_asr (['validation', 'test']) ...
+    {'language': 'mas_asr', 'total': 1707, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 1707 rows -> data/waxal/mas_asr.jsonl (sha256=43aa35e8a9e8fdf7...)
+[2] materializing mlg_asr (['validation', 'test']) ...
+    {'language': 'mlg_asr', 'total': 4560, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 4560 rows -> data/waxal/mlg_asr.jsonl (sha256=c9ed50705f109de2...)
+[2] materializing nyn_asr (['validation', 'test']) ...
+    {'language': 'nyn_asr', 'total': 1689, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 1689 rows -> data/waxal/nyn_asr.jsonl (sha256=ae73cd707513cec0...)
+[2] materializing orm_asr (['validation', 'test']) ...
+    {'language': 'orm_asr', 'total': 6860, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 6860 rows -> data/waxal/orm_asr.jsonl (sha256=d3bbeb676144c526...)
+[2] materializing sid_asr (['validation', 'test']) ...
+    {'language': 'sid_asr', 'total': 6652, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 6652 rows -> data/waxal/sid_asr.jsonl (sha256=30d7162178b3d2d3...)
+[2] materializing sna_asr (['validation', 'test']) ...
+    {'language': 'sna_asr', 'total': 3476, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 3476 rows -> data/waxal/sna_asr.jsonl (sha256=0eca360e8d7d95a1...)
+[2] materializing sog_asr (['validation', 'test']) ...
+    {'language': 'sog_asr', 'total': 1658, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 1658 rows -> data/waxal/sog_asr.jsonl (sha256=eddc6daac053acf7...)
+[2] materializing tir_asr (['validation', 'test']) ...
+    {'language': 'tir_asr', 'total': 9459, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 9459 rows -> data/waxal/tir_asr.jsonl (sha256=405633e002724328...)
+[2] materializing wal_asr (['validation', 'test']) ...
+    {'language': 'wal_asr', 'total': 5458, 'empty_or_null': 0, 'empty_rate': 0.0}
+    wrote 5458 rows -> data/waxal/wal_asr.jsonl (sha256=57028653d1f4fd96...)
+[3] audit log -> data/waxal/transcription_audit.json (76107 rows across 19 configs)
+[4] NOTE: run the second-ASR QA pass before freezing; see README 'WAXAL QA pass'
+[done] acquisition complete. Run scripts/freeze_checksums.py to freeze (step 5).

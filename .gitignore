@@ -20,3 +20,8 @@ venv/
 # Node
 node_modules/
 dist/
+
+# Heavy WAXAL corpus artifacts (re-pullable from pinned HF revision e0a62aa;
+# git tracks manifests + checksums only)
+afreval-harness/data/waxal/raw/
+afreval-harness/data/waxal/audio/

@@ -55,3 +55,11 @@ Verified `google/WaxalNLP` on the Hub (repo sha `e0a62aa`): per-language/per-tas
 ## [2026-07-31] impl | WAXAL two-stage acquisition (eval-first)
 
 Full ~1,250h pull (~52 days at observed Hub transfer rates) buys nothing for Phase 0 — the harness only scores the held-out eval split. Decided and implemented **two-stage, eval-first**: Stage A (now) acquires `validation`+`test` only (~2% of the collection, ~1–2 days), the frozen WER/CER harness; Stage B (Phase 4) pulls labeled `train` on-demand for WAXAL-NET fine-tuning; `unlabeled` is never acquired (pretraining-only). `acquire_waxal.py` defaults to `--splits validation test`, materializes audio (decode failures raise — never enter the harness) into `data/waxal/audio/`, writes per-config JSONL manifests + transcription audit. Added `soundfile` to the `[waxal]` extra (audio decoder). Pin + runbook + [waxal.md](substrates/waxal.md) updated.
+
+## [2026-07-31] impl | WAXAL loader caveat + corrected acquisition
+
+Discovered the background pull was downloading `unlabeled` shards: `datasets.load_dataset()` materializes the WHOLE config (all splits) even when one split is requested. Killed it and rewrote `acquire_waxal.py` to `snapshot_download(allow_patterns="data/ASR/*/*-{split}-*.parquet")` + local pyarrow reads (audio is embedded in the parquet; no separate fetch). Dropped the `datasets` dependency from `[waxal]` (added `pyarrow`).
+
+## [2026-07-31] impl | WAXAL Stage A acquisition complete
+
+Ran the corrected Stage A pull end-to-end: **all 19 `_asr` configs, `validation`+`test`, 76,107 rows, 0 empty transcriptions**, ~21GB audio materialized in `data/waxal/audio/` (decode-verified per clip), 0 unlabeled / 0 train downloaded. Manifests + audit committed; heavy artifacts gitignored (re-pullable from pinned revision `e0a62aa`). Phase 0 remaining: second-ASR QA pass, then `freeze_checksums.py --pin waxal.yaml` closes the gate.

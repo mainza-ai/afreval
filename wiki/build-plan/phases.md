@@ -10,7 +10,7 @@ Six phases with explicit gates and acceptance criteria. The through-line: **noth
 
 ## Phase 0 — Harness freeze (weeks 1–3)
 
-**Status: in progress.** `afreval-harness/` implemented in-tree: pins for all three substrates, `harness/tokenizer_eval.py` (§3.1 script-stratified eval, verified against afri-fertility reference numbers), `harness/waxal_eval.py` (pure WER/CER), `harness/afrobench_eval.py` (LITE vendored-drift validation), acquisition/freeze/bump scripts, checksums frozen for afri-fertility + AfroBench-LITE, 16 tests passing. **Blocking:** WAXAL is `pending-freeze` until §2.1.1 acquisition + QA completes.
+**Status: in progress — WAXAL acquired, awaiting QA.** `afreval-harness/` implemented in-tree: pins for all three substrates, `harness/tokenizer_eval.py` (§3.1 script-stratified eval, verified against afri-fertility reference numbers), `harness/waxal_eval.py` (pure WER/CER), `harness/afrobench_eval.py` (LITE vendored-drift validation), acquisition/freeze/bump scripts, checksums frozen for afri-fertility + AfroBench-LITE, 16 tests passing. WAXAL Stage A eval-split acquisition complete (**76,107 rows, 19 configs, 0 empties**); remaining: second-ASR QA pass then freeze ([waxal.md](../substrates/waxal.md)).
 
 Pin exact versions of [WAXAL](../substrates/waxal.md), [AfroBench(-LITE)](../substrates/afrobench.md), and [afri-fertility](../substrates/afri-fertility.md). Build `harness/` for each as read-only, checksummed artifacts. For WAXAL this is not complete until the §2.1.1 four-step acquisition/QA task list has run end-to-end and its provenance record committed — **a raw, un-audited pull does not satisfy the gate.**
 

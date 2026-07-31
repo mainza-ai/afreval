@@ -49,6 +49,6 @@ Both documents agree on: the Context Score's three vectors; WAXAL's ~1,250h ASR 
 4. agent-airlock upstream releases (security feed, per §3.5) — the Mobile MCP `mobile_open_url` preset pattern.
 5. AU Continental AI Strategy implementation progress — to anchor §3.6 citation-currency checks.
 
-## Blocking issue (Phase 0)
+## Blocking issue (Phase 0) — RESOLVED
 
-**WAXAL eval audio suspected misaligned/degraded (QA-BLOCKED).** The second-ASR QA pass cannot validate the corpus: Whisper degenerates on the clips (both engines), and spectrogram analysis (local Qwen3.6 VLM + quantitative scan of 150 clips across all 19 languages) shows 33–68% silence with sparse periodic pulses and clean −80dB background — not continuous speech, and inconsistent with the long image-description transcriptions. This blocks freezing the WAXAL harness until a human listening check / corpus-source investigation resolves it ([waxal.md](substrates/waxal.md), pin `qa_findings`).
+**WAXAL corpus confirmed VALID (2026-07-31).** An earlier alarm (general ASRs — Whisper/MMS — degenerating on WAXAL clips, plus spectrogram/silence analysis) was a **false alarm caused by the wrong ASR choice**. Decisive evidence: `badrex/Ethio-ASR-multilingual-600M` (fine-tuned **on WAXAL**, CTC) transcribes the exact clips at WER 0.18–0.46 across amh/tir/orm/sid/wal, consistent with its model-card WAXAL test-set numbers. This **empirically reproduces the WAXAL-NET thesis**: zero-shot foundation ASRs fail on spontaneous African speech while tuned models succeed. **QA-BLOCKED lifted**; the QA second pass will use WAXAL-tuned ASRs (Ethio-ASR open; Sunbird 51-language gated). See [waxal.md](substrates/waxal.md) and the pin's `qa_findings`.

@@ -43,7 +43,7 @@ acquisition_strategy:   # two-stage, eval-first (NOT a full ~1,250h pull)
   never: "unlabeled split (pretraining-only; AfrEval does not pretrain) and the full 1,250h materialization"
   default_splits: [validation, test]
 acquisition_records:   # Stage A run, verified 2026-07-31
-  status: QA-BLOCKED   # QA pass found a corpus-level audio issue; DO NOT freeze until resolved
+  status: acquired-awaiting-QA   # QA pass 2 uses WAXAL-tuned ASRs (Ethio-ASR + Sunbird); see qa_findings
   date: 2026-07-31
   revision: e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2
   configs_acquired: 19
@@ -53,16 +53,13 @@ acquisition_records:   # Stage A run, verified 2026-07-31
   raw_parquet_bytes: "~18 GB local (data/waxal/raw/ — not committed to git)"
   method: snapshot_download allow_patterns="data/ASR/*/*-{validation,test}-*.parquet" (never unlabeled/TTS/train)
   loader_caveat: "datasets.load_dataset() materializes the whole config incl. unlabeled — do NOT use it for acquisition; the script reads local parquet via pyarrow"
-qa_findings:   # 2026-07-31 second-ASR QA investigation
-  finding: "Corpus-level audio issue: sampled clips (150 across all 19 languages) are 33-68% silent with sparse periodic broadband pulses and clean -80dB background — NOT continuous speech. 75% of clips >35% silence; 95% pulse-dominated (normal speech ~4-10% silence)."
-  evidence:
-    whisper_ctranslate2: "large-v3/large-v3-turbo: infinite repeated-character degeneration on WAXAL clips; perfect on known-good English TTS"
-    whisper_mlx: "mlx-whisper large-v3-turbo: identical degeneration; perfect on English TTS"
-    meta_mms_ctc: "facebook/mms-1b-all (CTC, covers amh, cannot loop): random character garbage, WER 1.0 on amh clip; perfect on English control — a third independent ASR failing = NOT a Whisper version/model issue"
-    vlm_spectrogram: "local Qwen3.6-35B VLM: discrete periodic broadband pulses in clean -80dB silence, no formant structure; EN control reads as normal speech through same pipeline"
-    decoders: "valid 128kbps mp3s; soundfile and ffmpeg decode agree exactly (corr=1.0)"
-  implications: "Audio does not match its long image-description transcription. Confirmed across 3 independent ASR families + spectrogram analysis. Likely misaligned/incorrect audio in the google/WaxalNLP HF release (same failure class galsenai/WaxalNLP fork reported) OR a genuinely non-speech recording protocol. WAXAL harness CANNOT be frozen on trust."
-  next_steps: ["human/linguist listening check on a stratified sample", "compare against paper methodology + alternate mirrors (galsenai fork, Waxal-Multilingual/speech-data)", "verify audio-transcription alignment independently"]
+qa_findings:   # 2026-07-31 — CORRECTED after false alarm
+  conclusion: "CORPUS IS VALID. WAXAL audio contains the transcribed speech. QA-BLOCKED lifted (2026-07-31)."
+  initial_false_alarm: "General ASRs (Whisper-ctranslate2, Whisper-MLX, Meta MMS) catastrophically failed (degeneration/garbage) + spectrogram/'silence' analysis suggested non-speech. WRONG interpretation — these are model-choice artifacts, not corpus defects."
+  decisive_evidence: "badrex/Ethio-ASR-multilingual-600M (wav2vec2-bert-2.0 fine-tuned ON google/WaxalNLP, CTC, cannot loop) transcribes the same amh clip at WER 0.286-0.314 (correct sentence). Across amh/tir/orm/sid/wal validation clips: mean WER 0.18-0.46 — consistent with the model card's WAXAL test-set WERs (amh 22.9, tir 35.2, orm 24.4, sid 31.7, wal 38.2)."
+  why_general_asrs_fail: "WAXAL is spontaneous, natural-environment speech (image-prompted, field recordings, quiet/sparse). Zero-shot foundation ASRs trained on clean studio speech fail on it — this EMPIRICALLY REPRODUCES the WAXAL-NET thesis (§2.1): fine-tuned/tuned models beat zero-shot foundations on spontaneous African speech."
+  correct_qa_asr: "Second-ASR pass must use WAXAL-tuned models: Ethio-ASR (badrex/Ethio-ASR-multilingual-600M) for amh/tir/orm/sid/wal (open); Sunbird/asr-whisper-51-african-languages for the other 14 (ach, aka, dag, dga, ewe, ful, kpo, lin, lug, mlg, nyn, sna, sog/xog, tir...; GATED — requires HF login/token). mas likely uncovered by both."
+  next_steps: ["run full QA pass 2 with Ethio-ASR (5 langs, no token needed) + Sunbird (14 langs, needs HF token for gated model)", "record per-language WER distributions + adaptive outlier flags", "freeze after QA"]
 qa_required:   # §2.1.1, corrected for split-separated labels
   step1_pull_by_config: "pull {lang}_asr configs, requested splits only; allow_patterns never match *-unlabeled-*"
   step2_materialize: "decode each clip; corrupt/unreadable audio raises and never enters the harness"

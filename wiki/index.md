@@ -54,11 +54,15 @@ Content catalog for the Milimo AfrEval wiki. Organized by category. Read this fi
 
 - [Phases](build-plan/phases.md) — Phase 0–5 with gates and acceptance criteria
 - [Risk Register](build-plan/risk-register.md) — risks and mitigations beyond the platform caveat
-- [Repository Layout](build-plan/repository-layout.md) — the ten planned repos
+- [Repository Layout](build-plan/repository-layout.md) — the eleven planned repos
+
+## Reports
+
+- [Tauri Integration](reports/tauri-integration.md) — **adopted**: Tauri 2 for an air-gapped `afreval-onprem` client (Phase 5); decisions recorded in §10
 
 ## Sources
 
 - [Implementation Bible](sources/implementation-bible.md) — build spec, v1.0, source-of-truth for implementation
 - [Implementation Research](sources/implementation-research.md) — the original architectural & strategic blueprint
 
-**Page count: 30** · maintained on every ingest/lint per [AGENTS.md](AGENTS.md).
+**Page count: 31** · maintained on every ingest/lint per [AGENTS.md](AGENTS.md).

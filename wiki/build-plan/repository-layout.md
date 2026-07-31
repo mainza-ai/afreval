@@ -6,7 +6,7 @@ updated: 2026-07-31
 
 # Repository Layout
 
-The **target** layout: ten planned repos for the AfrEval implementation. This describes where implementation work will live once the build plan starts — **not** the current workspace state. Today the repo contains `dev-docs/`, `wiki/`, and the three vendored substrate repos (`autoresearch/`, `AfroBench/` — with its `lm-evaluation-harness` submodule — and `afri-fertility/`), all flattened in-tree for re-engineering. The repos below are created as the phases in [phases.md](phases.md) are executed.
+The **target** layout: eleven planned repos for the AfrEval implementation. This describes where implementation work will live once the build plan starts — **not** the current workspace state. Today the repo contains `dev-docs/`, `wiki/`, and the three vendored substrate repos (`autoresearch/`, `AfroBench/` — with its `lm-evaluation-harness` submodule — and `afri-fertility/`), all flattened in-tree for re-engineering. The repos below are created as the phases in [phases.md](phases.md) are executed.
 
 Each repo carries its own `program.md` (or `GOAL.md` where the fitness function isn't yet known — §3.2) as the literal, version-controlled instruction file for whichever agent runs that repo's loop. **These instruction files are the operational heart of the system** — treat changes to them with the same review rigor as changes to the scorer itself.
 
@@ -22,6 +22,7 @@ Each repo carries its own `program.md` (or `GOAL.md` where the fitness function 
 | `afreval-compliance` | §3.6 — citation-currency loop | Python/Markdown | |
 | `afreval-dashboard` | Phase 5 — enterprise SaaS surface | TypeScript/JavaScript | security dashboard + enterprise integrations |
 | `afreval-sdk` | Phase 5 — client SDKs | TypeScript/JavaScript + Python | |
+| `afreval-onprem` | Phase 5 — air-gapped certification + security dashboard client | Tauri 2 (Rust core) + TS/JS frontend | embeds `afreval-context-score` + `afreval-airlock` crates; Stronghold JWS vault; reuses `afreval-dashboard` frontend; local MCP server post-MVP ([report](../reports/tauri-integration.md)) |
 
 ## Related
 

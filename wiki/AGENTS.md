@@ -28,12 +28,13 @@ wiki/
 ├── infrastructure/            # runtime / trust boundary (§4)
 ├── strategy/                  # regulatory + business layer
 ├── build-plan/                # phases, risks, repo layout (§5-7)
+├── reports/                   # investigation/decision-input reports for human review
 └── sources/                   # one page per ingested source doc
 ```
 
 ## Page conventions
 
-- **Frontmatter**: every page starts with YAML frontmatter: `type` (`concept` | `substrate` | `subsystem` | `infrastructure` | `strategy` | `build-plan` | `source` | `synthesis` | `schema` | `overview`), `tags`, and `updated: YYYY-MM-DD`.
+- **Frontmatter**: every page starts with YAML frontmatter: `type` (`concept` | `substrate` | `subsystem` | `infrastructure` | `strategy` | `build-plan` | `report` | `source` | `synthesis` | `schema` | `overview`), `tags`, and `updated: YYYY-MM-DD`.
 - **Links**: use relative markdown links (e.g. `([Context Score](concepts/context-score.md))` from the wiki root, or `../concepts/…` from a subdirectory page). A page that mentions another wiki concept must link to it at least once. No orphan concepts: every page should have at least one inbound link from `index.md`, `home.md`, or a related page.
 - **Source citations**: when a claim comes from a source doc, tag it `[Bible §3.1]` or `[Research]` so provenance is traceable. Don't inline the whole source; link to `sources/implementation-bible.md` / `sources/implementation-research.md`.
 - **Contradictions**: when sources disagree (e.g. language counts, hour figures), do NOT silently pick one. Record both, flag the discrepancy, and note it in `synthesis.md` under "flagged discrepancies".

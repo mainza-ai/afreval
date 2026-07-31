@@ -37,10 +37,16 @@ collection:
   min_clip_seconds: 15
   metadata: speaker age/gender/language/environment
   transcribed_by: paid local linguistic experts, local scripts where available
+acquisition_strategy:   # two-stage, eval-first (NOT a full ~1,250h pull)
+  stage_a: "Phase 0 (now): acquire validation + test only — the frozen WER/CER eval harness (§3.4 'held-out eval split'); ~2% of the collection (~1-2 days)"
+  stage_b: "Phase 4 (deferred): acquire labeled train per language as the WAXAL-NET fine-tuning substrate, on-demand; still excludes unlabeled"
+  never: "unlabeled split (pretraining-only; AfrEval does not pretrain) and the full 1,250h materialization"
+  default_splits: [validation, test]
 qa_required:   # §2.1.1, corrected for split-separated labels
-  step1_pull_by_config: "pull {lang}_asr configs, LABELED splits only; allow_patterns never match *-unlabeled-*"
-  step2_empty_transcription_audit: "verify empties are (near-)absent in labeled splits; filter only if >0.1% (don't assume)"
-  step3_qa_pass: "second-ASR edit distance is the REAL filter — flag/drop high-divergence + unreadable/corrupt audio"
-  step4_checksum_and_freeze: "checksummed filtered corpus + provenance record in README"
+  step1_pull_by_config: "pull {lang}_asr configs, requested splits only; allow_patterns never match *-unlabeled-*"
+  step2_materialize: "decode each clip; corrupt/unreadable audio raises and never enters the harness"
+  step3_empty_transcription_audit: "verify empties are (near-)absent in labeled splits; filter only if >0.1% (don't assume)"
+  step4_qa_pass: "second-ASR edit distance is the REAL filter — flag/drop high-divergence rows"
+  step5_checksum_and_freeze: "checksummed filtered corpus + provenance record in README"
 acquisition_script: scripts/acquire_waxal.py
 checksums: []

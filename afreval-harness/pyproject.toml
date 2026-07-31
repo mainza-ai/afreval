@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-waxal = ["datasets>=2.20", "huggingface_hub>=0.24"]
+waxal = ["datasets>=2.20", "huggingface_hub>=0.24", "soundfile>=0.12"]
 dev = ["pytest>=8.0"]
 
 [tool.setuptools.packages.find]

@@ -83,22 +83,37 @@ Hub ground truth (verified 2026-07-31): `google/WaxalNLP` is per-language,
 per-task configs. Each `{lang}_asr` config ships **labeled splits
 `train`/`validation`/`test`** (every row carries `transcription`) plus a large
 **`unlabeled`** split (`transcription == ""`). Transcribed-vs-untranscribed is
-separated by split — so acquire labeled splits only; the QA/edit-distance pass
-is the real filtering work, not a hunt for an untranscribed-vs-transcribed
-split inside the labeled data.
+separated by split — so acquire the splits you need; the QA/edit-distance pass
+is the real filtering work, not a hunt for untranscribed rows inside the data.
+
+**Strategy: two-stage, eval-first — do NOT pull the full ~1,250h (~52 days).**
+Stage A (Phase 0) freezes the harness on `validation`+`test` only (~2% of the
+collection, ~1–2 days); Stage B (Phase 4) pulls labeled `train` on-demand as
+the WAXAL-NET fine-tuning substrate. `unlabeled` is never acquired.
 
 ```bash
+# 0. Install acquisition deps:
+pip install -e ".[waxal]"
+
 # 1. Plan only (resolves the 19 ASR configs from the dataset card, no download):
 python scripts/acquire_waxal.py --dry-run
-# 2. Full acquisition — labeled splits only (train+validation+test), empty/null
-#    audit, optional audio-integrity check:
-python scripts/acquire_waxal.py --out data/waxal --audio-check
+
+# 2. STAGE A — full eval-split acquisition (default splits = validation test):
+#    materializes audio into data/waxal/audio/, writes per-config JSONL
+#    manifests + transcription audit; corrupt audio raises (never enters the
+#    harness). Run in the background: ~1-2 days.
+nohup python scripts/acquire_waxal.py --out data/waxal > data/waxal/acquire.log 2>&1 &
+
 # 3. QA pass (the REAL filter) — re-transcribe with a second ASR, compute edit
-#    distance against the shipped transcriptions, drop high-divergence rows and
-#    unreadable files. harness.waxal_eval.wer/cer provide the deterministic
-#    scoring; the second-ASR model is supplied by the operator.
+#    distance against the shipped transcriptions, drop high-divergence rows.
+#    harness.waxal_eval.wer/cer provide deterministic scoring; the second-ASR
+#    model is supplied by the operator.
+
 # 4. Freeze (writes checksums/ + provenance; only valid after 1–3 pass):
 python scripts/freeze_checksums.py --pin waxal.yaml
+
+# STAGE B (Phase 4, when WAXAL-NET fine-tuning starts):
+python scripts/acquire_waxal.py --out data/waxal --splits train validation test
 ```
 
 ## Bumping a pin (the ONLY legitimate way to change versions)

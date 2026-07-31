@@ -2,21 +2,26 @@
   "configs": [
     {
       "config": "amh_asr",
-      "rows": 4,
-      "median_wer": 0.2626,
-      "adaptive_high": 0.5356,
-      "flagged": 0,
-      "flagged_ids": []
+      "rows": 396,
+      "median_wer": 0.25,
+      "adaptive_high": 0.7442,
+      "flagged": 4,
+      "flagged_ids": [
+        "gRq4OCYo9NquJcB2dIKY",
+        "V5aBpM0N92VWU2qj5qA8",
+        "Ty8f9YjP528OPbPD580d",
+        "QZ1lDGxoF6IAlrR4cLvU"
+      ]
     },
     {
       "config": "ach_asr",
-      "rows": 4,
-      "median_wer": 0.2296,
-      "adaptive_high": 0.7927,
+      "rows": 174,
+      "median_wer": 0.3067,
+      "adaptive_high": 0.9776,
       "flagged": 0,
       "flagged_ids": []
     }
   ],
-  "total_rows": 8,
-  "total_flagged": 0
+  "total_rows": 570,
+  "total_flagged": 4
 }

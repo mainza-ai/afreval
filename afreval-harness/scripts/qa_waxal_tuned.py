@@ -56,7 +56,7 @@ SUNBIRD_TOKENS = {
 }
 
 
-def load_model(model_id: str, torch):
+def load_model(model_id: str, torch, device: str):
     from transformers import (
         AutoModelForCTC, AutoProcessor,
         WhisperForConditionalGeneration, WhisperProcessor,
@@ -64,41 +64,50 @@ def load_model(model_id: str, torch):
     if model_id == ETHIO_ASR:
         proc = AutoProcessor.from_pretrained(model_id)
         model = AutoModelForCTC.from_pretrained(model_id)
+        if device == "mps":
+            model = model.to("mps")
         model.eval()
         return ("ctc", model, proc)
     proc = WhisperProcessor.from_pretrained(model_id)
     model = WhisperForConditionalGeneration.from_pretrained(model_id)
+    if device == "mps":
+        model = model.to("mps")
     model.eval()
     return ("whisper", model, proc)
 
 
-def build_transcriber(kind, model, proc, lang, torch):
+def build_transcriber(kind, model, proc, lang, torch, device):
+    dev = torch.device("mps" if device == "mps" else "cpu")
+
+    def _load(paths):
+        import soundfile as sf
+        import torchaudio.functional as taF
+        audios = []
+        for p in paths:
+            a, sr = sf.read(p, dtype="float32")
+            if a.ndim > 1:
+                a = a.mean(axis=1)
+            if a.size == 0:
+                audios.append(None)
+                continue
+            if sr != 16000:
+                a = taF.resample(torch.from_numpy(a), sr, 16000).numpy()
+            audios.append(a)
+        return audios
+
     if kind == "ctc":
         def transcribe_batch(paths):
-            import soundfile as sf
-            import torchaudio.functional as taF
-            audios, lens = [], []
-            for p in paths:
-                a, sr = sf.read(p, dtype="float32")
-                if a.ndim > 1:
-                    a = a.mean(axis=1)
-                if a.size == 0:
-                    audios.append(None); lens.append(0); continue
-                if sr != 16000:
-                    a = taF.resample(torch.from_numpy(a), sr, 16000).numpy()
-                audios.append(a); lens.append(len(a))
-            outs = []
-            # process non-empty sequentially (variable-length padding wastes GPU/CPU)
-            for a in audios:
-                if a is None:
-                    outs.append(""); continue
-                inputs = proc(a, sampling_rate=16000, return_tensors="pt")
-                with torch.no_grad():
-                    logits = model(**inputs).logits
-                pred = torch.argmax(logits, dim=-1)
-                text = proc.batch_decode(pred)[0]
-                outs.append(text.strip())
-            return outs
+            audios = _load(paths)
+            valid = [a for a in audios if a is not None]
+            if not valid:
+                return [""] * len(paths)
+            inp = proc(valid, sampling_rate=16000, return_tensors="pt", padding=True)
+            inp = {k: v.to(dev) for k, v in inp.items()}
+            with torch.no_grad():
+                logits = model(**inp).logits
+            texts = list(proc.batch_decode(torch.argmax(logits.cpu(), dim=-1)))
+            it = iter(texts)
+            return [next(it) if a is not None else "" for a in audios]
         return transcribe_batch
 
     tok = SUNBIRD_TOKENS[lang]
@@ -106,24 +115,22 @@ def build_transcriber(kind, model, proc, lang, torch):
               (3, proc.tokenizer.convert_tokens_to_ids("<|notimestamps|>"))]
 
     def transcribe_batch(paths):
-        import soundfile as sf
-        import torchaudio.functional as taF
-        outs = []
-        for p in paths:
-            a, sr = sf.read(p, dtype="float32")
-            if a.ndim > 1:
-                a = a.mean(axis=1)
-            if a.size == 0:
-                outs.append(""); continue
-            if sr != 16000:
-                a = taF.resample(torch.from_numpy(a), sr, 16000).numpy()
-            feats = proc(a, sampling_rate=16000, do_normalize=True, return_tensors="pt").input_features
-            with torch.no_grad():
-                ids = model.generate(feats, forced_decoder_ids=forced,
-                                     num_beams=1, do_sample=False)
-            outs.append(proc.decode(ids[0], skip_special_tokens=True,
-                                    clean_up_tokenization_spaces=False).strip())
-        return outs
+        audios = _load(paths)
+        valid = [a for a in audios if a is not None]
+        if not valid:
+            return [""] * len(paths)
+        inp = proc(valid, sampling_rate=16000, do_normalize=True,
+                   return_tensors="pt", padding=True)
+        with torch.no_grad():
+            ids = model.generate(
+                inp.input_features.to(dev),
+                attention_mask=inp.get("attention_mask"),
+                forced_decoder_ids=forced, num_beams=1, do_sample=False,
+            )
+        texts = [proc.decode(i, skip_special_tokens=True,
+                             clean_up_tokenization_spaces=False) for i in ids.cpu()]
+        it = iter(texts)
+        return [next(it) if a is not None else "" for a in audios]
     return transcribe_batch
 
 
@@ -131,7 +138,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="WAXAL QA pass 2 with WAXAL-tuned ASRs")
     ap.add_argument("--out", default=str(HARNESS_ROOT / "data/waxal"))
     ap.add_argument("--configs", nargs="*", help="subset of configs (default: all routed)")
-    ap.add_argument("--threads", type=int, default=8, help="torch threads")
+    ap.add_argument("--threads", type=int, default=8, help="torch CPU threads (ignored on mps)")
+    ap.add_argument("--device", default="mps", choices=["cpu", "mps"], help="inference device")
     ap.add_argument("--batch", type=int, default=4, help="clips per inference call")
     ap.add_argument("--limit", type=int, help="cap clips per config (smoke only)")
     ap.add_argument("--no-resume", action="store_true")
@@ -158,10 +166,10 @@ def main() -> int:
     for cfg in configs:
         model_id, lang = ROUTING[cfg]
         if model_id not in _models:
-            print(f"[qa2] loading {model_id} ...")
-            _models[model_id] = load_model(model_id, _torch)
+            print(f"[qa2] loading {model_id} (device={args.device}) ...")
+            _models[model_id] = load_model(model_id, _torch, args.device)
         kind, model, proc = _models[model_id]
-        transcribe = build_transcriber(kind, model, proc, lang, _torch)
+        transcribe = build_transcriber(kind, model, proc, lang, _torch, args.device)
 
         rows = [json.loads(l) for l in (out / f"{cfg}.jsonl").read_text().splitlines()]
         state_path = out / f"{cfg}_qa2_state.json"

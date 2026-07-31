@@ -1,0 +1,9 @@
+afri-fertility>=0.1.0
+PyYAML>=6.0
+
+[dev]
+pytest>=8.0
+
+[waxal]
+datasets>=2.20
+huggingface_hub>=0.24

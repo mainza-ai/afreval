@@ -1,0 +1,30 @@
+# Pin record — WAXAL (acoustic substrate, §2.1).
+# Phase 0 is NOT complete for WAXAL until acquisition + QA (§2.1.1, four steps) has
+# run end-to-end, per-language pre/post-filter row counts and edit-distance QA results
+# are recorded, and the corpus is checksummed. A raw, un-audited pull does NOT satisfy
+# the Phase 0 gate.
+substrate: waxal
+variant: asr   # image-prompted spontaneous speech; TTS excluded unless a subsystem needs it
+pinned_version: TBD   # set when acquired & QA'd
+hf_repo: google/WaxalNLP
+hf_revision: TBD      # exact dataset revision/commit pulled
+upstream: https://github.com/Waxal-Multilingual/speech-data
+paper: https://arxiv.org/abs/2602.02734
+pinned_date: 2026-07-31
+status: pending-freeze   # acquisition & QA required before freeze
+scale:
+  asr_hours: "~1250 transcribed (pin exact paper revision)"
+  tts_hours: "~180-235 (varies by paper revision — pin exact)"
+  language_count: "21-27 depending on release (pin exact set; Research doc says 24)"
+collection:
+  method: image-prompted speech in natural environments
+  min_clip_seconds: 15
+  metadata: speaker age/gender/language/environment
+  transcribed_ratio: "~10%, by paid local linguistic experts"
+qa_required:   # §2.1.1
+  step1_pull_by_config: per-language {lang}_asr shards, no blind tree clone
+  step2_empty_transcription_audit: per-language empty/null rate logged, filtered before pin
+  step3_second_pass_edit_distance: re-transcribe sample/full, flag high-divergence rows
+  step4_checksum_and_freeze: checksummed filtered corpus + provenance record in README
+acquisition_script: scripts/acquire_waxal.py
+checksums: []

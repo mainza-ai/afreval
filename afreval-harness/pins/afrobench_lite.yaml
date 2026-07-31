@@ -1,0 +1,48 @@
+substrate: afrobench
+variant: LITE
+pinned_version: afrobench-lite group v1 (lm-eval)
+vendored_commit: 78aaa6e9794cf0a009be7ff451e5e204eb16bdd7
+harness_submodule: EleutherAI/lm-evaluation-harness@f4d4b3de3ee6741a7151a9fe74945ee515262f4c
+harness_group: afrobench_lite
+upstream: https://github.com/McGill-NLP/AfroBench
+leaderboard: https://mcgill-nlp.github.io/AfroBench/
+paper: https://arxiv.org/abs/2311.07978
+pinned_date: 2026-07-31
+task_set:
+- afrimgsm_cot_tasks
+- afrimmlu_tasks
+- afrixnli_tasks
+- belebele_tasks
+- sib_tasks
+- african_flores_tasks
+- injongointent_tasks
+languages:
+- eng
+- amh
+- hau
+- ibo
+- kin
+- lin
+- lug
+- orm
+- sna
+- sot
+- swa
+- xho
+- yor
+- zul
+metrics:
+- acc
+full_bench_use: full AfroBench reserved for periodic deep audits; LITE is the routine
+  certification pass
+status: frozen
+checksums:
+  afrobench_lite_group: 1474b7f5a53d6b77e5920f6fb3e1b2e418e364ccdd7f2fe15bab21afc8c88cee
+  afrobench_main_group: e64ffd32e21e124e487b608fd6d7747a23ccb71810792af055eca49df8110bed
+  afrobench_lite_afrimgsm.yaml: 86abd392196300e5619cd3f91a2ef389c60352c2238bf319004292dd3142e16f
+  afrobench_lite_afrimmlu.yaml: 1e41be88079b5b98010308f9b42fa28b6bb081102be8bf970769c536cf28844a
+  afrobench_lite_afrixnli.yaml: a16363d2be6e861dfc75e78991b57f19445f4873e218aa2154a6f98546fc33a5
+  afrobench_lite_belebele.yaml: 1b72a9427ae3bfaa8872c3cb7f73e599cca8ccb04e376d368123d501ec016755
+  afrobench_lite_flores.yaml: 83f11b14c04df0284334f5d503db83753b83c1c4dbc81a3838b7fca91d728c4e
+  afrobench_lite_intent.yaml: 5f88426948996b84fc5fd31af8570e7d9ed8ff829bb64405d5dd8e35b1039aa8
+  afrobench_lite_sib.yaml: 3a9380c1206d4cc156e4774e2ed9815d3b82dc615089890edf9fe813c18babf6

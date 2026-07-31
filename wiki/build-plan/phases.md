@@ -10,6 +10,8 @@ Six phases with explicit gates and acceptance criteria. The through-line: **noth
 
 ## Phase 0 — Harness freeze (weeks 1–3)
 
+**Status: in progress.** `afreval-harness/` implemented in-tree: pins for all three substrates, `harness/tokenizer_eval.py` (§3.1 script-stratified eval, verified against afri-fertility reference numbers), `harness/waxal_eval.py` (pure WER/CER), `harness/afrobench_eval.py` (LITE vendored-drift validation), acquisition/freeze/bump scripts, checksums frozen for afri-fertility + AfroBench-LITE, 16 tests passing. **Blocking:** WAXAL is `pending-freeze` until §2.1.1 acquisition + QA completes.
+
 Pin exact versions of [WAXAL](../substrates/waxal.md), [AfroBench(-LITE)](../substrates/afrobench.md), and [afri-fertility](../substrates/afri-fertility.md). Build `harness/` for each as read-only, checksummed artifacts. For WAXAL this is not complete until the §2.1.1 four-step acquisition/QA task list has run end-to-end and its provenance record committed — **a raw, un-audited pull does not satisfy the gate.**
 
 **Acceptance:** harness repo tagged `v0.1.0`, checksums committed, documented procedure for pin bumps (WAXAL and AfroBench are active projects — an unplanned silent bump invalidates historical Context Scores). WAXAL per-language pre/post-filter row counts and edit-distance QA results present in the harness README.

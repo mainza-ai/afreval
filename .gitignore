@@ -13,8 +13,8 @@ venv/
 .vscode/
 
 # Obsidian (user-specific workspace state)
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
+**/.obsidian/workspace.json
+**/.obsidian/workspace-mobile.json
 
 # Node
 node_modules/

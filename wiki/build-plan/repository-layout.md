@@ -6,7 +6,7 @@ updated: 2026-07-31
 
 # Repository Layout
 
-The **target** layout: eleven planned repos for the AfrEval implementation. This describes where implementation work will live once the build plan starts — **not** the current workspace state. Today the repo contains `dev-docs/`, `wiki/`, and the three vendored substrate repos (`autoresearch/`, `AfroBench/` — with its `lm-evaluation-harness` submodule — and `afri-fertility/`), all flattened in-tree for re-engineering. The repos below are created as the phases in [phases.md](phases.md) are executed.
+The **target** layout: eleven planned repos for the AfrEval implementation. The repos below are created as the phases in [phases.md](phases.md) are executed. **Implemented so far (in-tree):** `afreval-harness` (Phase 0 — frozen pins, checksums, tests passing; see its [README](../../afreval-harness/README.md)). Current workspace also contains `dev-docs/`, `wiki/`, and the three vendored substrate repos (`autoresearch/`, `AfroBench/` — with its `lm-evaluation-harness` submodule — and `afri-fertility/`), all flattened in-tree for re-engineering.
 
 Each repo carries its own `program.md` (or `GOAL.md` where the fitness function isn't yet known — §3.2) as the literal, version-controlled instruction file for whichever agent runs that repo's loop. **These instruction files are the operational heart of the system** — treat changes to them with the same review rigor as changes to the scorer itself.
 

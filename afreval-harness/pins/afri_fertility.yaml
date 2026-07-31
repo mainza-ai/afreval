@@ -1,0 +1,27 @@
+substrate: afri-fertility
+pinned_version: 0.1.0
+vendored_commit: 8295979d7ec11f774a10656e550e398d1282535e
+vendored_path: ../afri-fertility
+upstream: https://github.com/CipherSenseAI/afri-fertility
+paper: https://arxiv.org/abs/2606.24460
+license: Apache-2.0
+pinned_date: 2026-07-31
+baseline_language: eng
+script_stratification: latin|ethiopic|nko
+metric:
+  fertility: tokens/words
+  premium: F(L,T) / F(eng,T)
+  cpt: chars/tokens
+  bpt: utf8_bytes/tokens
+  context_efficiency: window_size * cpt
+corpora:
+- flores (devtest)
+- sib200 (test)
+- mafand (test)
+status: frozen
+checksums:
+  afri_fertility_reference_suite: 15543bbf5b29f38cad32173bee048009f4326ef79ecff59e658163a81105b165
+  afri_fertility_languages_registry: 180cf757ed94002c596d3240a0147610454a848fed664519d6d1ee827f48f852
+  afri_fertility_study_config: 4f7c71142309a8ba6f8d14681c5333bc804c105ee526b28c24fc0904672c288c
+  afri_fertility_prices_snapshot: 4ef5e2d1a8d27d8a7e2c925969da5e2e28536fce07d19066b22c9d9bbe6fd1a4
+  afri_fertility_fx_snapshot: 3421b8f0ec4f977f68e26c76935da944d246e14cca4c1924a22dfe2085254d5f

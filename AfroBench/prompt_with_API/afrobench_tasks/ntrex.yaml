@@ -1,0 +1,65 @@
+name: ntrex
+dataset: masakhane/ntrex_african
+translation: True
+trust_remote_code: True
+languages:
+   - afr_Latn-eng_Latn
+   - amh_Ethi-eng_Latn
+   - bem_Latn-eng_Latn
+   - ewe_Latn-eng_Latn
+   - fra_Latn-eng_Latn
+   - hau_Latn-eng_Latn
+   - ibo_Latn-eng_Latn
+   - kin_Latn-eng_Latn
+   - mlg_Latn-eng_Latn
+   - nde_Latn-eng_Latn
+   - nso_Latn-eng_Latn
+   - nya_Latn-eng_Latn
+   - orm_Ethi-eng_Latn
+   - sna_Latn-eng_Latn
+   - som_Latn-eng_Latn
+   - ssw_Latn-eng_Latn
+   - swa_Latn-eng_Latn
+   - tir_Ethi-eng_Latn
+   - tsn_Latn-eng_Latn
+   - ven_Latn-eng_Latn
+   - wol_Latn-eng_Latn
+   - xho_Latn-eng_Latn
+   - yor_Latn-eng_Latn
+   - zul_Latn-eng_Latn
+   - eng_Latn-afr_Latn
+   - eng_Latn-amh_Ethi
+   - eng_Latn-bem_Latn
+   - eng_Latn-ewe_Latn
+   - eng_Latn-fra_Latn
+   - eng_Latn-hau_Latn
+   - eng_Latn-ibo_Latn
+   - eng_Latn-kin_Latn
+   - eng_Latn-mlg_Latn
+   - eng_Latn-nde_Latn
+   - eng_Latn-nso_Latn
+   - eng_Latn-nya_Latn
+   - eng_Latn-orm_Ethi
+   - eng_Latn-sna_Latn
+   - eng_Latn-som_Latn
+   - eng_Latn-ssw_Latn
+   - eng_Latn-swa_Latn
+   - eng_Latn-tir_Ethi
+   - eng_Latn-ton_Latn
+   - eng_Latn-tsn_Latn
+   - eng_Latn-urd_Arab
+   - eng_Latn-ven_Latn
+   - eng_Latn-wol_Latn
+   - eng_Latn-xho_Latn
+   - eng_Latn-yor_Latn
+   - eng_Latn-zul_Latn
+test_split: test
+fewshot_split: test
+target_prefix: sentence
+prompts:
+  - "{{source}} sentence: {{source_column}} \n{{target}} sentence: . Return only the translated sentence."
+  - "You are a translation expert. Translate the following {{source}} sentences to {{target}} \n{{source}} sentence: {{source_column}}\n{{target}} sentence: . Return only the translated sentence."
+  - "As a {{source}} and {{target}}, translate the following {{source}} sentences to {{target}}. \n{{source}} sentence: {{source_column}}\n{{target}} sentence: . Return only the translated sentence."
+metrics:
+  - chrf
+  - bleu

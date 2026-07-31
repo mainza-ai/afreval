@@ -1,0 +1,126 @@
+# Pinned API price snapshot — 2026-06-12
+# All prices in USD per token (divide per-million price by 1,000,000).
+# Prices are keyed by tokenizer ID; each entry represents the API tier that
+# uses that tokenizer. Open-weight models have no canonical price — the entry
+# records one representative hosting provider, named in the comment.
+# Appendix C of the paper must list: provider, tier/model name, source URL,
+# and access date for each entry.
+#
+# STATUS LEGEND:
+#   [verified]  — pulled from official pricing page; URL noted below
+#   [estimate]  — representative or self-hosted; no single canonical price
+#   [NEEDS VERIFY] — placeholder; must be confirmed before locking results
+snapshot_date: "2026-06-12"
+currency: USD
+models:
+
+  openai/o200k_base:
+    # Model:    GPT-4.1 (also covers GPT-4o, GPT-5, o3, o4-mini — all use o200k_base)
+    # Tier:     GPT-4.1 standard input / output
+    # Source:   openai.com/api/pricing  [verified]
+    # Status:   [verified]
+    price_in:  0.0000025    # $2.50 per 1M input tokens
+    price_out: 0.000010     # $10.00 per 1M output tokens
+
+  openai/o200k_harmony:
+    # Model:    gpt-oss (OpenAI open-source weights: gpt-oss-120B, gpt-oss-20B)
+    # Tier:     Together.ai — "gpt-oss-120B" line item (sovereignty baseline for African deployments)
+    # Source:   together.ai/pricing  [verified — confirmed from pricing page]
+    # Status:   [verified]
+    # Note:     Same BPE text vocab as o200k_base; +1,069 special tokens only.
+    #           Text fertility is identical to o200k_base but included separately as the
+    #           open-weight sovereignty option: self-hostable, no API dependency.
+    price_in:  0.00000015   # $0.15 per 1M input tokens (gpt-oss-120B on Together.ai)
+    price_out: 0.00000060   # $0.60 per 1M output tokens
+
+  openai/cl100k_base:
+    # Model:    GPT-3.5-Turbo (legacy reference; model deprecated but price still listed)
+    # Tier:     GPT-3.5-Turbo standard input / output
+    # Source:   openai.com/api/pricing  [verified]
+    # Status:   [verified] — retained as within-OpenAI 100k→200k generational control
+    price_in:  0.0000005    # $0.50 per 1M input tokens
+    price_out: 0.0000015    # $1.50 per 1M output tokens
+
+  meta/llama-3.1:
+    # Model:    Llama 3 8B Instruct Lite
+    # Tier:     Together.ai — "Llama 3 8B Instruct Lite" line item
+    # Source:   together.ai/pricing  [verified — confirmed from pricing page]
+    # Status:   [verified] — closest listed match to Llama-3.1-8B on Together.ai
+    price_in:  0.00000014   # $0.14 per 1M input tokens
+    price_out: 0.00000014   # $0.14 per 1M output tokens
+
+  meta/llama-4:
+    # Model:    Llama 4 Scout 17B-16E Instruct
+    # Tier:     NOT available on Together.ai as of 2026-06-15 (confirmed absent from pricing page)
+    # Source:   [NEEDS VERIFY] — check Groq (console.groq.com) or Fireworks.ai for availability
+    # Status:   [NEEDS VERIFY] — prices below are placeholders; must confirm provider before locking
+    price_in:  0.00000018   # ~$0.18 per 1M input tokens (placeholder)
+    price_out: 0.00000059   # ~$0.59 per 1M output tokens (placeholder)
+
+  google/gemma-4:
+    # Model:    Gemma 4 31B Instruct
+    # Tier:     Together.ai — "Gemma 4 31B" line item
+    # Source:   together.ai/pricing  [verified — confirmed from pricing page]
+    # Status:   [verified] — tokenizer (262k vocab BPE) is shared across all Gemma 4 sizes
+    price_in:  0.00000039   # $0.39 per 1M input tokens
+    price_out: 0.00000097   # $0.97 per 1M output tokens
+
+  mistral/tekken:
+    # Model:    Mistral Nemo (Tekken tokenizer, 131k vocab)
+    # Tier:     Mistral API — Mistral Nemo standard tier
+    # Source:   mistral.ai/technology/#pricing  [verified]
+    # Status:   [verified]
+    price_in:  0.00000015   # $0.15 per 1M input tokens
+    price_out: 0.00000015   # $0.15 per 1M output tokens
+
+  qwen/qwen3:
+    # Model:    Qwen3.5 9B
+    # Tier:     Together.ai — "Qwen3.5 9B" line item
+    # Source:   together.ai/pricing  [verified — confirmed from pricing page]
+    # Status:   [verified] — tokenizer (151k vocab) is unchanged from Qwen 2.5 across Qwen 3 family
+    price_in:  0.00000017   # $0.17 per 1M input tokens
+    price_out: 0.00000025   # $0.25 per 1M output tokens
+
+  deepseek/v3:
+    # Model:    DeepSeek-V3
+    # Tier:     DeepSeek API (cache-miss / non-discounted rate)
+    # Source:   api-docs.deepseek.com/quick_start/pricing  [verified]
+    # Status:   [verified] — DeepSeek offers heavy cache-hit discounts; these are full rates
+    price_in:  0.00000014   # $0.14 per 1M input tokens
+    price_out: 0.00000028   # $0.28 per 1M output tokens
+
+  bigscience/bloom:
+    # Model:    BLOOM 176B
+    # Tier:     Self-hosted estimate (no active commercial API as of 2026)
+    # Source:   Internal estimate based on A100 GPU cloud compute cost  [estimate]
+    # Status:   [estimate] — BLOOM has no canonical API; used as multilingual baseline (H3).
+    #           Self-host cost per token approximated from 8×A100 inference throughput.
+    #           Flag in paper: cost figure is illustrative, not from a live API.
+    price_in:  0.00000010   # ~$0.10 per 1M input tokens (self-hosted estimate)
+    price_out: 0.00000010   # ~$0.10 per 1M output tokens (self-hosted estimate)
+
+  cohere/aya-expanse:
+    # Model:    Aya Expanse 8B
+    # Tier:     Cohere API — Command-R tier (Aya Expanse billed at Command-R rates)
+    # Source:   cohere.com/pricing  [verified]
+    # Status:   [verified]
+    price_in:  0.00000050   # $0.50 per 1M input tokens
+    price_out: 0.00000150   # $1.50 per 1M output tokens
+
+  anthropic/claude:
+    # Model:    Claude Sonnet 4.6 (claude-sonnet-4-6)
+    # Tier:     Anthropic API standard tier
+    # Source:   anthropic.com/pricing  [NEEDS VERIFY]
+    # Status:   [NEEDS VERIFY] — confirm current Sonnet pricing before locking
+    #           Counts via messages.count_tokens endpoint; inspectable=False (opaque tokenizer).
+    price_in:  0.000003     # ~$3.00 per 1M input tokens (estimate)
+    price_out: 0.000015     # ~$15.00 per 1M output tokens (estimate)
+
+  google/gemini:
+    # Model:    Gemini 2.0 Flash
+    # Tier:     Google AI Studio / Vertex AI standard tier
+    # Source:   ai.google.dev/pricing  [NEEDS VERIFY]
+    # Status:   [NEEDS VERIFY] — confirm current Gemini 2.0 Flash pricing before locking
+    #           Counts via GenerativeModel.count_tokens(); inspectable=False (opaque tokenizer).
+    price_in:  0.000000075  # ~$0.075 per 1M input tokens (estimate)
+    price_out: 0.0000003    # ~$0.30 per 1M output tokens (estimate)

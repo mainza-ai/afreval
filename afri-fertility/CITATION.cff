@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the paper below."
+type: software
+title: "afri-fertility"
+abstract: "Open measurement engine for quantifying the tokenization tax on African languages
+  in frontier LLMs. Measures fertility, premium, CPT, BPT, and enterprise cost across
+  tokenizers and corpora."
+version: 0.1.0
+date-released: "2026-07-01"
+license: Apache-2.0
+repository-code: "https://github.com/datalens-africa/afri-fertility"
+url: "https://datalens.africa"
+authors:
+  - family-names: Somide
+    given-names: Anthony Olaoye
+    affiliation: "DataLens Africa Research"
+    email: research@datalens.africa
+keywords:
+  - natural language processing
+  - tokenization
+  - African languages
+  - large language models
+  - fertility
+  - cost analysis
+preferred-citation:
+  type: unpublished
+  title: "The African Language Tax: Quantifying the Cost, Latency, and Context Penalty
+    of Tokenizing African Languages in Frontier LLMs"
+  authors:
+    - family-names: Somide
+      given-names: Anthony Olaoye
+      affiliation: "DataLens Africa Research"
+  year: 2026
+  url: "https://datalens.africa"
+  notes: "Preprint — cite this paper when using afri-fertility in research."

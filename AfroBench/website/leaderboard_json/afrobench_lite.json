@@ -1,0 +1,149 @@
+{
+    "NLI": {
+        "afrixnli": {
+            "Aya-101 13B": 52.4,
+            "Gemma1.1 7b": 34.6,
+            "LLaMa2 7b": 33.7,
+            "LLaMa3 8B": 35.6,
+            "LLaMa3.1 8B": 36.4,
+            "LLaMAX3 8B": 41.4,
+            "Gemma2 9b": 40.9,
+            "Gemma2 27b": 43.7,
+            "LLaMa3.1 70B": 38.4,
+            "AfroLLaMa 8B": 36.3,
+            "Gemini 1.5 pro": 63.6,
+            "GPT-4o (Aug)": 66.3,
+            "Gemma 3 27b": 51.2,
+            "Gemini-2.0 Flash": 66.5,
+            "GPT-4.1 (April)": 67.5,
+            "LLaMa 4 405B": 45.5,
+            "Lugha-Llama 8B": 36.7
+        }
+    },
+    "Intent": {
+        "injongointent": {
+            "AfroLLaMa 8B": 0.9,
+            "LLaMAX3 8B": 6.3,
+            "LLaMa2 7b": 1.4,
+            "LLaMa3.1 70B": 36.9,
+            "LLaMa3.1 8B": 6.3,
+            "LLaMa3 8B": 2.3,
+            "Gemma1.1 7b": 10.2,
+            "Gemma2 27b": 37.8,
+            "Gemma2 9b": 34.1,
+            "Aya-101 13B": 48.2,
+            "Gemini 1.5 pro": 76.3,
+            "GPT-4o (Aug)": 78.3,
+            "Gemma 3 27b": 55.2,
+            "Gemini-2.0 Flash": 73.9,
+            "GPT-4.1 (April)": 84.4,
+            "LLaMa 4 405B": 73.9,
+            "Lugha-Llama 8B": 4.1
+        }
+    },
+    "MT(en/fr-xx)": {
+        "flores - en_xx": {
+            "AfroLLaMa 8B": 10.7,
+            "LLaMAX3 8B": 27.7,
+            "LLaMa2 7b": 9.2,
+            "LLaMa3.1 70B": 27.4,
+            "LLaMa3.1 8B": 14.5,
+            "LLaMa3 8B": 11.8,
+            "Aya-101 13B": 31.1,
+            "Gemma1.1 7b": 11.7,
+            "Gemma2 27b": 38.4,
+            "Gemma2 9b": 36.5,
+            "Gemini 1.5 pro": 43.0,
+            "GPT-4o (Aug)": 42.4,
+            "Gemma 3 27b": 33.1,
+            "Gemini-2.0 Flash": 59.1,
+            "GPT-4.1 (April)": 47.3,
+            "LLaMa 4 405B": 42.8,
+            "Lugha-Llama 8B": 22.1
+        }
+    },
+    "MMLU": {
+        "afrimmlu": {
+            "AfroLLaMa 8B": 25.8,
+            "Aya-101 13B": 30.2,
+            "Gemma1.1 7b": 27.3,
+            "LLaMa2 7b": 25.9,
+            "LLaMa3 8B": 28.4,
+            "LLaMAX3 8B": 29.6,
+            "Gemma2 9b": 36.1,
+            "Gemma2 27b": 40.8,
+            "LLaMa3.1 8B": 31.6,
+            "LLaMa3.1 70B": 40.6,
+            "GPT-4o (Aug)": 63.1,
+            "Gemini 1.5 pro": 62.6,
+            "Gemma 3 27b": 44.4,
+            "Gemini-2.0 Flash": 57.8,
+            "GPT-4.1 (April)": 60.2,
+            "LLaMa 4 405B": 15.8,
+            "Lugha-Llama 8B": 25.2
+        }
+    },
+    "Math": {
+        "afrimgsm": {
+            "AfroLLaMa 8B": 0.3,
+            "Aya-101 13B": 4.9,
+            "Gemma1.1 7b": 5.0,
+            "LLaMa2 7b": 1.9,
+            "LLaMa3 8B": 5.7,
+            "LLaMa3.1 8B": 7.8,
+            "LLaMAX3 8B": 5.2,
+            "Gemma2 9b": 21.7,
+            "Gemma2 27b": 31.1,
+            "LLaMa3.1 70B": 26.5,
+            "GPT-4o (Aug)": 57.3,
+            "Gemini 1.5 pro": 57.7,
+            "Gemma 3 27b": 47.5,
+            "Gemini-2.0 Flash": 67.5,
+            "GPT-4.1 (April)": 59.5,
+            "LLaMa 4 405B": 65.0,
+            "Lugha-Llama 8B": 1.8
+        }
+    },
+    "Topic": {
+        "sib": {
+            "AfroLLaMa 8B": 13.9,
+            "LLaMAX3 8B": 62.6,
+            "LLaMa2 7b": 18.0,
+            "LLaMa3.1 70B": 64.3,
+            "LLaMa3.1 8B": 48.0,
+            "LLaMa3 8B": 40.1,
+            "Aya-101 13B": 76.6,
+            "Gemma1.1 7b": 42.7,
+            "Gemma2 27b": 68.8,
+            "Gemma2 9b": 65.7,
+            "Gemini 1.5 pro": 81.3,
+            "GPT-4o (Aug)": 82.8,
+            "Gemma 3 27b": 74.2,
+            "Gemini-2.0 Flash": 84.9,
+            "GPT-4.1 (April)": 84.8,
+            "LLaMa 4 405B": 80.6,
+            "Lugha-Llama 8B": 34.1
+        }
+    },
+    "RC": {
+        "belebele": {
+            "AfroLLaMa 8B": 24.7,
+            "LLaMAX3 8B": 28.9,
+            "LLaMa2 7b": 23.5,
+            "LLaMa3.1 8B": 36.2,
+            "LLaMa3.1 70B": 45.9,
+            "LLaMa3 8B": 26.2,
+            "Aya-101 13B": 60.3,
+            "Gemma1.1 7b": 34.3,
+            "Gemma2 27b": 53.5,
+            "Gemma2 9b": 50.5,
+            "Gemini 1.5 pro": 55.0,
+            "GPT-4o (Aug)": 70.4,
+            "Gemma 3 27b": 62.4,
+            "Gemini-2.0 Flash": 56.8,
+            "GPT-4.1 (April)": 64.8,
+            "LLaMa 4 405B": 24.6,
+            "Lugha-Llama 8B": 23.0
+        }
+    }
+}

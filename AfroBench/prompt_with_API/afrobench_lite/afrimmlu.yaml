@@ -1,0 +1,35 @@
+name: afrimmlu
+dataset: masakhane/afrimmlu
+trust_remote_code: True
+languages:
+  - eng
+  - amh
+  - hau
+  - ibo
+  - kin
+  - lin
+  - lug
+  - orm
+  - sna
+  - sot
+  - swa
+  - xho
+  - yor
+  - zul
+test_split: test
+fewshot_split: validation
+target: answer
+prompts:
+  - "You are a highly knowledgeable and intelligent artificial intelligence model answers multiple-choice questions about {{subject}}. \n\nQuestion: {{question}} \nChoices: \n{{choices}} \n\nAnswer: "
+  - "As an expert in {{subject}}, choose the most accurate answer to the question below. Your goal is to select the correct option 'A', 'B', 'C', or 'D' by understanding the nuances of the topic. \n\nQuestion: {{question}} \nChoices: \n{{choices}} \n\nAnswer: "
+  - "You are a subject matter expert in {{subject}}. Utilizing your expertise in {{subject}}, answer the following multiple-choice question by picking 'A', 'B', 'C', or 'D'.\n\nQuestion: {{question}} \nChoices: \n{{choices}} \n\nAnswer: "
+  - "Analyze each question critically and determine the most correct option based on your understanding of the subject matter. \n\nQuestion: {{question}} \nChoices: \n{{choices}} \n\nAnswer: "
+  - "Given your proficiency in {subject}, please answer the subsequent multiple-choice question with 'A', 'B', 'C', or 'D'. \n\nQuestion: {{question}} \nChoices: \n{{choices}} \n\nAnswer: "
+choices:
+  - A
+  - B
+  - C
+  - D
+metrics:
+  - f1
+  - acc

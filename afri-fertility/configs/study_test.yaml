@@ -1,0 +1,55 @@
+# Fast test config — 6 core languages, 3 tokenizers, 50 sentences per language.
+# Use for local iteration before running the full study_main.yaml.
+
+baseline_language: eng
+
+languages:
+  - eng
+  - yor
+  - hau
+  - ibo
+  - wol
+  - swh
+  - amh
+
+corpora:
+  - id: flores
+    split: devtest
+  - id: sib200
+    split: test
+  - id: mafand
+    split: test
+
+tokenizers:
+  - openai/o200k_base
+  - google/gemma-2
+  - mistral/tekken
+
+normalization: NFC
+segmentation: uax29
+
+max_sentences: 50
+
+bootstrap:
+  iterations: 100
+  seed: 42
+
+context_window: 128000
+
+cost:
+  prices: configs/prices_2026-06.yaml
+  fx: configs/fx_2026-06.yaml
+  reference_words: 1000
+  scenarios:
+    bank_cs:
+      out_in_ratio: 1.0
+      monthly_queries: 1000000
+    clinical_triage:
+      out_in_ratio: 1.5
+      monthly_queries: 200000
+    agri_sms:
+      out_in_ratio: 0.5
+      monthly_queries: 500000
+
+output_dir: runs/test
+workers: 4

@@ -1,0 +1,54 @@
+name: afrixnli
+dataset: masakhane/afrixnli
+trust_remote_code: True
+languages:
+  - eng
+  - fra
+  - amh
+  - ewe
+  - hau
+  - ibo
+  - kin
+  - lin
+  - lug
+  - orm
+  - sna
+  - sot
+  - swa
+  - twi
+  - wol
+  - xho
+  - yor
+  - zul
+test_split: test
+fewshot_split: validation
+target: label
+prompts:
+  - "Please identify whether the premise entails or contradicts the hypothesis in the following premise and hypothesis. The answer should be exact entailment, contradiction, or neutral. \n\nPremise: {{premise}} \nHypothesis: {{hypothesis}}. \n\nIs it entailment, contradiction, or neutral?"
+  - "{{premise}}\nQuestion: {{hypothesis}} True, False, or Neither?\nAnswer: "
+  - "Given the following premise and hypothesis in {{language}}, identify if the premise entails, contradicts, or is neutral towards the hypothesis. Please respond with exact 'entailment', 'contradiction', or 'neutral'. \n\nPremise: {{premise}} \nHypothesis: {{hypothesis}}"
+  - "You are an expert in Natural Language Inference (NLI) specializing in {{language}} language.\nAnalyze the premise and hypothesis given in {{language}}, and determine the relationship between them.\nRespond with one of the following options: 'entailment', 'contradiction', or 'neutral'. \n\nPremise: {{premise}} \nHypothesis: {{hypothesis}}"
+  - "Based on the given statement, is the following claim 'true', 'false', or 'inconclusive'. \nStatement: {{premise}} \nClaim: {{hypothesis}}"
+choices:
+  - "entailment"
+  - "neutral"
+  - "contradiction"
+verbalizer:
+  "entailment": ['encouragement', 'entitlement', 'entails', 'entailed', 'entailment', 'true', 'True', 'entail']
+  "contradiction": ['contradictory', 'contradicts', 'contradiction', 'False', 'false', 'contradict']
+  "neutral": ['neutral', 'neither', 'Neither', 'inconclusive']
+map_response:
+  entailment: 0
+  neutral: 1
+  contradiction: 2
+preprocessing:
+  label: #target column to be preprocessed
+    - function: map_pos_tags
+      params:
+        mapping:
+          0: entailment
+          1: neutral
+          2: contradiction
+metrics:
+  - f1
+  - acc

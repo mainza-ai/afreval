@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AfroBench Tasks</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 20px 8%;
+      font-size: 17px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .nav-left, .nav-right {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #333;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #c35f51;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      border-bottom: 2px dotted #c35f51;
+      transition: width 0.25s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: #c35f51;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    h2 {
+      margin: 50px 0 3px 0; /* reduced margins for tighter spacing */
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 0 auto;
+      width: 70%;
+    }
+    table {
+      width: 100%;
+      table-layout: fixed;
+      margin: 15px auto 20px auto;
+      border-collapse: collapse;
+      min-width: 450px;
+    }
+    th, td {
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th:nth-child(1), td:nth-child(1) {
+      width: 24%;
+    }
+
+    th:nth-child(2), td:nth-child(2) {
+      width: 17%;
+    }
+
+    th:nth-child(3), td:nth-child(3),
+    th:nth-child(4), td:nth-child(4) {
+      width: 10%;
+      text-align: center;
+    }
+
+    th:nth-child(5), td:nth-child(5) {
+      width: 16%;
+      text-align: center !important;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    a {
+      color: #c35f51;
+      text-decoration: none;
+      position: relative;
+    }
+    td a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .icon {
+      font-size: 18px;
+    }
+
+    a::after {
+      content: '';
+      display: block;
+      width: 100%;
+      border-bottom: 2px dotted #c35f51;
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+    }
+
+    a:hover {
+      color: #a24438;
+    }
+    a:has(i)::after {
+      display: none;
+    }
+    a:hover::after {
+      border-color: #a24438;
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin: 25px auto;
+      padding: 10px 16px;
+      background-color: #e44d26;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .download-btn:hover {
+      background-color: #d13b1e;
+    }
+
+    @media screen and (max-width: 600px) {
+      .table-wrapper {
+        width: 95%;
+      }
+
+      .icon {
+        font-size: 18px;
+      }
+
+      th, td {
+        padding: 3px 4px;
+      }
+
+      .download-btn {
+        width: 90%;
+        font-size: 14px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="nav-bar">
+  <div class="nav-left">
+    <a href="index.html" class="nav-link">AfroBench</a>
+    <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+  </div>
+  <div class="nav-right">
+    <a href="tasks.html" class="nav-link active">Tasks</a>
+    <a href="index.html" class="nav-link">About</a>
+    <a href="http://arxiv.org/abs/2311.07978" class="nav-link">Paper</a>
+  </div>
+  </nav>
+  <h1>AfroBench Task Overview</h1>
+
+  <div class="table-wrapper">
+    <table>
+      <tr>
+        <th>Task Name</th>
+        <th>Dataset</th>
+        <th>Paper</th>
+        <th>Download</th>
+        <th>Metric</th>
+      </tr>
+      <tr>
+        <td rowspan="1" class="text-left">Part of Speech Tagging (POS)</td>
+        <td>MasakhaPOS</td>
+        <td>
+          <a href="https://aclanthology.org/2023.acl-long.609/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/masakhane/masakhapos" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>F1</td>
+      </tr>
+      <tr>
+        <td rowspan="1" class="text-left">Named Entity Recognition (NER)</td>
+        <td>MasakhaNER</td>
+        <td>
+          <a href="https://aclanthology.org/2022.emnlp-main.298/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/masakhane/masakhaner-x" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>Span F1</td>
+      </tr>
+      <tr>
+        <td rowspan="2" class="text-left">Sentiment Analysis (SA)</td>
+        <td>AfriSenti</td>
+        <td>
+          <a href="https://aclanthology.org/2023.emnlp-main.862/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/masakhane/afrisenti" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>F1</td>
+      </tr>
+      <tr>
+        <td>NollySenti</td>
+        <td>
+        <a href="https://aclanthology.org/2023.acl-short.85/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+        </a>
+        </td>
+        <td>
+        <a href="https://huggingface.co/datasets/Davlan/nollysenti" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+        </a>
+        </td>
+        <td class="text-center">F1</td>
+      </tr>
+      <tr>
+        <td rowspan="2" class="text-left">Topic Classification (TC)</td>
+        <td>SIB</td>
+        <td>
+          <a href="https://aclanthology.org/2024.eacl-long.14/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/Davlan/sib200" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>F1</td>
+      </tr>
+      <tr>
+        <td>MasakhaNEWS</td>
+        <td>
+        <a href="https://aclanthology.org/2023.ijcnlp-main.10/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+        </a>
+        </td>
+        <td>
+        <a href="https://huggingface.co/datasets/masakhane/masakhanews" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+        </a>
+        </td>
+        <td class="text-center">Accuracy</td>
+      </tr>
+      <tr>
+        <td rowspan="1" class="text-left">Intent Detection (Intent)</td>
+        <td>Injongointent</td>
+        <td>
+          <a href="https://arxiv.org/abs/2502.09814" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/masakhane/InjongoIntent" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>Accuracy</td>
+        </tr>
+        <tr>
+        <td rowspan="1" class="text-left">Hate Speech Detection (Hate)</td>
+        <td>AfriHate</td>
+        <td>
+          <a href="https://arxiv.org/html/2501.08284v1" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>Coming soon!</td>
+        <td>F1</td>
+      </tr>
+      <tr>
+        <td rowspan="1" class="text-left">Natural Language Inference (NLI)</td>
+        <td>AfriXNLI</td>
+        <td>
+          <a href="https://arxiv.org/pdf/2406.03368" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/masakhane/afrixnli" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>Accuracy</td>
+      </tr>
+      <tr>
+        <td rowspan="1" class="text-left">Crosslingual QA (XAQ)</td>
+        <td>AfriQA</td>
+        <td>
+          <a href="https://arxiv.org/abs/2305.06897" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/masakhane/afriqa-gold-passages" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>F1</td>
+      </tr>
+      <tr>
+        <td rowspan="2" class="text-left">Reading Comprehension (RC)</td>
+        <td>Belebele</td>
+        <td>
+          <a href="https://aclanthology.org/2023.emnlp-main.862/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/facebook/belebele" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>F1</td>
+      </tr>
+      <tr>
+        <td>NaijaRC</td>
+        <td>
+        <a href="https://arxiv.org/abs/2308.09768" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+        </a>
+        </td>
+        <td>
+        <a href="https://huggingface.co/datasets/Davlan/NaijaRC" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+        </a>
+        </td>
+        <td class="text-center">F1</td>
+      </tr>
+      <tr>
+        <td rowspan="1" class="text-left">Scientific Arc-Easy (Arc-E)</td>
+        <td>Uhura-Arc-Easy</td>
+        <td>
+          <a href="https://arxiv.org/abs/2412.00948" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/masakhane/uhura-arc-easy" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>Accuracy</td>
+      </tr>
+      <tr>
+        <td rowspan="2" class="text-left">Knowledge QA (MMLU)</td>
+        <td>AfriMMLU</td>
+        <td>
+          <a href="https://arxiv.org/pdf/2406.03368" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/masakhane/afrimmlu" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>Accuracy</td>
+      </tr>
+      <tr>
+        <td>Openai MMLU</td>
+        <td>
+        <a href="https://arxiv.org/abs/2009.03300" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+        </a>
+        </td>
+        <td>
+        <a href="https://huggingface.co/datasets/openai/MMMLU" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+        </a>
+        </td>
+        <td class="text-center">Accuracy</td>
+      </tr>
+      <tr>
+        <td rowspan="1" class="text-left">Math Reasoning (Math)</td>
+        <td>AfriMGSM</td>
+        <td>
+          <a href="https://arxiv.org/pdf/2406.03368" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/masakhane/afrimgsm" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>ExactMatch</td>
+      </tr>
+      <tr>
+        <td rowspan="4" class="text-left">Machine Translation (MT)</td>
+        <td>Flores</td>
+        <td>
+          <a href="https://arxiv.org/abs/2207.04672" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/facebook/flores" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>ChrF</td>
+      </tr>
+      <tr>
+        <td>MAFAND</td>
+        <td>
+        <a href="https://aclanthology.org/2022.naacl-main.223/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+        </a>
+        </td>
+        <td>
+        <a href="https://huggingface.co/datasets/masakhane/mafand" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+        </a>
+        </td>
+        <td class="text-center">ChrF</td>
+      </tr>
+      <tr>
+        <td>NTREX</td>
+        <td>
+        <a href="https://aclanthology.org/2022.sumeval-1.4/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+        </a>
+        </td>
+        <td>
+        <a href="https://huggingface.co/datasets/masakhane/ntrex_african" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+        </a>
+        </td>
+        <td class="text-center">ChrF</td>
+      </tr>
+      <tr>
+        <td>Salt</td>
+        <td>
+        <a href="https://aclanthology.org/2023.emnlp-main.862/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+        </a>
+        </td>
+        <td>
+        <a href="https://huggingface.co/datasets/Sunbird/salt" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+        </a>
+        </td>
+        <td class="text-center">ChrF</td>
+      </tr>
+      <tr>
+        <td rowspan="1" class="text-left">Summarization (Summ)</td>
+        <td>XLSUM</td>
+        <td>
+          <a href="https://aclanthology.org/2021.findings-acl.413/" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/csebuetnlp/xlsum" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>BertScore</td>
+      </tr>
+      <tr>
+        <td rowspan="1" class="text-left">Automatic Diacritics Restoration (ADR)</td>
+        <td>ADR</td>
+        <td>
+          <a href="https://arxiv.org/pdf/2311.07978" title="View Paper">
+            <i class="fas fa-arrow-up-right-from-square icon"></i>
+          </a>
+        </td>
+        <td>
+          <a href="https://huggingface.co/datasets/masakhane/diacritics-restoration" title="Download Dataset">
+            <i class="fas fa-download icon"></i>
+          </a>
+        </td>
+        <td>ChrF</td>
+      </tr>
+    </table>
+  </div>
+
+  <a class="download-btn" href="https://huggingface.co/collections/masakhane/afrobench-67dbf553ebf5701c2207f883">
+    <i class="fas fa-download"></i> HuggingFace Collection
+  </a>
+</body>
+</html>

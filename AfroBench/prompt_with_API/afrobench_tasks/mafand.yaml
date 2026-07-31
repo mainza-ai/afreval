@@ -1,0 +1,37 @@
+name: mafand
+dataset: masakhane/mafand
+translation: True
+trust_remote_code: True
+reverse: True
+languages:
+  - en-amh
+  - fr-bam
+  - fr-bbj
+  - fr-ewe
+  - fr-fon
+  - en-hau
+  - en-ibo
+  - en-kin
+  - en-lug
+  - en-luo
+  - fr-mos
+  - en-nya
+  - en-pcm
+  - en-sna
+  - en-swa
+  - en-tsn
+  - en-twi
+  - fr-wol
+  - en-xho
+  - en-yor
+  - en-zul
+test_split: test
+fewshot_split: validation
+target: translation
+prompts:
+  - "You are an advanced Translator, a specialized assistant designed to translate documents from {{source}} into {{target}}. \nYour main goal is to ensure translations are grammatically correct and human-oriented. \n{{source}}: {{source_column}} \n{{target}}: . Return only the translated sentence."
+  - "{{source}} sentence: {{source_column}} \n{{target}} sentence: . Return only the translated sentence."
+  - "You are a translation expert. Translate the following {{source}} sentences to {{target}} \n{{source}}: {{source_column}}\n{{target}}: . Return only the translated sentence."
+metrics:
+  - chrf
+  - bleu

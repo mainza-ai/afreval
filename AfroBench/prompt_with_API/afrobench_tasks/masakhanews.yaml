@@ -1,0 +1,57 @@
+name: masakhanews
+dataset: masakhane/masakhanews
+trust_remote_code: True
+languages:
+  - amh
+  - eng
+  - fra
+  - hau
+  - ibo
+  - lin
+  - lug
+  - orm
+  - pcm
+  - run
+  - sna
+  - som
+  - swa
+  - tir
+  - xho
+  - yor
+test_split: test
+fewshot_split: validation
+target: label
+prompts:
+  - "Given the categories technology, business, politics, sports, health, entertainment, or religion; what category does the text: '{{headline}}' belong to: \n\nReturn only the one category"
+  - "Does this {{language}} topic; '{{headline}}' belong to one of the following categories: technology, business, politics, sports, health, entertainment, or religion? category only\n\nReturn only the one category"
+  - "You are an assistant able to classify topics in texts. \n\nGiven the categories technology, religion, politics, sports, health, entertainment, or business; what is \n\ntext: {{headline}} \ncategory: \n\nReturn only the one category"
+  - "Label the following text as technology, religion, politics, sports, health, entertainment, or geography. Provide only the category as your response. \n\ntext: {{headline}} \ncategory: \n\nReturn only the one category"
+  - "You are tasked with performing topic classification on the following {{language}} text. For each input, classify the topic as technology, business, politics, sports, health, entertainment, or religion. Use the following guidelines: \n\ntechnology: The text discusses scientific discoveries, technological advancements, or related topics. \npolitics: The text covers political events, policies, or related topics. \nsports: The text talks about sports events, athletes, or related topics. \nhealth: The text addresses health issues, medical advancements, or related topics. \nentertainment: The text pertains to movies, music, celebrities, or related topics. \nreligion: The text talks about relgions, religious institutions and beliefs or related topics. \n\nbusiness: The text covers economy, business, or related topics. \n\nIf the text contains multiple topics, choose the dominant topic. For ambiguous or unclear topics, select the category that best reflects the overall content. Please provide a single classification for each input.\n\ntext: {{headline}} \ncategory: \n\nReturn only the one category"
+choices:
+  - "business"
+  - "entertainment"
+  - "health"
+  - "politics"
+  - "religion"
+  - "sports"
+  - "technology"
+verbalizer:
+  "business": ['business', 'finance', 'economy', 'economics']
+  "entertainment": ['entertainment', 'music']
+  "health": ['health' ]
+  "politics": ['politics', 'world politics']
+  "religion": ['religion']
+  "sports": ['sports']
+  "technology": ['technology', 'tech',]
+  "science": ['Science', 'science']
+map_response:
+  business: 0
+  entertainment: 1
+  health: 2
+  politics: 3
+  religion: 4
+  sports: 5
+  technology: 6
+metrics:
+  - f1
+  - acc

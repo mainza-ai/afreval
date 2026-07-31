@@ -1,9 +1,0 @@
-[submodule "autoresearch"]
-	path = autoresearch
-	url = https://github.com/karpathy/autoresearch
-[submodule "AfroBench"]
-	path = AfroBench
-	url = https://github.com/McGill-NLP/AfroBench.git
-[submodule "afri-fertility"]
-	path = afri-fertility
-	url = https://github.com/CipherSenseAI/afri-fertility.git

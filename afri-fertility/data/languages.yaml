@@ -1,0 +1,192 @@
+# Locked language registry for the African Language Tax study.
+# All 22 languages pre-registered before measurement.
+languages:
+  # Core deep-dive (6)
+  - iso639_3: yor
+    name: Yoruba
+    family: "Niger-Congo (Volta-Niger)"
+    script: Latin
+    tier: core
+    flores_code: yor_Latn
+    sib200_code: yor_Latn
+
+  - iso639_3: hau
+    name: Hausa
+    family: "Afro-Asiatic (Chadic)"
+    script: Latin
+    tier: core
+    flores_code: hau_Latn
+    sib200_code: hau_Latn
+
+  - iso639_3: ibo
+    name: Igbo
+    family: "Niger-Congo (Volta-Niger)"
+    script: Latin
+    tier: core
+    flores_code: ibo_Latn
+    sib200_code: ibo_Latn
+
+  - iso639_3: wol
+    name: Wolof
+    family: "Niger-Congo (Atlantic)"
+    script: Latin
+    tier: core
+    flores_code: wol_Latn
+    sib200_code: wol_Latn
+
+  - iso639_3: swh
+    name: Swahili
+    family: "Niger-Congo (Bantu)"
+    script: Latin
+    tier: core
+    flores_code: swh_Latn
+    sib200_code: swh_Latn
+
+  - iso639_3: amh
+    name: Amharic
+    family: "Afro-Asiatic (Semitic)"
+    script: Ethiopic
+    tier: core
+    flores_code: amh_Ethi
+    sib200_code: amh_Ethi
+
+  # Latin breadth (12)
+  - iso639_3: zul
+    name: Zulu
+    family: "Niger-Congo (Bantu)"
+    script: Latin
+    tier: breadth
+    flores_code: zul_Latn
+    sib200_code: zul_Latn
+
+  - iso639_3: xho
+    name: Xhosa
+    family: "Niger-Congo (Bantu)"
+    script: Latin
+    tier: breadth
+    flores_code: xho_Latn
+    sib200_code: xho_Latn
+
+  - iso639_3: sna
+    name: Shona
+    family: "Niger-Congo (Bantu)"
+    script: Latin
+    tier: breadth
+    flores_code: sna_Latn
+    sib200_code: sna_Latn
+
+  - iso639_3: kin
+    name: Kinyarwanda
+    family: "Niger-Congo (Bantu)"
+    script: Latin
+    tier: breadth
+    flores_code: kin_Latn
+    sib200_code: kin_Latn
+
+  - iso639_3: lug
+    name: Luganda
+    family: "Niger-Congo (Bantu)"
+    script: Latin
+    tier: breadth
+    flores_code: lug_Latn
+    sib200_code: lug_Latn
+
+  - iso639_3: aka
+    name: Akan/Twi
+    family: "Niger-Congo (Kwa)"
+    script: Latin
+    tier: breadth
+    flores_code: twi_Latn_akua1239
+    sib200_code: aka_Latn
+
+  - iso639_3: lin
+    name: Lingala
+    family: "Niger-Congo (Bantu)"
+    script: Latin
+    tier: breadth
+    flores_code: lin_Latn
+    sib200_code: lin_Latn
+
+  - iso639_3: gaz
+    name: Oromo
+    family: "Afro-Asiatic (Cushitic)"
+    script: Latin
+    tier: breadth
+    flores_code: gaz_Latn
+    sib200_code: gaz_Latn
+
+  - iso639_3: pcm
+    name: Nigerian Pidgin
+    family: "English Creole"
+    script: Latin
+    tier: breadth
+    flores_code: pcm_Latn
+    sib200_code: pcm_Latn
+
+  - iso639_3: sot
+    name: Sesotho
+    family: "Niger-Congo (Bantu)"
+    script: Latin
+    tier: breadth
+    flores_code: sot_Latn
+    sib200_code: sot_Latn
+
+  - iso639_3: bam
+    name: Bambara
+    family: "Niger-Congo (Mande)"
+    script: Latin
+    tier: breadth
+    flores_code: bam_Latn
+    sib200_code: bam_Latn
+
+  # Non-Latin scripts — Hausa Ajami (Arabic script): same language, different script; isolates H2
+  - iso639_3: hau_arab
+    name: "Hausa (Ajami)"
+    family: "Afro-Asiatic (Chadic)"
+    script: Arabic
+    tier: non-latin
+    flores_code: hau_Arab
+    sib200_code: hau_Arab
+
+  - iso639_3: afr
+    name: Afrikaans
+    family: "Indo-European (Germanic)"
+    script: Latin
+    tier: control
+    flores_code: afr_Latn
+    sib200_code: afr_Latn
+
+  - iso639_3: tir
+    name: Tigrinya
+    family: "Afro-Asiatic (Semitic)"
+    script: Ethiopic
+    tier: non-latin
+    flores_code: tir_Ethi
+    sib200_code: tir_Ethi
+
+  # N'Ko script — FLORES+ uses nqo_Nkoo (ISO 639-3: nqo = N'Ko language/script).
+  # Paper spec listed this as bam_Nkoo but the dataset code is nqo_Nkoo.
+  - iso639_3: nqo
+    name: "N'Ko"
+    family: "Niger-Congo (Mande)"
+    script: "N'Ko"
+    tier: non-latin
+    flores_code: nqo_Nkoo
+    sib200_code: nqo_Nkoo
+
+  # Baselines (2)
+  - iso639_3: eng
+    name: English
+    family: "Indo-European (Germanic)"
+    script: Latin
+    tier: baseline
+    flores_code: eng_Latn
+    sib200_code: eng_Latn
+
+  - iso639_3: fra
+    name: French
+    family: "Indo-European (Romance)"
+    script: Latin
+    tier: baseline
+    flores_code: fra_Latn
+    sib200_code: fra_Latn

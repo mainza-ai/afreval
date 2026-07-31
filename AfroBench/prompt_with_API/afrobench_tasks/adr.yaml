@@ -1,0 +1,22 @@
+name: adr
+dataset: masakhane/diacritics-restoration
+trust_remote_code: True
+num_fewshot: 5
+languages:
+  - bbj
+  - fon
+  - ibo
+  - wol
+  - yor
+test_split: test
+fewshot_split: dev
+target: target
+prompts:
+  - "Please restore the missing diacritics in the following sentence: {{text}}. Return output sentence only"
+  - "Given a sentence without diacritics, add the appropriate diacritics to make it grammatically and semantically correct. \nSentence: {{text}}. Return output sentence only"
+  - "This text is in {{language}}. Restore all diacritical marks to their proper places in the following sentence: {{text}}. Return output sentence only"
+  - "You are a linguist specializing in diacritical marks for {{language}}. Add the appropriate diacritics to this {{language}} sentence: {{text}}. Return output sentence only"
+  - "You are a linguist specializing in diacritical marks for {{language}}. Diacritics are essential for proper pronunciation and meaning in {{language}}. You are tasked with converting {{language}} sentences  without diacritics into their correctly accented forms. Here's the input: {{text}}. Return output sentence only"
+metrics:
+  - chrf
+  - bleu

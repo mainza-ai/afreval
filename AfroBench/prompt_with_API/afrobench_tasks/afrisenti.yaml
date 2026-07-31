@@ -1,0 +1,34 @@
+name: afrisenti
+dataset: masakhane/afrisenti
+num_fewshot: 5
+languages:
+  - amh
+  - arq
+  - ary
+  - hau
+  - ibo
+  - kin
+  - orm
+  - pcm
+  - por
+  - swa
+  - tir
+  - tso
+  - twi
+  - yor
+test_split: test
+fewshot_split: train
+target: label
+prompts:
+  - "Does this statement; {{tweet}} have a Neutral, Positive or Negative sentiment? Labels only"
+  - "Does this {{language}} statement; '{{tweet}}' have a Neutral, Positive or Negative sentiment? Labels only"
+  - "You are an assistant able to detect sentiments in tweets. \n\nGiven the sentiment labels Neutral, Positive or Negative; what is the sentiment of the {{language}} statement below? Return only the labels. \n\ntext: {{tweet}} \nlabel:"
+  - "Label the following text as Neutral, Positive, or Negative. Provide only the label as your response. \n\ntext: {{tweet}} \nlabel: "
+  - "You are tasked with performing sentiment classification on the following {{language}} text. For each input, classify the sentiment as positive, negative, or neutral. Use the following guidelines: \n\nPositive: The text expresses happiness, satisfaction, or optimism. \nNegative: The text conveys disappointment, dissatisfaction, or pessimism. \nNeutral: The text is factual, objective, or without strong emotional undertones. \n\nIf the text contains both positive and negative sentiments, choose the dominant sentiment. For ambiguous or unclear sentiments, select the label that best reflects the overall tone. Please provide a single classification for each input.\n\ntext: {{tweet}} \nlabel: "
+choices:
+  - negative
+  - positive
+  - neutral
+metrics:
+  - f1
+  - acc

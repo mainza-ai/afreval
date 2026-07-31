@@ -1,0 +1,61 @@
+name: masakhapos
+dataset: masakhane/masakhapos
+trust_remote_code: True
+num_fewshot: 5
+languages:
+  - bam
+  - bbj
+  - ewe
+  - fon
+  - hau
+  - ibo
+  - kin
+  - lug
+  - luo
+  - mos
+  - nya
+  - pcm
+  - sna
+  - swa
+  - tsn
+  - twi
+  - wol
+  - xho
+  - yor
+  - zul
+test_split: test
+fewshot_split: train
+target: upos
+preprocessing:
+  upos: #target column to be preprocessed
+    - function: map_pos_tags
+      params:
+        mapping:
+          0: NOUN
+          1: PUNCT
+          2: ADP
+          3: NUM
+          4: SYM
+          5: SCONJ
+          6: ADJ
+          7: PART
+          8: DET
+          9: CCONJ
+          10: PROPN
+          11: PRON
+          12: X
+          13: "_"
+          14: ADV
+          15: INTJ
+          16: VERB
+          17: AUX
+filters:
+  - extract_pos
+prompts:
+  - "Please provide the POS tags for each word in the input sentence. The input will be a list of words in the sentence. The output format should be a list of tuples, where each tuple consists of a word from the input text and its corresponding POS tag label from the tag label set: ['ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ, 'DET', 'INTJ', 'NOUN', 'NUM', 'PART', 'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'SYM', 'VERB', 'X']. \nYour response should include only a list of tuples, in the order that the words appear in the input sentence, including punctuations, with each tuple containing the corresponding POS tag label for a word. \n\nSentence: {{tokens}} \nOutput: "
+  - "You are an expert in tagging words and sentences in {{language}} with the right POS tag. \n\nPlease provide the POS tags for each word in the {{language}} sentence. The input is a list of words in the sentence. POS tag label set: [ 'ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ, 'DET', 'INTJ', 'NOUN', 'NUM', 'PART', 'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'SYM', 'VERB', 'X' ]. The output format should be a list of tuples, where each tuple consists of a word from the input text and its corresponding POS tag label from the POS tag label set provided\nYour response should include only a list of tuples, in the order that the words appear in the input sentence, including punctuations, with each tuple containing the corresponding POS tag label for a word. \n\nSentence: {{tokens}} \nOutput: "
+  - "Acting as a {{language}} linguist and without making any corrections or changes to the text, perform a part of speech (POS) analysis of the sentences using the following POS tag label annotation ['ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ, 'DET', 'INTJ', 'NOUN', 'NUM', 'PART', 'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'SYM', 'VERB', 'X']. The input will be a list of words in the sentence. The output format should be a list of tuples, where each tuple consists of a word from the input text and its corresponding POS tag label from the POS tag label set provided\nYour response should include only a list of tuples, in the order that the words appear in the input sentence, including punctuations, with each tuple containing the corresponding POS tag label for a word. \n\nSentence: {{tokens}} \nOutput: "
+  - "Annotate each word in the provided sentence with the appropriate POS tag. The annotation list is given as: ['ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ, 'DET', 'INTJ', 'NOUN', 'NUM', 'PART', 'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'SYM', 'VERB', 'X']. The input sentence will be a list of words in the sentence. The output format should be a list of tuples, where each tuple consists of a word from the input text and its corresponding POS tag label from the POS tag label set provided\nYour response should include only a list of tuples, in the order that the words appear in the input sentence, including punctuations, with each tuple containing the corresponding POS tag label for a word. \n\nSentence: {{tokens}} \nOutput: "
+  - "Given the following sentence, identify the part of speech (POS) for each word. Use the following POS tag set: \nNOUN: Noun (person, place, thing), \nVERB: Verb (action, state), \nADJ: Adjective (describes a noun), \nADV: Adverb (modifies a verb, adjective, or adverb), \nPRON: Pronoun (replaces a noun), \nDET: Determiner (introduces a noun), \nADP: Adposition (preposition or postposition), \nCCONJ: Conjunction (connects words, phrases, clauses) \nPUNCT: Punctuation, \nPROPN: Proper Noun, \nAUX: Auxiliary verb (helper verb), \nSCONJ: Subordinating conjunction \nPART: Particle, \nSYM: Symbol, \nINTJ: Interjection, \nNUM: Numeral, \nX: others. The output format should be a list of tuples, where each tuple consists of a word from the input text and its corresponding POS tag label key only from the POS tag set provided\nYour response should include only a list of tuples, in the order that the words appear in the input sentence, including punctuations, with each tuple containing the corresponding POS tag label for a word. \n\nSentence: {{tokens}} \nOutput: "
+metrics:
+  - acc_pos

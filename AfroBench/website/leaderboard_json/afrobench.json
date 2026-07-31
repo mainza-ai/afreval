@@ -1,0 +1,300 @@
+{
+    "QA": {
+        "XQA": {
+            "datasets": {
+                "afriqa": {
+                    "AfroLLaMa 8B": 21.8,
+                    "LLaMAX3 8B": 2.2,
+                    "LLaMa2 7b": 13.7,
+                    "LLaMa3.1 8B": 21.8,
+                    "LLaMa3 8B": 12.6,
+                    "Aya-101 13B": 62.5,
+                    "Gemma1.1 7b": 17.4,
+                    "Gemma2 27b": 50.5,
+                    "Gemma2 9b": 45.9,
+                    "LLaMa3.1 70B": 44.0,
+                    "Gemini 1.5 pro": 40.5,
+                    "GPT-4o (Aug)": 43.4
+                }
+            }
+        },
+        "RC": {
+            "datasets": {
+                "RC": {
+                    "AfroLLaMa 8B": 24.1,
+                    "LLaMAX3 8B": 29.7,
+                    "LLaMa2 7b": 24.3,
+                    "LLaMa3.1 8B": 39.5,
+                    "LLaMa3.1 70B": 49.7,
+                    "LLaMa3 8B": 27.6,
+                    "Aya-101 13B": 60.7,
+                    "Gemma1.1 7b": 38.1,
+                    "Gemma2 27b": 53.9,
+                    "Gemma2 9b": 51.6,
+                    "Gemini 1.5 pro": 52.7,
+                    "GPT-4o (Aug)": 69.2
+                }
+            }
+        }
+    },
+    "NLU": {
+        "NER": {
+            "datasets": {
+                "masakhaner": {
+                    "AfroLLaMa 8B": 3.5,
+                    "LLaMAX3 8B": 0.0,
+                    "LLaMa2 7b": 15.6,
+                    "LLaMa3.1 70B": 14.4,
+                    "LLaMa3.1 8B": 11.5,
+                    "LLaMa3 8B": 22.7,
+                    "Aya-101 13B": 0.0,
+                    "Gemma1.1 7b": 27.9,
+                    "Gemma2 27b": 50.8,
+                    "Gemma2 9b": 40.3,
+                    "Gemini 1.5 pro": 41.8,
+                    "GPT-4o (Aug)": 40.7
+                }
+            }
+        },
+        "NLI": {
+            "datasets": {
+                "afrixnli": {
+                    "Aya-101 13B": 51.5,
+                    "Gemma1.1 7b": 34.4,
+                    "LLaMa2 7b": 33.8,
+                    "LLaMa3 8B": 35.4,
+                    "LLaMa3.1 8B": 36.5,
+                    "LLaMAX3 8B": 40.8,
+                    "Gemma2 9b": 40.3,
+                    "Gemma2 27b": 42.8,
+                    "LLaMa3.1 70B": 38.0,
+                    "AfroLLaMa 8B": 35.9,
+                    "Gemini 1.5 pro": 62.0,
+                    "GPT-4o (Aug)": 64.3
+                }
+            }
+        },
+        "Intent": {
+            "datasets": {
+                "injongointent": {
+                    "AfroLLaMa 8B": 0.8,
+                    "LLaMAX3 8B": 5.6,
+                    "LLaMa2 7b": 1.5,
+                    "LLaMa3.1 70B": 34.0,
+                    "LLaMa3.1 8B": 6.0,
+                    "LLaMa3 8B": 2.1,
+                    "Gemma1.1 7b": 9.4,
+                    "Gemma2 27b": 34.9,
+                    "Gemma2 9b": 31.7,
+                    "Aya-101 13B": 44.8,
+                    "Gemini 1.5 pro": 74.3,
+                    "GPT-4o (Aug)": 74.0
+                }
+            }
+        },
+        "Topic": {
+            "datasets": {
+                "TC": {
+                    "AfroLLaMa 8B": 31.8,
+                    "LLaMAX3 8B": 49.9,
+                    "LLaMa2 7b": 19.7,
+                    "LLaMa3.1 70B": 58.4,
+                    "LLaMa3.1 8B": 47.5,
+                    "LLaMa3 8B": 38.0,
+                    "Aya-101 13B": 70.7,
+                    "Gemma1.1 7b": 45.7,
+                    "Gemma2 27b": 62.9,
+                    "Gemma2 9b": 56.4,
+                    "Gemini 1.5 pro": 76.8,
+                    "GPT-4o (Aug)": 75.0
+                }
+            }
+        },
+        "Senti": {
+            "datasets": {
+                "sentiment": {
+                    "AfroLLaMa 8B": 43.4,
+                    "LLaMAX3 8B": 51.9,
+                    "LLaMa2 7b": 42.3,
+                    "LLaMa3.1 70B": 50.6,
+                    "LLaMa3.1 8B": 52.8,
+                    "LLaMa3 8B": 43.6,
+                    "Aya-101 13B": 63.4,
+                    "Gemma1.1 7b": 43.3,
+                    "Gemma2 27b": 63.4,
+                    "Gemma2 9b": 60.0,
+                    "Gemini 1.5 pro": 68.3,
+                    "GPT-4o (Aug)": 68.0
+                }
+            }
+        },
+        "Hate": {
+            "datasets": {
+                "afrihate": {
+                    "Gemma1.1 7b": 24.2,
+                    "LLaMa2 7b": 21.4,
+                    "LLaMa3 8B": 27.8,
+                    "LLaMAX3 8B": 29.2,
+                    "LLaMa3.1 8B": 23.6,
+                    "AfroLLaMa 8B": 18.1,
+                    "Gemma2 9b": 30.1,
+                    "Aya-101 13B": 31.6,
+                    "Gemma2 27b": 45.7,
+                    "LLaMa3.1 70B": 49.3,
+                    "Gemini 1.5 pro": 61.7,
+                    "GPT-4o (Aug)": 63.0
+                }
+            }
+        },
+        "POS": {
+            "datasets": {
+                "masakhapos": {
+                    "AfroLLaMa 8B": 0.0,
+                    "LLaMAX3 8B": 41.5,
+                    "LLaMa2 7b": 27.9,
+                    "LLaMa3.1 70B": 54.1,
+                    "LLaMa3.1 8B": 47.1,
+                    "LLaMa3 8B": 48.5,
+                    "Aya-101 13B": 0.0,
+                    "Gemma1.1 7b": 38.6,
+                    "Gemma2 27b": 55.1,
+                    "Gemma2 9b": 51.9,
+                    "Gemini 1.5 pro": 60.8,
+                    "GPT-4o (Aug)": 62.8
+                }
+            }
+        }
+    },
+    "NLG": {
+        "MT(en/fr-xx)": {
+            "datasets": {
+                "MT - en-xx": {
+                    "Gemma1.1 7b": 11.6,
+                    "LLaMa2 7b": 10.8,
+                    "LLaMa3 8B": 16.4,
+                    "LLaMAX3 8B": 23.2,
+                    "LLaMa3.1 8B": 16.7,
+                    "AfroLLaMa 8B": 8.5,
+                    "Gemma2 9b": 25.1,
+                    "Aya-101 13B": 23.9,
+                    "Gemma2 27b": 28.3,
+                    "LLaMa3.1 70B": 25.6,
+                    "Gemini 1.5 pro": 37.9,
+                    "GPT-4o (Aug)": 35.5
+                }
+            }
+        },
+        "ADR": {
+            "datasets": {
+                "ADR": {
+                    "AfroLLaMa 8B": 5.2,
+                    "LLaMAX3 8B": 49.4,
+                    "LLaMa2 7b": 30.4,
+                    "LLaMa3.1 70B": 51.7,
+                    "LLaMa3.1 8B": 25.9,
+                    "LLaMa3 8B": 27.8,
+                    "Aya-101 13B": 50.4,
+                    "Gemma1.1 7b": 50.8,
+                    "Gemma2 27b": 55.1,
+                    "Gemma2 9b": 51.6,
+                    "Gemini 1.5 pro": 55.6,
+                    "GPT-4o (Aug)": 54.9
+                }
+            }
+        },
+        "MT(xx-en/fr)": {
+            "datasets": {
+                "MT - xx-en": {
+                    "Gemma1.1 7b": 9.6,
+                    "LLaMa2 7b": 20.7,
+                    "LLaMa3 8B": 28.1,
+                    "LLaMAX3 8B": 35.3,
+                    "LLaMa3.1 8B": 28.9,
+                    "AfroLLaMa 8B": 9.5,
+                    "Gemma2 9b": 29.4,
+                    "Aya-101 13B": 38.2,
+                    "Gemma2 27b": 33.2,
+                    "LLaMa3.1 70B": 38.3,
+                    "Gemini 1.5 pro": 42.0,
+                    "GPT-4o (Aug)": 41.0
+                }
+            }
+        },
+        "SUMM": {
+            "datasets": {
+                "xlsum": {
+                    "AfroLLaMa 8B": 50.8,
+                    "LLaMAX3 8B": 50.7,
+                    "LLaMa2 7b": 46.9,
+                    "LLaMa3.1 70B": 67.6,
+                    "LLaMa3.1 8B": 43.7,
+                    "LLaMa3 8B": 66.2,
+                    "Aya-101 13B": 52.4,
+                    "Gemma1.1 7b": 49.1,
+                    "Gemma2 27b": 66.4,
+                    "Gemma2 9b": 66.1,
+                    "Gemini 1.5 pro": 66.7,
+                    "GPT-4o (Aug)": 66.5
+                }
+            }
+        }
+    },
+    "Reasoning": {
+        "Math": {
+            "datasets": {
+                "afrimgsm": {
+                    "AfroLLaMa 8B": 0.3,
+                    "Aya-101 13B": 4.4,
+                    "Gemma1.1 7b": 4.6,
+                    "LLaMa2 7b": 2.0,
+                    "LLaMa3 8B": 5.1,
+                    "LLaMa3.1 8B": 6.8,
+                    "LLaMAX3 8B": 4.7,
+                    "Gemma2 9b": 18.7,
+                    "Gemma2 27b": 27.0,
+                    "LLaMa3.1 70B": 23.2,
+                    "GPT-4o (Aug)": 49.8,
+                    "Gemini 1.5 pro": 52.3
+                }
+            }
+        }
+    },
+    "Knowledge": {
+        "Arc-E": {
+            "datasets": {
+                "uhura": {
+                    "AfroLLaMa 8B": 37.2,
+                    "LLaMAX3 8B": 39.9,
+                    "LLaMa2 7b": 23.3,
+                    "LLaMa3.1 8B": 32.8,
+                    "LLaMa3 8B": 32.0,
+                    "Gemma1.1 7b": 32.2,
+                    "Gemma2 27b": 56.3,
+                    "Gemma2 9b": 53.4,
+                    "Aya-101 13B": 60.0,
+                    "LLaMa3.1 70B": 57.5,
+                    "GPT-4o (Aug)": 85.7,
+                    "Gemini 1.5 pro": 84.8
+                }
+            }
+        },
+        "MMLU": {
+            "datasets": {
+                "mmlu": {
+                    "AfroLLaMa 8B": 25.8,
+                    "Aya-101 13B": 30.9,
+                    "Gemma1.1 7b": 28.6,
+                    "LLaMa2 7b": 25.6,
+                    "LLaMa3 8B": 27.4,
+                    "LLaMAX3 8B": 28.3,
+                    "Gemma2 9b": 37.1,
+                    "Gemma2 27b": 40.5,
+                    "LLaMa3.1 8B": 31.4,
+                    "LLaMa3.1 70B": 39.9,
+                    "GPT-4o (Aug)": 60.4,
+                    "Gemini 1.5 pro": 57.6
+                }
+            }
+        }
+    }
+}

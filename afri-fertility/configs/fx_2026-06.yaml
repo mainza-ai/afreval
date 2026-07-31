@@ -1,0 +1,12 @@
+# Pinned FX rates snapshot — 2026-06-12
+# Base currency: USD
+snapshot_date: "2026-06-12"
+base: USD
+rates:
+  NGN: 1360.95    # Nigerian Naira
+  ZAR: 16.31      # South African Rand
+  KES: 129.45     # Kenyan Shilling
+  GHS: 11.1       # Ghanaian Cedi
+  ETB: 157.56     # Ethiopian Birr
+  EUR: 0.86       # Euro (reference)
+  GBP: 0.75       # British Pound (reference)

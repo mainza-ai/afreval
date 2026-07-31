@@ -1,0 +1,132 @@
+name: flores
+dataset: facebook/flores
+translation: True
+trust_remote_code: True
+num_fewshot: 5
+fewshot_split: dev
+languages:
+   - aeb_Arab-eng_Latn
+   - afr_Latn-eng_Latn
+   - aka_Latn-eng_Latn
+   - amh_Ethi-eng_Latn
+   - ary_Arab-eng_Latn
+   - arz_Arab-eng_Latn
+   - bam_Latn-eng_Latn
+   - bem_Latn-eng_Latn
+   - cjk_Latn-eng_Latn
+   - dik_Latn-eng_Latn
+   - dyu_Latn-eng_Latn
+   - ewe_Latn-eng_Latn
+   - fon_Latn-eng_Latn
+   - fra_Latn-eng_Latn
+   - fuv_Latn-eng_Latn
+   - hau_Latn-eng_Latn
+   - ibo_Latn-eng_Latn
+   - kab_Latn-eng_Latn
+   - kam_Latn-eng_Latn
+   - knc_Arab-eng_Latn
+   - knc_Latn-eng_Latn
+   - kbp_Latn-eng_Latn
+   - kea_Latn-eng_Latn
+   - kik_Latn-eng_Latn
+   - kin_Latn-eng_Latn
+   - kmb_Latn-eng_Latn
+   - kon_Latn-eng_Latn
+   - lin_Latn-eng_Latn
+   - lua_Latn-eng_Latn
+   - lug_Latn-eng_Latn
+   - luo_Latn-eng_Latn
+   - plt_Latn-eng_Latn
+   - mos_Latn-eng_Latn
+   - nso_Latn-eng_Latn
+   - nus_Latn-eng_Latn
+   - nya_Latn-eng_Latn
+   - gaz_Latn-eng_Latn
+   - run_Latn-eng_Latn
+   - sag_Latn-eng_Latn
+   - sna_Latn-eng_Latn
+   - som_Latn-eng_Latn
+   - sot_Latn-eng_Latn
+   - ssw_Latn-eng_Latn
+   - sun_Latn-eng_Latn
+   - swh_Latn-eng_Latn
+   - tir_Ethi-eng_Latn
+   - taq_Latn-eng_Latn
+   - taq_Tfng-eng_Latn
+   - tsn_Latn-eng_Latn
+   - tso_Latn-eng_Latn
+   - tum_Latn-eng_Latn
+   - twi_Latn-eng_Latn
+   - tzm_Tfng-eng_Latn
+   - umb_Latn-eng_Latn
+   - wol_Latn-eng_Latn
+   - xho_Latn-eng_Latn
+   - yor_Latn-eng_Latn
+   - zul_Latn-eng_Latn
+   - eng_Latn-aeb_Arab
+   - eng_Latn-afr_Latn
+   - eng_Latn-aka_Latn
+   - eng_Latn-amh_Ethi
+   - eng_Latn-ary_Arab
+   - eng_Latn-arz_Arab
+   - eng_Latn-bam_Latn
+   - eng_Latn-bem_Latn
+   - eng_Latn-cjk_Latn
+   - eng_Latn-dik_Latn
+   - eng_Latn-dyu_Latn
+   - eng_Latn-ewe_Latn
+   - eng_Latn-fon_Latn
+   - eng_Latn-fra_Latn
+   - eng_Latn-fuv_Latn
+   - eng_Latn-hau_Latn
+   - eng_Latn-ibo_Latn
+   - eng_Latn-kab_Latn
+   - eng_Latn-kam_Latn
+   - eng_Latn-knc_Arab
+   - eng_Latn-knc_Latn
+   - eng_Latn-kbp_Latn
+   - eng_Latn-kea_Latn
+   - eng_Latn-kik_Latn
+   - eng_Latn-kin_Latn
+   - eng_Latn-kmb_Latn
+   - eng_Latn-kon_Latn
+   - eng_Latn-lin_Latn
+   - eng_Latn-lua_Latn
+   - eng_Latn-lug_Latn
+   - eng_Latn-luo_Latn
+   - eng_Latn-plt_Latn
+   - eng_Latn-mos_Latn
+   - eng_Latn-nso_Latn
+   - eng_Latn-nus_Latn
+   - eng_Latn-nya_Latn
+   - eng_Latn-gaz_Latn
+   - eng_Latn-run_Latn
+   - eng_Latn-sag_Latn
+   - eng_Latn-sna_Latn
+   - eng_Latn-som_Latn
+   - eng_Latn-sot_Latn
+   - eng_Latn-ssw_Latn
+   - eng_Latn-sun_Latn
+   - eng_Latn-swh_Latn
+   - eng_Latn-tir_Ethi
+   - eng_Latn-taq_Latn
+   - eng_Latn-taq_Tfng
+   - eng_Latn-tsn_Latn
+   - eng_Latn-tso_Latn
+   - eng_Latn-tum_Latn
+   - eng_Latn-twi_Latn
+   - eng_Latn-tzm_Tfng
+   - eng_Latn-umb_Latn
+   - eng_Latn-wol_Latn
+   - eng_Latn-xho_Latn
+   - eng_Latn-yor_Latn
+   - eng_Latn-zul_Latn
+test_split: devtest
+target_prefix: sentence
+prompts:
+  - "{{source}} sentence: {{source_column}} \n{{target}} sentence: . Return only the translated sentence."
+  - "You are a translation expert. Translate the following {{source}} sentences to {{target}} \n{{source}} sentence: {{source_column}}\n{{target}} sentence: . Return only the translated sentence."
+  - "As a {{source}} and {{target}}, translate the following {{source}} sentences to {{target}}. \n{{source}} sentence: {{source_column}}\n{{target}} sentence: . Return only the translated sentence."
+metrics:
+  - chrf
+  - bleu

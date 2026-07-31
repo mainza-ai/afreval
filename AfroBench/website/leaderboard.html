@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AfroBench Leaderboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function toggleLeaderboard(view) {
+            // Toggle visibility of views
+            document.getElementById("afrobench-view").classList.toggle("hidden", view !== 'afrobench');
+            document.getElementById("afrobench-lite-view").classList.toggle("hidden", view !== 'afrobench-lite');
+            
+            // Call switchView to update the current view and load appropriate data
+            switchView(view);
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    
+    <!-- Navigation Bar -->
+    <nav class="flex justify-between items-center p-6 bg-white shadow-md border-b border-gray-200">
+        <div class="flex space-x-6">
+            <button onclick="toggleLeaderboard('afrobench')" class="hover:text-yellow-600 font-bold text-lg">AfroBench</button>
+            <button onclick="toggleLeaderboard('afrobench-lite')" class="hover:text-yellow-600 font-bold text-lg">AfroBench-Lite</button>
+        </div>
+        <ul class="flex space-x-6">
+            <li><a href="tasks.html" class="hover:text-yellow-600 font-medium">Tasks</a></li>
+            <li><a href="index.html" class="hover:text-yellow-600 font-medium">About</a></li>
+            <li><a href="http://arxiv.org/abs/2311.07978" class="hover:text-yellow-600 font-medium">Paper</a></li>
+        </ul>
+    </nav>
+
+        <!-- AfroBench Leaderboard View -->
+        <div id="afrobench-view" class="p-6">
+            <h2 class="text-3xl font-bold text-center">AfroBench Leaderboard</h2>
+            <div class="max-w-[90%] mx-auto overflow-x-auto mt-6">
+                <table class="w-full border-collapse border border-gray-300 bg-white shadow-md rounded-lg">
+                    <thead>
+                        <tr class="bg-yellow-600 text-white text-center text-lg">
+                            <th rowspan="2" class="border p-2">Rank</th>
+                            <th rowspan="2" class="border p-2">Model</th>
+                            <th rowspan="2" class="border p-2">Score</th>
+                            <th colspan="7" class="border p-3">NLU</th>
+                            <th colspan="2" class="border p-3">QA</th>
+                            <th colspan="2" class="border p-3">Knowledge</th>
+                            <th colspan="1" class="border p-3">Reasoning</th>
+                            <th colspan="4" class="border p-3">NLG</th>
+                        </tr>
+                        <tr class="bg-yellow-600 text-white text-center text-sm">
+                            <th class="border p-2">POS</th>
+                            <th class="border p-2">NER</th>
+                            <th class="border p-2">Senti</th>
+                            <th class="border p-2">Topic</th>
+                            <th class="border p-2">Intent</th>
+                            <th class="border p-2">Hate</th>
+                            <th class="border p-2">NLI</th>
+                            <th class="border p-2">XQA</th>
+                            <th class="border p-2">Arc-E</th>
+                            <th class="border p-2">RC</th>
+                            <th class="border p-2">MMLU</th>
+                            <th class="border p-2">MATH</th>
+                            <th class="border p-2">MT<br>(en/fr-xx)</th>
+                            <th class="border p-2">MT<br>(xx-en/fr)</th>
+                            <th class="border p-2">SUMM</th>
+                            <th class="border p-2">ADR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="afrobench-table">
+                        <!-- Table rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- AfroBench-Lite Leaderboard View (Hidden by Default) -->
+        <div id="afrobench-lite-view" class="p-6 hidden">
+            <h2 class="text-3xl font-bold text-center">AfroBench-Lite Leaderboard</h2>
+            <div class="max-w-[90%] mx-auto overflow-x-auto mt-6">
+                <table class="w-full border-collapse border border-gray-300 bg-white shadow-md rounded-lg">
+                    <thead>
+                        <tr class="bg-yellow-600 text-white text-lg">
+                            <th class="border p-2">Rank</th>
+                            <th class="border p-2">Model</th>
+                            <th class="border p-2">Score</th>
+                            <th class="border p-2">Intent</th>
+                            <th class="border p-2">Topic</th>
+                            <th class="border p-2">NLI</th>
+                            <th class="border p-2">RC</th>
+                            <th class="border p-2">MMLU</th>
+                            <th class="border p-2">MATH</th>
+                            <th class="border p-2">MT<br>(en/fr-xx)</th>
+<!--                            <th class="border p-2">MT<br>(xx-en/fr)</th>-->
+                        </tr>
+                    </thead>
+                    <tbody id="afrobench_lite-table">
+                        <!-- Table rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <script>
+        let leaderboardData = {};
+        let selectedDatasets = [];
+        let currentView = "afrobench"; // Default view is AfroBench
+    
+        // Function to fetch leaderboard data
+        async function fetchLeaderboardData() {
+            const filePath = currentView === "afrobench-lite" ? "leaderboard_json/afrobench_lite.json" : "leaderboard_json/afrobench.json";
+            try {
+                const response = await fetch(filePath);
+                leaderboardData = await response.json();
+                updateLeaderboard(); // Render table
+            } catch (error) {
+                console.error("Error loading leaderboard data:", error);
+            }
+        }
+    
+        // Compute per-model scores dynamically (for both views)
+        function computeScores() {
+            let modelScores = {}; 
+        
+            if (currentView === "afrobench") {
+                // AfroBench JSON structure
+                Object.keys(leaderboardData).forEach((task) => {
+                    Object.keys(leaderboardData[task]).forEach((subtask) => {
+                        Object.keys(leaderboardData[task][subtask].datasets).forEach((dataset) => {
+                            let datasetScores = leaderboardData[task][subtask].datasets[dataset];
+    
+                            Object.keys(datasetScores).forEach((model) => {
+                                if (!modelScores[model]) modelScores[model] = {};
+                                if (!modelScores[model][subtask]) modelScores[model][subtask] = [];
+    
+                                if (selectedDatasets.length === 0 || selectedDatasets.includes(dataset)) {
+                                    modelScores[model][subtask].push(datasetScores[model]); // Store dataset score
+                                }
+                            });
+                        });
+                    });
+                });
+            } else if (currentView === "afrobench-lite") {
+                // AfroBench-Lite JSON structure (Directly stores task names as keys)
+                Object.keys(leaderboardData).forEach((task) => {
+                    Object.keys(leaderboardData[task]).forEach((dataset) => {
+                        let datasetScores = leaderboardData[task][dataset];
+    
+                        Object.keys(datasetScores).forEach((model) => {
+                            if (!modelScores[model]) modelScores[model] = {};
+                            if (!modelScores[model][task]) modelScores[model][task] = [];
+    
+                            modelScores[model][task].push(datasetScores[model]); // Append dataset score correctly
+                        });
+                    });
+                });
+            }
+            // Compute final per-model averages
+            let finalScores = [];
+            Object.keys(modelScores).forEach((model) => {
+                let tasks = modelScores[model];
+                let avgScores = {};
+                let totalScore = 0;
+                let count = 0;
+
+                Object.keys(tasks).forEach((task) => {
+                    let taskAvg = tasks[task].reduce((a, b) => a + b, 0) / tasks[task].length;
+                    avgScores[task] = taskAvg.toFixed(1);
+
+                    totalScore += taskAvg;
+                    count++;
+                });
+
+                let overallScore = count > 0 ? (totalScore / count).toFixed(1) : "N/A";
+                finalScores.push({ model, overallScore, scores: avgScores });
+            });
+
+            return finalScores.sort((a, b) => b.overallScore - a.overallScore); // Sort by rank
+        }
+
+        // Update leaderboard table dynamically (Handles both views)
+        function updateLeaderboard() {
+            const tableBody = document.getElementById(currentView === "afrobench" ? "afrobench-table" : "afrobench_lite-table");
+            tableBody.innerHTML = ""; // Clear existing content
+
+            let computedScores = computeScores();
+            
+            // Define the columns for each view
+            let columns;
+            if (currentView === "afrobench") {
+                columns = ["POS", "NER", "Senti", "Topic", "Intent", "Hate", "NLI", "XQA", "Arc-E", "RC", "MMLU", "Math", "MT(en/fr-xx)", "MT(xx-en/fr)", "SUMM", "ADR"];
+            } else { // afrobench-lite
+                columns = ["Intent", "Topic", "NLI", "RC", "MMLU", "Math", "MT(en/fr-xx)"];
+            }
+            
+            computedScores.forEach((entry, index) => {
+                let row = document.createElement("tr");
+                row.className = "border bg-gray-100 hover:bg-gray-200 transition";
+                
+                // Create rank cell
+                let rankCell = document.createElement("td");
+                rankCell.className = "border p-3 text-center";
+                rankCell.textContent = index + 1;
+                row.appendChild(rankCell);
+                
+                // Create model name cell
+                let modelCell = document.createElement("td");
+                modelCell.className = "border p-3 font-medium text-gray-900";
+                modelCell.textContent = entry.model;
+                row.appendChild(modelCell);
+                
+                // Create overall score cell
+                let scoreCell = document.createElement("td");
+                scoreCell.className = "border p-3 text-center font-bold text-yellow-600";
+                scoreCell.textContent = entry.overallScore;
+                row.appendChild(scoreCell);
+                
+                // Create cells for each metric
+                columns.forEach((task) => {
+                    let cell = document.createElement("td");
+                    cell.className = "border p-3 text-center";
+                    cell.textContent = entry.scores[task] || "-";
+                    row.appendChild(cell);
+                });
+                
+                tableBody.appendChild(row);
+            });
+        }
+    
+        // Handle dataset selection (for future filtering options)
+        function toggleDataset(dataset) {
+            if (selectedDatasets.includes(dataset)) {
+                selectedDatasets = selectedDatasets.filter((d) => d !== dataset);
+            } else {
+                selectedDatasets.push(dataset);
+            }
+            updateLeaderboard();
+        }
+    
+        // Function to switch views
+        function switchView(view) {
+            if (currentView === view) return; // Avoid unnecessary re-renders
+            currentView = view;
+            fetchLeaderboardData();
+        }
+    
+        // Initialize the page with AfroBench view
+        fetchLeaderboardData();
+    </script>            
+    </body>
+    </html>

@@ -1,0 +1,79 @@
+# Locked pre-registration study configuration.
+# All choices fixed before measurement; deviations logged in Deviations appendix.
+
+baseline_language: eng
+
+languages:
+  # Core deep-dive
+  - eng   # baseline
+  - yor
+  - hau
+  - ibo
+  - wol
+  - swh
+  - amh
+  # Latin breadth
+  - fra   # baseline
+  - zul
+  - xho
+  - sna
+  - kin
+  - lug
+  - aka
+  - lin
+  - gaz
+  - pcm
+  - sot
+  - bam
+  # Non-Latin
+  - tir
+  - nqo  # N'Ko script; FLORES+ nqo_Nkoo
+  - afr  # control
+
+corpora:
+  - id: flores
+    split: devtest
+  - id: sib200
+    split: test
+  - id: mafand
+    split: test
+
+tokenizers:
+  - openai/o200k_base
+  - openai/o200k_harmony      # gpt-oss open weights; same BPE text vocab as o200k_base — sovereignty baseline
+  - openai/cl100k_base        # legacy — within-OpenAI before/after (100k → 200k)
+  - meta/llama-3.1            # 128k; pair with llama-4 to isolate vocabulary-upgrade effect
+  - meta/llama-4              # 256k; 200-language training, 10× multilingual data vs 3.1
+  - google/gemma-4
+  - mistral/tekken
+  - qwen/qwen3
+  - deepseek/v3
+  - bigscience/bloom
+  - cohere/aya-expanse
+
+normalization: NFC
+segmentation: uax29
+
+bootstrap:
+  iterations: 1000
+  seed: 42
+
+context_window: 128000
+
+cost:
+  prices: configs/prices_2026-06.yaml
+  fx: configs/fx_2026-06.yaml
+  reference_words: 1000
+  scenarios:
+    bank_cs:
+      out_in_ratio: 1.0
+      monthly_queries: 1000000
+    clinical_triage:
+      out_in_ratio: 1.5
+      monthly_queries: 200000
+    agri_sms:
+      out_in_ratio: 0.5
+      monthly_queries: 500000
+
+output_dir: runs/main
+workers: 4

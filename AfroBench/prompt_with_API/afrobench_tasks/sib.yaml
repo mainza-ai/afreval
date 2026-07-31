@@ -1,0 +1,89 @@
+name: sib
+dataset: Davlan/sib200
+trust_remote_code: True
+num_fewshot: 5
+languages:
+  - aeb_Arab
+  - afr_Latn
+  - aka_Latn
+  - amh_Ethi
+  - ary_Arab
+  - arz_Arab
+  - bam_Latn
+  - bem_Latn
+  - cjk_Latn
+  - dik_Latn
+  - dyu_Latn
+  - eng_Latn
+  - ewe_Latn
+  - fon_Latn
+  - fra_Latn
+  - fuv_Latn
+  - gaz_Latn
+  - hau_Latn
+  - ibo_Latn
+  - kab_Latn
+  - kam_Latn
+  - kbp_Latn
+  - kea_Latn
+  - kik_Latn
+  - kin_Latn
+  - kmb_Latn
+  - knc_Latn
+  - kon_Latn
+  - lin_Latn
+  - lua_Latn
+  - lug_Latn
+  - luo_Latn
+  - mos_Latn
+  - nso_Latn
+  - nus_Latn
+  - nya_Latn
+  - plt_Latn
+  - por_Latn
+  - run_Latn
+  - sag_Latn
+  - sna_Latn
+  - som_Latn
+  - sot_Latn
+  - ssw_Latn
+  - taq_Latn
+  - tir_Ethi
+  - tso_Latn
+  - tum_Latn
+  - twi_Latn
+  - tzm_Tfng
+  - umb_Latn
+  - wol_Latn
+  - xho_Latn
+  - yor_Latn
+  - zul_Latn
+test_split: test
+fewshot_split: validation
+target: category
+prompts:
+  - "Given the categories science/technology, travel, politics, sports, health, entertainment, or geography; what category does the text: '{{text}}' belong to: \n\n"
+  - "Does this {{language}} topic; '{{text}}' belong to one of the following categories: science/technology, travel, politics, sports, health, entertainment, or geography? category only\n\n"
+  - "You are an assistant able to classify topics in texts. \n\nGiven the categories science/technology, travel, politics, sports, health, entertainment, or geography; what is the topic of the {{language}} statement below? Return only the category. \n\ntext: {{text}} \ncategory:\n\n"
+  - "Label the following text as science/technology, travel, politics, sports, health, entertainment, or geography. Provide only the category as your response. \n\ntext: {{text}} \ncategory: \n\n"
+  - "You are tasked with performing topic classification on the following {{language}} text. For each input, classify the topic as science/technology, travel, politics, sports, health, entertainment, or geography. Use the following guidelines: \n\nscience/technology: The text discusses scientific discoveries, technological advancements, or related topics. \ntravel: The text describes travel experiences, destinations, or related topics. \npolitics: The text covers political events, policies, or related topics. \nsports: The text talks about sports events, athletes, or related topics. \nhealth: The text addresses health issues, medical advancements, or related topics. \nentertainment: The text pertains to movies, music, celebrities, or related topics. \ngeography: The text involves geographical information, locations, or related topics. \n\nIf the text contains multiple topics, choose the dominant topic. For ambiguous or unclear topics, select the category that best reflects the overall content. Please provide a single classification for each input.\n\ntext: {{text}} \ncategory: \n\n"
+choices:
+  - "science/technology"
+  - "travel"
+  - "politics"
+  - "sports"
+  - "health"
+  - "entertainment"
+  - "geography"
+verbalizer:
+  "business": ['business', 'finance', 'economy', 'economics']
+  "entertainment": ['entertainment', 'music']
+  "health": ['health' ]
+  "politics": ['politics', 'world politics']
+  "religion": ['religion']
+  "sports": [ 'sports']
+  "geography": [ 'geography' ]
+  "science/technology": ['technology', 'tech', 'science and technology', 'Science/technology', 'science technology']
+metrics:
+  - f1
+  - acc

@@ -1,0 +1,44 @@
+name: flores
+dataset: facebook/flores
+translation: True
+trust_remote_code: True
+num_fewshot: 5
+fewshot_split: dev
+languages:
+   - amh_Ethi-eng_Latn
+   - fra_Latn-eng_Latn
+   - hau_Latn-eng_Latn
+   - ibo_Latn-eng_Latn
+   - kin_Latn-eng_Latn
+   - lin_Latn-eng_Latn
+   - lug_Latn-eng_Latn
+   - gaz_Latn-eng_Latn
+   - sna_Latn-eng_Latn
+   - sot_Latn-eng_Latn
+   - swh_Latn-eng_Latn
+   - xho_Latn-eng_Latn
+   - yor_Latn-eng_Latn
+   - zul_Latn-eng_Latn
+   - eng_Latn-amh_Ethi
+   - eng_Latn-fra_Latn
+   - eng_Latn-hau_Latn
+   - eng_Latn-ibo_Latn
+   - eng_Latn-kin_Latn
+   - eng_Latn-lin_Latn
+   - eng_Latn-lug_Latn
+   - eng_Latn-gaz_Latn
+   - eng_Latn-sna_Latn
+   - eng_Latn-sot_Latn
+   - eng_Latn-swh_Latn
+   - eng_Latn-xho_Latn
+   - eng_Latn-yor_Latn
+   - eng_Latn-zul_Latn
+test_split: devtest
+target_prefix: sentence
+prompts:
+  - "{{source}} sentence: {{source_column}} \n{{target}} sentence: . Return only the translated sentence."
+  - "You are a translation expert. Translate the following {{source}} sentences to {{target}} \n{{source}} sentence: {{source_column}}\n{{target}} sentence: . Return only the translated sentence."
+  - "As a {{source}} and {{target}}, translate the following {{source}} sentences to {{target}}. \n{{source}} sentence: {{source_column}}\n{{target}} sentence: . Return only the translated sentence."
+metrics:
+  - chrf
+  - bleu

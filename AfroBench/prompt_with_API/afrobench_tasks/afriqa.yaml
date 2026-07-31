@@ -1,0 +1,25 @@
+name: afriqa
+dataset: masakhane/afriqa-gold-passages
+trust_remote_code: True
+languages:
+  - bem
+  - fon
+  - hau
+  - ibo
+  - kin
+  - swa
+  - twi
+  - yor
+  - zul
+test_split: test
+fewshot_split: train
+target: answer_pivot
+prompts:
+  - "Your task is to answer a question given a context. \nMake sure you respond with the shortest span containing the answer in the context.\nQuestion: {{question_lang}}\nContext: {{context}}\nAnswer:"
+  - "Your task is to answer a question given a context. The question is in {language}, while the context is in English or French. \nMake sure you respond with the shortest span in the context that contains the answer.\nQuestion: {{question_lang}}\nContext: {{context}}\nAnswer:"
+  - "Given the context, provide the answer to the following question. \nEnsure your response is concise and directly from the context.\nQuestion: {{question_lang}}\nContext: {{context}}\nAnswer:"
+  - "You are an AI assistant and your task is to answer the question based on the provided context. \nYour answer should be the shortest span that contains the answer within the context.\nQuestion: {{question_lang}}\nContext: {{context}}\nAnswer:"
+  - "Using the context, find the answer to the question. \nRespond with the briefest span that includes the answer from the context.\nQuestion: {{question_lang}}\nContext: {{context}}\nAnswer:"
+metrics:
+  - f1
+  - exact_match

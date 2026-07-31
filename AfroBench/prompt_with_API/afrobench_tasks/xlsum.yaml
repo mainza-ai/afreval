@@ -1,0 +1,29 @@
+name: xlsum
+dataset: csebuetnlp/xlsum
+trust_remote_code: True
+num_fewshot: 5
+languages:
+  - amharic
+  - arabic
+  - hausa
+  - igbo
+  - oromo
+  - pidgin
+  - somali
+  - swahili
+  - telugu
+  - tigrinya
+  - yoruba
+  - english
+  - french
+test_split: test
+fewshot_split: validation
+target: summary
+prompts:
+  - "Provide a summary of the document written in {{language}}. Ensure that you provide the summary in {{language}} and nothing else. \n\nDocument in {{language}}: {{text}} \n\nSummary: . Return the summary only and nothing else"
+  - "Summarize the document below in triple backticks and return only the summary and nothing else. \n\n{{text}}. Return the summary only and nothing else"
+  - "You are an advanced Summarizer, a specialized assistant designed to summarize documents in {{language}}. Your main goal is to ensure summaries are concise and informative. \nEnsure you return the summary only and nothing else. \n\nDocument: {{text}} \n\nSummary:"
+metrics:
+  - chrf
+  - bleu
+  - bert_score

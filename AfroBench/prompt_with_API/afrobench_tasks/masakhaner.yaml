@@ -1,0 +1,39 @@
+name: masakhaner
+dataset: masakhane/masakhaner-x
+trust_remote_code: True
+use_fewshot: True
+num_fewshot: 5
+languages:
+  - am
+  - bbj
+  - bm
+  - ee
+  - ha
+  - ig
+  - lg
+  - luo
+  - mos
+  - ny
+  - pcm
+  - rw
+  - sn
+  - sw
+  - tn
+  - tw
+  - wo
+  - xh
+  - yo
+  - zu
+test_split: test
+fewshot_split: train
+target: target
+filters:
+  - format_span
+prompts:
+  - "Named entities refers to names of location, organisation and personal name. \n For example, 'David is an employee of Amazon and he is visiting New York next week to see Esther' will be \nPERSON: David $ ORGANIZATION: Amazon $ LOCATION: New York $ PERSON: Esther \n\nEnsure the output strictly follows the format: label: entity $ label: entity, with each unique entity on a separate label line, avoiding grouped entities (e.g., avoid LOC: entity, entity) or irrelevant entries like none. \n\nText: {{text}} \nReturn only the output"
+  - "You are working as a named entity recognition expert and your task is to label a given text with named entity labels. Your task is to identify and label any named entities present in the text. The named entity labels that you will be using are PER (person), LOC (location), ORG (organization) and DATE (date). Label multi-word entities as a single named entity. For words which are not part of any named entity, do not return any value for it. \nEnsure the output strictly follows the format: label: entity $$ label: entity, with each unique entity on a separate label line, avoiding grouped entities (e.g., avoid LOC: entity, entity) or irrelevant entries like none. Return only the output \n\nText: {{text}}"
+  - "You are a Named Entity Recognition expert in {{language}} language. \nExtract all named entities from the following {{language}} text and categorize them into PERSON, LOCATION, ORGANIZATION, or DATE. \nEnsure the output strictly follows the format; label: entity $$ label: entity, with each unique entity on a separate label line, avoiding grouped entities (e.g., avoid LOC: entity, entity) or irrelevant entries like none. Return only the output \n\nText: {{text}}"
+  - "As a {{language}} linguist, label all named entities in the {{language}} text below with the categories: PERSON, LOCATION, ORGANIZATION, and DATE. Ensure the output strictly follows the format; label: entity $$ label: entity, with each unique entity on a separate label line, avoiding grouped entities (e.g., avoid LOC: entity, entity) or irrelevant entries like none. Return only the output. \n\nText: {{text}}"
+  - "Provide a concise list of named entities in the text below. Use the following labels: PERSON, LOCATION, ORGANIZATION, and DATE. Ensure the output strictly follows the format; label: entity $$ label: entity, with each unique entity on a separate label line, avoiding grouped entities (e.g., avoid LOC: entity, entity) or irrelevant entries like none. Return only the output.  \n\nText: {{text}}"
+metrics:
+  - span_f1

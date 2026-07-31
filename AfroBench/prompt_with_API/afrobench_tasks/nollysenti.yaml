@@ -1,0 +1,27 @@
+name: nollysenti
+dataset: Davlan/nollysenti
+trust_remote_code: True
+languages:
+  - en
+  - ha
+  - ig
+  - pcm
+  - yo
+test_split: test
+fewshot_split: validation
+target: label
+prompts:
+  - 'Does this movie description "{{review}}" have a Positive or Negative sentiment? Labels only\n'
+  - 'Does this {{language} movie description; "{{review}}" have a Positive or Negative sentiment? Labels only\n'
+  - "You are an assistant able to detect sentiment in movie reviews. \n\nGiven the sentiment labels Positive or Negative; what is the sentiment of the English statement below? Return only the labels\n\nReview: {{review}}\n"
+  - "Label the following text as Positive, or Negative. Provide only the label as your response. \n\ntext: {{review}} \nlabel: \n"
+  - "You are tasked with performing sentiment classification on the following English text. For each input, classify the sentiment as positive, negative. Use the following guidelines: \n\n Positive: The text expresses happiness, satisfaction, or optimism. \nNegative: The text conveys disappointment, dissatisfaction, or pessimism. \n\nIf the text contains both positive and negative sentiments, choose the dominant sentiment. For ambiguous or unclear sentiments, select the label that best reflects the overall tone. Please provide a single classification for each input.\n\ntext: {{review}} \nlabel: \n"
+choices:
+  - negative
+  - positive
+map_response:
+  positive: 0
+  negative: 1
+metrics:
+  - f1
+  - acc

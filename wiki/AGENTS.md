@@ -9,7 +9,7 @@ This file is the schema layer of the Milimo AfrEval wiki. It tells any LLM agent
 
 ## The three layers
 
-1. **Raw sources** — `dev-docs/` (immutable, never edited by agents): `Milimo_AfrEval_Implementation_Bible.md`, `Milimo AfrEval Implementation Research.md`, and the paper PDF `2606.24460v1.pdf`. The three cloned substrate repos (`autoresearch/`, `AfroBench/`, `afri-fertility/`) are also read-only source material.
+1. **Raw sources** — `dev-docs/` (immutable, never edited by agents): `Milimo_AfrEval_Implementation_Bible.md`, `Milimo AfrEval Implementation Research.md`, and the paper PDF `2606.24460v1.pdf`. The three substrate repos (`autoresearch/`, `AfroBench/`, `afri-fertility/`) are **vendored in-repo** (flattened for re-engineering; `AfroBench/lm-evaluation-harness/` is a git submodule of EleutherAI/lm-evaluation-harness) and are also read-only source material.
 2. **The wiki** — `wiki/`, this directory. Owned entirely by the LLM. Every page here is generated and maintained by the agent; the human only edits `AGENTS.md` conventions with the agent.
 3. **The schema** — this file.
 

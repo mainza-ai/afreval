@@ -50,3 +50,7 @@ Each is a Karpathy Loop with a specified harness / artifact / instruction file /
 ## Navigation
 
 Start with [index.md](index.md) (content catalog) or [log.md](log.md) (activity timeline). Read [AGENTS.md](AGENTS.md) for the schema and conventions that maintain this wiki.
+
+## Repository status
+
+The workspace lives in the [`mainza-ai/afreval`](https://github.com/mainza-ai/afreval) GitHub repo. Structure: `wiki/` (this knowledge base), `dev-docs/` (raw sources), and the three substrate repos vendored in-repo — `autoresearch/`, `AfroBench/`, and `afri-fertility/` are **flattened** (no local git history) so their loop artifacts can be re-engineered and committed directly; `AfroBench/lm-evaluation-harness/` is a **git submodule** of EleutherAI/lm-evaluation-harness pinned to upstream HEAD. Clone with `git clone --recursive`. See [README.md](../README.md) for structure and sync commands. This state is current as of the latest [log](log.md) entry.

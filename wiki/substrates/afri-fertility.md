@@ -6,7 +6,7 @@ updated: 2026-07-31
 
 # afri-fertility
 
-The **tokenization economics substrate** for AfrEval — the open measurement engine behind *The African Language Tax* paper, the [Token Fertility Leaderboard](https://datalens.africa/token-fertility-leaderboard), and DataLens Africa's cost-calculator widget. Cloned locally at `../afri-fertility/`.
+The **tokenization economics substrate** for AfrEval — the open measurement engine behind *The African Language Tax* paper, the [Token Fertility Leaderboard](https://datalens.africa/token-fertility-leaderboard), and DataLens Africa's cost-calculator widget. Vendored in-repo at `../afri-fertility/` (flattened).
 
 - **Package:** `afri-fertility` on PyPI. **Pin the exact version before building against it** — treat PyPI version drift as a breaking-change risk, not a routine bump.
 - **License:** Apache-2.0 · © 2026 DataLens Africa Research. Python 3.11+, CPU-only, key-free core.

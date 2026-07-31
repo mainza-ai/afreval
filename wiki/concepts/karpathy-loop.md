@@ -22,7 +22,7 @@ Formalized (per the [awesome-autoresearch](https://github.com/webfuse-com/awesom
 AGENT + CONSTRAINED_SCOPE + SCALAR_METRIC + FAST_VERIFICATION = AUTONOMOUS_IMPROVEMENT
 ```
 
-The canonical repo lives locally at `../autoresearch/` (clone of karpathy/autoresearch: `prepare.py`, `train.py`, `program.md`, plus analysis tooling).
+The canonical repo is vendored in-repo at `../autoresearch/` (flattened copy of karpathy/autoresearch: `prepare.py`, `train.py`, `program.md`, plus analysis tooling) — kept in the tree for direct re-engineering of the loop artifacts.
 
 ## The generalized loop
 

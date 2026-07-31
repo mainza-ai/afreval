@@ -8,7 +8,7 @@ updated: 2026-07-31
 
 The **textual/reasoning substrate** for AfrEval. Built by McGill NLP because prior multilingual benchmarks (e.g. MEGA) exclude African languages due to data scarcity and low discoverability of existing datasets.
 
-- **Source:** [McGill-NLP/AfroBench](https://github.com/McGill-NLP/AfroBench) (cloned locally at `../AfroBench/`) · leaderboard [mcgill-nlp.github.io/AfroBench](https://mcgill-nlp.github.io/AfroBench/) · paper [arXiv 2311.07978](https://arxiv.org/abs/2311.07978)
+- **Source:** [McGill-NLP/AfroBench](https://github.com/McGill-NLP/AfroBench) (vendored in-repo at `../AfroBench/`, flattened) · leaderboard [mcgill-nlp.github.io/AfroBench](https://mcgill-nlp.github.io/AfroBench/) · paper [arXiv 2311.07978](https://arxiv.org/abs/2311.07978)
 - **Coverage:** **64 African languages, 15 NLP tasks, 22 datasets** — classification, QA, reasoning, generation. Datasets on HuggingFace under the Masakhane AfroBench collection; runs via [LM-Harness](https://github.com/EleutherAI/lm-evaluation-harness/tree/main/lm_eval/tasks/afrobench) (HF models) or `prompt_with_API` (closed models / TogetherAI).
 
 ## AfroBench-LITE

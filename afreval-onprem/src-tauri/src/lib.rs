@@ -41,6 +41,23 @@ fn clearance_status() -> Result<String, String> {
     Ok(serde_json::to_string_pretty(&out).map_err(|e| e.to_string())?)
 }
 
+#[tauri::command]
+fn security_report() -> Result<String, String> {
+    // Per-seam bypass rates from the last §3.5 hardening-loop run.
+    // Path: $AFREVAL_SECURITY_REPORT or <repo>/afreval-airlock/attack/report.json.
+    let manifest = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let default = manifest
+        .parent()
+        .and_then(|p| p.parent())
+        .map(|p| p.join("afreval-airlock/attack/report.json"))
+        .ok_or_else(|| "cannot resolve repo root".to_string())?;
+    let path = std::env::var("AFREVAL_SECURITY_REPORT")
+        .map(std::path::PathBuf::from)
+        .unwrap_or(default);
+    let s = std::fs::read_to_string(&path).map_err(|e| format!("read {}: {e}", path.display()))?;
+    Ok(s)
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -48,7 +65,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             score_report,
             validate_tool_call,
-            clearance_status
+            clearance_status,
+            security_report
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

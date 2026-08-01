@@ -47,6 +47,30 @@ async function status() {
   out.textContent = await invoke("clearance_status");
 }
 
+async function security() {
+  const out = document.querySelector("#out4");
+  try {
+    const raw = await invoke("security_report");
+    const r = JSON.parse(raw);
+    let lines = [
+      `run: ${r.timestamp}`,
+      `total variants: ${r.total_variants}`,
+      `bypasses: ${r.total_bypasses}`,
+      "per-seam bypass rate (never aggregate):",
+    ];
+    for (const [seam, s] of Object.entries(r.per_seam)) {
+      lines.push(`  seam ${seam}: ${s.bypasses}/${s.total} (${(s.rate * 100).toFixed(1)}%)`);
+    }
+    if (r.bypasses.length) {
+      lines.push("bypasses:");
+      r.bypasses.forEach((b) => lines.push("  " + b));
+    }
+    out.textContent = lines.join("\n");
+  } catch (e) {
+    out.textContent = "error: " + e;
+  }
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#report").value = JSON.stringify(REPORT_SAMPLE, null, 2);
   document.querySelector("#weights").value = WEIGHTS_SAMPLE;
@@ -69,4 +93,5 @@ window.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#score-btn").addEventListener("click", score);
   document.querySelector("#validate-btn").addEventListener("click", validate);
   document.querySelector("#status-btn").addEventListener("click", status);
+  document.querySelector("#security-btn").addEventListener("click", security);
 });

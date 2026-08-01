@@ -53,6 +53,7 @@ pub enum Decision {
 pub struct Verdict {
     pub decision: Decision,
     pub reasons: Vec<String>,
+    pub ghost_args_stripped: Vec<String>,
 }
 
 impl Verdict {
@@ -65,6 +66,7 @@ fn deny(reason: String) -> Verdict {
     Verdict {
         decision: Decision::Deny,
         reasons: vec![reason],
+        ghost_args_stripped: Vec::new(),
     }
 }
 
@@ -72,6 +74,7 @@ fn require_reauth(reason: String) -> Verdict {
     Verdict {
         decision: Decision::RequireReauth,
         reasons: vec![reason],
+        ghost_args_stripped: Vec::new(),
     }
 }
 
@@ -106,6 +109,7 @@ pub fn validate(call: &ToolCall, policy: &Policy, now_secs: u64) -> Verdict {
     Verdict {
         decision: Decision::Allow,
         reasons,
+        ghost_args_stripped: stripped.removed,
     }
 }
 

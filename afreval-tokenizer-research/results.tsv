@@ -3,3 +3,5 @@ HEAD	candidate/byte-fallback-v0	1.0398	1.9760	nan	1.0000	FAIL_CPT_REGRESSION
 HEAD	candidate/char-v0	0.9276	0.7561	nan	1.0000	FAIL_CPT_REGRESSION	
 HEAD	candidate/byte-fallback-v0	1.0398	1.9760	nan	1.0000	FAIL_CPT_REGRESSION	
 HEAD	candidate/bpe-v0	0.9101	1.0617	nan	1.8030	FAIL_CPT_REGRESSION	
+HEAD	candidate/script-aware-v0	1.9074	3.3770	nan	5.7349	FAIL_SCRIPT_REGRESSION	
+HEAD	candidate/script-aware-v0	1.5456	3.3770	nan	5.7349	PASS	

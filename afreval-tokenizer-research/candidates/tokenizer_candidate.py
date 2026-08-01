@@ -77,5 +77,34 @@ class TrainedBPE:
         return self._inner.count(text)
 
 
+_ETHIOPIC_NKO = "\u1200-\u137F\u07C0-\u07FF"
+
+
+def _has_ethiopic_or_nko(text: str) -> bool:
+    for ch in text:
+        o = ord(ch)
+        if (0x1200 <= o <= 0x137F) or (0x07C0 <= o <= 0x07FF):
+            return True
+    return False
+
+
+class ScriptAwareCandidate:
+    """§3.1 script-aware pre-tokenization: English-efficient Latin path +
+    WAXAL-trained BPE for Ethiopic/N'Ko. Holds English CPT at baseline while
+    collapsing the non-Latin premiums.
+    """
+
+    id = "candidate/script-aware-v0"
+
+    def __init__(self):
+        self._latin = from_afri_fertility("openai/o200k_base")
+        self._bpe = TrainedBPE()
+
+    def count(self, text: str) -> int:
+        if _has_ethiopic_or_nko(text):
+            return self._bpe.count(text)
+        return self._latin.count(text)
+
+
 # The agent swaps the active candidate here (or adds new classes above).
-ACTIVE_CANDIDATE = TrainedBPE
+ACTIVE_CANDIDATE = ScriptAwareCandidate

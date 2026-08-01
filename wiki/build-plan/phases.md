@@ -10,7 +10,7 @@ Six phases with explicit gates and acceptance criteria. The through-line: **noth
 
 ## Phase 0 — Harness freeze (weeks 1–3)
 
-**Status: in progress — WAXAL acquired, awaiting QA.** `afreval-harness/` implemented in-tree: pins for all three substrates, `harness/tokenizer_eval.py` (§3.1 script-stratified eval, verified against afri-fertility reference numbers), `harness/waxal_eval.py` (pure WER/CER), `harness/afrobench_eval.py` (LITE vendored-drift validation), acquisition/freeze/bump scripts, checksums frozen for afri-fertility + AfroBench-LITE, 16 tests passing. WAXAL Stage A eval-split acquisition complete (**76,107 rows, 19 configs, 0 empties**); remaining: second-ASR QA pass then freeze ([waxal.md](../substrates/waxal.md)).
+**Status: WAXAL QA pass 2 running.** `afreval-harness/` in-tree: pins, `tokenizer_eval.py`, `waxal_eval.py`, `afrobench_eval.py`, acquisition/freeze/bump scripts, checksums frozen for afri-fertility + AfroBench-LITE. WAXAL Stage A eval-split acquisition complete (**76,107 rows, 19 configs, 0 empties**); the §2.1.1 QA pass 2 runs **Ethio-ASR + Sunbird** (WAXAL-tuned ASRs — general zero-shot ASRs fail on spontaneous WAXAL audio, which *empirically reproduces the WAXAL-NET thesis*); Ethio pass done, Sunbird ~13h. Remaining: Sunbird QA → review `qa2_summary.json` flags → drop high-divergence rows → `freeze_checksums.py --pin waxal.yaml` ([waxal.md](../substrates/waxal.md)).
 
 Pin exact versions of [WAXAL](../substrates/waxal.md), [AfroBench(-LITE)](../substrates/afrobench.md), and [afri-fertility](../substrates/afri-fertility.md). Build `harness/` for each as read-only, checksummed artifacts. For WAXAL this is not complete until the §2.1.1 four-step acquisition/QA task list has run end-to-end and its provenance record committed — **a raw, un-audited pull does not satisfy the gate.**
 
@@ -18,11 +18,15 @@ Pin exact versions of [WAXAL](../substrates/waxal.md), [AfroBench(-LITE)](../sub
 
 ## Phase 1 — Tokenizer & Context Score core (weeks 3–8)
 
+**Status: complete (deterministic half).** `afreval-context-score` (Rust, bit-identical repeated runs ✓ — the acceptance criterion), `afreval-tokenizer-research` (§3.1 loop: mutable candidate artifact, runner, program.md; **script-aware candidate PASSES** — Ethiopic premium 7.83→3.38 at zero English-CPT regression), harness→scorer report bridge, and the **§3.2.1 certification pipeline** (`scripts/certify.py` — deterministic, auditable certs with sha256). The *autonomous* search/calibration variants are Phase 3 by design.
+
 Build [§3.1 tokenizer search](../subsystems/tokenizer-search.md) and the **deterministic (non-search) half** of [§3.2](../subsystems/context-score-calibration.md) — the Rust scorer that takes a fixed weight config and produces a Context Score, *before* the calibration search loop exists. Ship as an invocable, auditable pipeline first; the autonomous calibration loop is Phase 3.
 
-**Acceptance:** given a pinned model + pinned weight config + pinned harness, the scorer produces a **bit-identical score on repeated runs**.
+**Acceptance:** given a pinned model + pinned weight config + pinned harness, the scorer produces a **bit-identical score on repeated runs**. ✓ (verified: byte-identical CLI output + cert sha256).
 
 ## Phase 2 — Isolation & MCP boundary (weeks 6–12, overlapping Phase 1)
+
+**Status: software seams done; server infra pending.** `afreval-airlock` (Rust) implements all **four** defensive seams — deny-by-default allowlist, ghost-arg stripping/schema, output sanitization (PII+cap), and **seam 4 per-call reauthorization (JWS HS256 clearance — the genuinely-unbuilt upstream piece)** — plus the §3.5 hardening loop (attack program → per-seam bypass rate; **0 bypasses, 19 regression tests**). Still to stand up (server infra, not laptop-testable): [gVisor](../infrastructure/isolation-tiers.md) + Firecracker tiers and Envoy credential injection.
 
 Stand up the [gVisor tier](../infrastructure/isolation-tiers.md), Firecracker tier, Envoy credential injection, and fork/extend [agent-airlock](../subsystems/agent-airlock.md) for the fourth seam (per-call reauthorization). Infrastructure, not research — **no autonomous loop yet, just build it correctly.**
 

@@ -4,38 +4,55 @@ Autonomous, context-aware alignment & benchmarking infrastructure for AI in Afri
 
 Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact → instruction file → metric → budget), with every subsystem — tokenizer search, Context Score calibration, BiasScope probing, edge ASR, execution-boundary hardening, compliance — running as an autonomous loop over three frozen data substrates: WAXAL, AfroBench, and afri-fertility.
 
+## Implementation status
+
+**8 of 11 target repos are implemented in-tree** (all pushed to this repo). The remaining three are gated on downstream prerequisites, not neglected.
+
+| Area | Repo | Status |
+|---|---|---|
+| Phase 0 — frozen harnesses | `afreval-harness/` | ✅ Pins + checksums for afri-fertility & AfroBench-LITE frozen (tagged `v0.1.0`); WAXAL acquired (76,107 eval rows, 19 languages) — **QA pass 2 running** (WAXAL-tuned Ethio-ASR + Sunbird); finalize → freeze is the open gate |
+| Phase 1 — Context Score core | `afreval-context-score/` | ✅ Deterministic Rust scorer (bit-identical repeated runs — the acceptance criterion) + deterministic certification pipeline with auditable sha256 certs |
+| Phase 1 — tokenizer search | `afreval-tokenizer-research/` | ✅ §3.1 search loop with trained BPE candidates; **script-aware candidate PASSES** (Ethiopic premium 7.83→3.38 at zero English-CPT regression) |
+| Phase 2 — execution boundary | `afreval-airlock/` | ✅ Four defensive seams incl. JWS HS256 clearance; §3.5 red-team hardening loop — **19 regression tests, 0 bypasses** |
+| Phase 2 — evaluation bias | `afreval-biasscope/` | ✅ §3.3 probe loop (mock/omlx judge backends; acceptance-rate-gap metric) |
+| Phase 2 — compliance | `afreval-compliance/` | ✅ §3.6 citation-currency loop (Kenya ODPC + Nigeria NDPC verified current) |
+| Phase 5 — on-prem client | `afreval-onprem/` | 🚧 Tauri 2 skeleton embedding scorer + airlock; trust-root vault + security-dashboard surface (Stronghold, dashboard reuse, local MCP server: post-MVP) |
+| Phase 5 — dashboard | `afreval-dashboard/` | ✅ Certification + security web surface (build-target-agnostic) |
+| Phase 4 — edge ASR | `afreval-waxal-net/` | ⏸ Gates on WAXAL QA completion |
+| Phase 4 — field app | `afreval-field-app/` | ⏸ Gates on WAXAL-NET (Flutter) |
+| Phase 5 — SDK | `afreval-sdk/` | ⏸ Gates on the certification API being live |
+
+**Current critical path:** WAXAL QA pass 2 (Sunbird, ~11.5h) → `finalize_waxal.py --apply` (drop ~2% flagged rows) → human review → `freeze_checksums.py --pin waxal.yaml` → **Phase 0 closed** → Phase 4 (WAXAL-NET) unblocks.
+
 ## Repository structure
 
 ```
 afreval/
-├── wiki/          # the knowledge base — start at wiki/home.md
-├── dev-docs/      # raw source documents (immutable)
-├── autoresearch/  # vendored karpathy/autoresearch — flattened for re-engineering
-├── AfroBench/     # vendored McGill-NLP/AfroBench — flattened for re-engineering
-│   └── lm-evaluation-harness/   # git submodule (EleutherAI)
-└── afri-fertility/               # vendored CipherSenseAI/afri-fertility — flattened
+├── wiki/                     # LLM-maintained knowledge base — start at wiki/home.md
+├── dev-docs/                 # raw source documents (Implementation Bible, Research blueprint)
+├── afreval-harness/          # Phase 0 frozen harnesses + WAXAL acquisition/QA tooling
+├── afreval-context-score/    # Rust Context Score scorer + weights/{telco,banking}.yaml
+├── afreval-tokenizer-research/  # §3.1 tokenizer search loop + BPE candidates
+├── afreval-airlock/          # four-seam tool-call validator + hardening loop
+├── afreval-biasscope/        # §3.3 judge-bias probe loop
+├── afreval-compliance/       # §3.6 citation-currency loop
+├── afreval-onprem/           # Tauri 2 air-gapped client (skeleton)
+├── afreval-dashboard/        # certification & security dashboard
+├── autoresearch/             # vendored karpathy/autoresearch — flattened for re-engineering
+├── AfroBench/                # vendored McGill-NLP/AfroBench — flattened
+│   └── lm-evaluation-harness/  # git submodule (EleutherAI)
+└── afri-fertility/           # vendored CipherSenseAI/afri-fertility — flattened
 ```
-
-- **`wiki/`** — a persistent, LLM-maintained knowledge base following the [LLM Wiki pattern](wiki/AGENTS.md): interlinked concept, substrate, subsystem, infrastructure, strategy, and build-plan pages, plus a content `index.md`, an activity `log.md`, and an evolving `synthesis.md` of cross-source discrepancies and open questions.
-- **`dev-docs/`** — the source of truth: the Implementation Bible (build spec), the Implementation Research blueprint, and the African Language Tax paper.
-- **Substrate repos** — upstream clones are **flattened into the tree** (their `.git` history removed) so the Karpathy-loop artifacts (`train.py`, `prepare.py`, `program.md`) can be modified and committed in-repo during AfrEval implementation.
 
 ## Cloning
 
-The only remaining submodule is `AfroBench/lm-evaluation-harness` (EleutherAI/lm-evaluation-harness, pinned to upstream HEAD `f4d4b3de` — byte-identical to the previously vendored copy):
+The only remaining submodule is `AfroBench/lm-evaluation-harness` (EleutherAI/lm-evaluation-harness, pinned to upstream HEAD `f4d4b3de`):
 
 ```bash
 git clone --recursive https://github.com/mainza-ai/afreval.git
 ```
 
-To update it to a newer upstream:
-
-```bash
-git -C AfroBench/lm-evaluation-harness fetch origin
-git -C AfroBench/lm-evaluation-harness checkout <new-sha>   # or: git submodule update --remote
-```
-
-To pull upstream changes into a flattened repo:
+To pull upstream changes into a flattened substrate repo:
 
 ```bash
 git -C autoresearch remote add upstream https://github.com/karpathy/autoresearch
@@ -53,5 +70,6 @@ git -C autoresearch fetch upstream && git -C autoresearch merge upstream/main
 ## Navigation
 
 - [Wiki home](wiki/home.md) — overview and full index
-- [Build plan](wiki/build-plan/phases.md) — Phase 0–5 roadmap
+- [Build plan](wiki/build-plan/phases.md) — Phase 0–5 roadmap with live status
 - [Risk register](wiki/build-plan/risk-register.md) — known risks and mitigations
+- [Repository layout](wiki/build-plan/repository-layout.md) — the eleven planned repos

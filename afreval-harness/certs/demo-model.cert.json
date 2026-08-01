@@ -1,0 +1,44 @@
+{
+  "model": "demo-model",
+  "report": {
+    "model_id": "demo-model",
+    "harness": {
+      "afri_fertility_pin": "0.1.0",
+      "afrobench_lite_pin": "EleutherAI/lm-evaluation-harness@f4d4b3de3ee6741a7151a9fe74945ee515262f4c",
+      "waxal_pin": "TBD"
+    },
+    "linguistic_fidelity": {
+      "waxal_macro_wer": 0.38,
+      "afrobench_lite_accuracy": 0.62
+    },
+    "cultural_safety": {
+      "bias_corrected_judge_score": 78.0
+    },
+    "structural_economics": {
+      "mean_fertility_premium": 2.6846874347553347,
+      "script_premiums": {
+        "latin": 1.5456312098557363,
+        "ethiopic": 7.8343373493975905
+      }
+    }
+  },
+  "score": {
+    "context_score": 57.77448519765356,
+    "model_id": "demo-model",
+    "pass": false,
+    "threshold": 70.0,
+    "vectors": {
+      "cultural_safety": 78.0,
+      "linguistic_fidelity": 62.0,
+      "structural_economics": 37.24828399217854
+    },
+    "vertical": "telco",
+    "weights_version": 1
+  },
+  "harness_pins": {
+    "afri_fertility": "0.1.0",
+    "afrobench_lite": "EleutherAI/lm-evaluation-harness@f4d4b3de3ee6741a7151a9fe74945ee515262f4c",
+    "waxal": "TBD"
+  },
+  "cert_sha256": "9e99cbb781feab20820a3a49e31382dd1d0eef2f012113201136427f4c91f7c3"
+}

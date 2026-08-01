@@ -1,0 +1,22 @@
+{
+  "model_id": "o200k_base-demo",
+  "harness": {
+    "afri_fertility_pin": "0.1.0",
+    "afrobench_lite_pin": "f4d4b3de",
+    "waxal_pin": "pending"
+  },
+  "linguistic_fidelity": {
+    "waxal_macro_wer": 0.38,
+    "afrobench_lite_accuracy": 0.62
+  },
+  "cultural_safety": {
+    "bias_corrected_judge_score": 78.0
+  },
+  "structural_economics": {
+    "mean_fertility_premium": 2.6846874347553347,
+    "script_premiums": {
+      "latin": 1.5456312098557363,
+      "ethiopic": 7.8343373493975905
+    }
+  }
+}

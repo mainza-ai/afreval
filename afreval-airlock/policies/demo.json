@@ -1,0 +1,23 @@
+{
+  "allowed_tools": ["query_customer", "get_balance", "send_sms"],
+  "schemas": {
+    "query_customer": {
+      "params": {
+        "customer_id": { "type": "string", "required": true },
+        "include_history": { "type": "boolean", "required": false }
+      }
+    },
+    "get_balance": {
+      "params": { "account": { "type": "string", "required": true } }
+    },
+    "send_sms": {
+      "params": { "to": { "type": "string", "required": true }, "message": { "type": "string", "required": true } }
+    }
+  },
+  "output_max_bytes": 8192,
+  "clearance": {
+    "hmac_key_b64": "CNXxf4RhmTbsqtWMnzgPxnLARJB3Hw-zpudJpIiwxXk",
+    "max_age_secs": 300
+  },
+  "reauth_tools": ["send_sms", "get_balance"]
+}

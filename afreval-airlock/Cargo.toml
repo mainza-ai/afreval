@@ -1,0 +1,17 @@
+[package]
+name = "afreval-airlock"
+version = "0.1.0"
+edition = "2021"
+description = "Deny-by-default tool-call validator for Milimo AfrEval (§3.5, Phase 2)"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+clap = { version = "4", features = ["derive"] }
+base64 = "0.22"
+hmac = "0.12"
+sha2 = "0.10"
+regex = "1"
+
+[lib]
+name = "afreval_airlock"

@@ -18,6 +18,10 @@ venv/
 **/.obsidian/workspace.json
 **/.obsidian/workspace-mobile.json
 
+# Rust build artifacts
+target/
+**/target/
+
 # Node
 node_modules/
 dist/

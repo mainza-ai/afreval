@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Milimo AfrEval — On-Prem</title>
+    <script type="module" src="/main.js" defer></script>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 0; background: #111; color: #eee; }
+      main { max-width: 900px; margin: 0 auto; padding: 24px; }
+      h1 { font-size: 20px; }
+      h2 { font-size: 15px; margin-top: 28px; border-bottom: 1px solid #333; padding-bottom: 6px; }
+      textarea { width: 100%; min-height: 120px; background: #1a1a1a; color: #eee; border: 1px solid #333; font: 11px ui-monospace, monospace; }
+      button { margin: 8px 0; padding: 6px 14px; }
+      pre { white-space: pre-wrap; background: #1a1a1a; border: 1px solid #333; padding: 10px; font: 11px ui-monospace, monospace; }
+      .ok { color: #6c6; } .fail { color: #f66; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Milimo AfrEval — On-Prem (air-gapped certification + security dashboard)</h1>
+
+      <h2>Context Score</h2>
+      <label>Model report (JSON)</label>
+      <textarea id="report"></textarea>
+      <label>Weights (YAML, per vertical)</label>
+      <textarea id="weights"></textarea>
+      <button id="score-btn">Score</button>
+      <pre id="out"></pre>
+
+      <h2>Tool-call validation (airlock)</h2>
+      <label>Tool call (JSON)</label>
+      <textarea id="call"></textarea>
+      <label>Policy (JSON)</label>
+      <textarea id="policy"></textarea>
+      <button id="validate-btn">Validate</button>
+      <pre id="out2"></pre>
+
+      <h2>Clearance / trust root</h2>
+      <button id="status-btn">Clearance status</button>
+      <pre id="out3"></pre>
+    </main>
+  </body>
+</html>

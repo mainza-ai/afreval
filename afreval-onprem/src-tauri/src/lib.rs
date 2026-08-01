@@ -2,8 +2,11 @@
 // Embeds the deterministic Context Score scorer and the airlock validator as
 // Rust crates. The UI surface is the reuse target for afreval-dashboard.
 
+mod vault;
+
 use afreval_airlock::{clearance, Policy, ToolCall};
 use afreval_context_score::{config, report, score};
+use vault::Vault;
 
 #[tauri::command]
 fn score_report(report_json: String, weights_yaml: String) -> Result<String, String> {
@@ -33,12 +36,14 @@ fn validate_tool_call(call_json: String, policy_json: String) -> Result<String, 
 }
 
 #[tauri::command]
-fn clearance_status() -> Result<String, String> {
-    let out = serde_json::json!({
-        "trust_root_configured": false,
-        "note": "Stronghold vault (JWS key material) lands post-MVP per report §10",
-    });
-    Ok(serde_json::to_string_pretty(&out).map_err(|e| e.to_string())?)
+fn clearance_status(vault: tauri::State<Vault>) -> Result<String, String> {
+    Ok(serde_json::to_string_pretty(&vault.status()).map_err(|e| e.to_string())?)
+}
+
+#[tauri::command]
+fn sign_grant(tool: String, vault: tauri::State<Vault>) -> Result<String, String> {
+    let iat = clearance::now_secs();
+    clearance::sign(&tool, iat, &vault.clearance_policy())
 }
 
 #[tauri::command]
@@ -62,11 +67,13 @@ fn security_report() -> Result<String, String> {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
+        .manage(Vault::from_env())
         .invoke_handler(tauri::generate_handler![
             score_report,
             validate_tool_call,
             clearance_status,
-            security_report
+            security_report,
+            sign_grant
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

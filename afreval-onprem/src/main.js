@@ -47,6 +47,16 @@ async function status() {
   out.textContent = await invoke("clearance_status");
 }
 
+async function grant() {
+  const out = document.querySelector("#out5");
+  const tool = document.querySelector("#grant-tool").value;
+  try {
+    out.textContent = await invoke("sign_grant", { tool });
+  } catch (e) {
+    out.textContent = "error: " + e;
+  }
+}
+
 async function security() {
   const out = document.querySelector("#out4");
   try {
@@ -94,4 +104,5 @@ window.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#validate-btn").addEventListener("click", validate);
   document.querySelector("#status-btn").addEventListener("click", status);
   document.querySelector("#security-btn").addEventListener("click", security);
+  document.querySelector("#grant-btn").addEventListener("click", grant);
 });

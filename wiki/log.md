@@ -114,3 +114,12 @@ Rust tool-call validator (§3.5) in-tree: seam 1 deny-by-default allowlist, seam
 - **Script-aware candidate PASSES** (§3.1): `ScriptAwareCandidate` = o200k_base for Latin + trained BPE for Ethiopic/N'Ko. **Ethiopic premium 7.83 → 3.38 (−57%) at zero English-CPT regression** — the first candidate to satisfy the §3.1 constraints. The loop caught a real bug en route (Yoruba `ẹ/ọ/ṣ`, Latin Extended Additional U+1E00+, misdetected as Ethiopic by a coarse `>=0x1200` check — fixed with precise Unicode blocks).
 - **Security dashboard surface** in `afreval-onprem`: `security_report` command → last hardening-loop report rendered (per-seam bypass rates, never aggregated).
 - **Wiki**: phases.md Phase 0/1/2 statuses, repository-layout implemented-repos list.
+
+## [2026-08-01] impl | §3.3 BiasScope probe loop + §3.6 compliance loop + §3.2.1 cert pipeline + dashboard
+
+- **afreval-biasscope** (§3.3): `probes/perturbation_program.py` (mutable; seeds from the pinned reference suite's parallel translations), `judge/backends.py` (frozen harness: mock deterministic / omlx real / api placeholder), `run_probe.py` (reports the §3.3 metric — acceptance-rate delta across languages under a fixed threshold), `program.md` (cost-bounded instructions). Mock demo shows the blind spot deterministically (English rejected, low-resource generously accepted → 1.0 delta); 4 tests.
+- **afreval-compliance** (§3.6): `citations/africa.yaml` (mutable mapping), `check_currency.py` (citation resolves + key phrase at authoritative source; --offline), `program.md`. Kenya ODPC + Nigeria NDPC **current**; AU AI Strategy + Malabo Convention **unverified** (TBD — must be sourced from official AU pages; a failure state, not a placeholder); 3 offline tests.
+- **afreval-dashboard**: Phase 5 certification & security web surface (certs + per-seam bypass rates from state.json; the build-target-agnostic UI the onprem client mounts).
+- **afreval-onprem**: seam-4 trust-root `Vault` stub ($AFREVAL_TRUST_KEY; Stronghold post-MVP) + `sign_grant` command.
+
+**8 of 11 target repos now have real in-tree implementation.** Remaining (`afreval-waxal-net`, `afreval-field-app`, `afreval-sdk`) are intentionally deferred: Phase 4 ML/mobile work gates on WAXAL QA/fine-tuning substrate; the SDK gates on the certification API being live. The Phase 3 autonomous loops gate on fitness/incident data + human sign-off.

@@ -1,0 +1,4 @@
+commit	candidate_id	latin_premium	ethiopic_premium	nko_premium	english_cpt	status	note
+HEAD	candidate/byte-fallback-v0	1.0398	1.9760	nan	1.0000	FAIL_CPT_REGRESSION	
+HEAD	candidate/char-v0	0.9276	0.7561	nan	1.0000	FAIL_CPT_REGRESSION	
+HEAD	candidate/byte-fallback-v0	1.0398	1.9760	nan	1.0000	FAIL_CPT_REGRESSION	

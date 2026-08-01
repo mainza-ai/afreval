@@ -1,0 +1,8 @@
+{
+  "tokenizer": "openai/o200k_base",
+  "english_cpt": 5.734939759036145,
+  "script_premiums": {
+    "latin": 1.5456312098557363,
+    "ethiopic": 7.8343373493975905
+  }
+}

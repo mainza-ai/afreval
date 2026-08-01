@@ -1,0 +1,10 @@
+vertical: banking
+version: 1
+weights:
+  linguistic_fidelity: 0.35
+  cultural_safety: 0.45
+  structural_economics: 0.20
+linguistic_fidelity_internal:
+  acoustic: 0.50
+  textual: 0.50
+threshold: 75.0

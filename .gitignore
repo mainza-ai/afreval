@@ -31,3 +31,6 @@ afreval-harness/data/waxal/audio/
 afreval-harness/data/waxal/*_qa2.jsonl
 afreval-harness/data/waxal/*_qa2_state.json
 afreval-harness/data/waxal/qa2_*.log
+
+# converted Sunbird->MLX weights (4GB, regenerable via scripts/convert_sunbird_mlx.py)
+afreval-harness/data/waxal/models/

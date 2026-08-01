@@ -85,3 +85,11 @@ Verified Sunbird (`Sunbird/asr-whisper-51-african-languages`, HF token authed as
 ## [2026-07-31] qa | QA pass 2 optimized for M3 Max (MPS + batching)
 
 User pushed for faster processing — right call, CPU per-clip inference was underutilizing the M3 Max. Benchmark on the 16-core/128GB machine: **MPS (unified GPU) + true batching** is the win. `qa_waxal_tuned.py` upgraded: `--device mps`, batched CTC (Ethio-ASR, padding+attention_mask) and batched Whisper generate (Sunbird, attention_mask verified byte-identical to single-clip). Throughput: Ethio-ASR **~173 clips/min** (CPU 24), Sunbird **~50 clips/min** (CPU 12). Critical finding: two MPS processes contend badly (Sunbird fell to 14/min), so the passes now run **sequentially via a shell chain** (Ethio ~3.4h → Sunbird ~13.5h ≈ **17h total**, down from ~80h). Both resumable.
+
+## [2026-07-31] qa | QA paused for reboot (memory pressure), resumed
+
+System hit 95% RAM (peak 126G used / 40G compressor / 5.9G swap) during QA. Diagnosed: not a leak or single process — QA is ~3GB; the bulk was GPU/Metal wired memory + compressed file cache. Stopped `omlx` (35B model), stopped the QA (freed 96GB → 30G used), user rebooted, QA resumed from state (sid 4832→). Copied the QA torch venv to a persistent `afreval-harness/.venv-torch` (survives reboot; /tmp/mmsenv was wiped). Lesson: on this 128GB machine, run heavy GPU workloads serially and watch `vm.swapusage` as the real safety metric.
+
+## [2026-07-31] impl | Phase 1 — deterministic Context Score scorer (afreval-context-score)
+
+Built the Rust scorer (§3.2 non-search half) in-tree: `src/report.rs` (model evaluation report + validation), `src/config.rs` (per-vertical weights YAML, Σweights=1 enforced), `src/score.rs` (deterministic pipeline — only +−·/min/max, no transcendentals), `src/main.rs` (CLI: `score`/`validate`). Weights: `telco.yaml`, `banking.yaml` (per-industry, the mutable artifact). 6 tests pass incl. **bit-identical repeated-run determinism** (Phase 1 acceptance). CLI verified end-to-end (example model: telco 63.27/fail, banking 67.91/fail; two runs byte-identical via `cmp`). `research/` placeholder documents the Phase 3 calibration loop (fitness-function-first). Also flagged the era-bound AfroBench findings (GPT-4o/Gemini 1.5 Pro are 2024–25; re-benchmark current frontier models at certification time).

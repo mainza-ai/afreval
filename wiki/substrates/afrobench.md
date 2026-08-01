@@ -17,7 +17,9 @@ The compute-constrained variant — **7 datasets, 14 languages**. AfrEval defaul
 
 ## Empirical findings baked into AfrEval's scorer priors
 
-- **Proprietary models lead on raw average score** (GPT-4o, Gemini 1.5 Pro).
+> **Era note (2026):** the findings below cite models evaluated at the paper's time (GPT-4o, Gemini 1.5 Pro, Gemma 2 27B, LLaMA 3.1 70B — 2024–25 era, several now superseded/deprecated). Treat them as **priors to calibrate against, not current leaders**. When certification runs begin, benchmark the *then-current* frontier models against AfroBench-LITE; the structural finding (below) is what persists, not the specific model names.
+
+- **Proprietary models lead on raw average score** (GPT-4o, Gemini 1.5 Pro — at time of evaluation).
 - Among open models, **Gemma 2 27B leads and beats LLaMA 3.1 70B** despite ~half the parameters.
 - **Fine-tuned baselines on AfroBench datasets often beat prompted general-purpose LLMs.**
 - **Knowledge-intensive and reasoning tasks show the largest performance gap.**

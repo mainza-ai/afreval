@@ -41,6 +41,8 @@ Both documents agree on: the Context Score's three vectors; WAXAL's ~1,250h ASR 
 - **WAXAL-NET hardware-class assertion** (§3.4, device layer task #4): what is the exact "target hardware class" for Phase 4 acceptance? Must be defined before the search loop can size its budget.
 - **Which deployment jurisdiction is the compliance loop anchored to first?** Kenya, Nigeria, or AU-level? (§3.6, §5 Phase 5.)
 
+- **Which current frontier models to benchmark?** AfroBench's cited leaders (GPT-4o, Gemini 1.5 Pro) are 2024–25 era and superseded by 2026. Certification runs must benchmark *then-current* models — the scorer priors are era-bound, not frozen ([afrobench](substrates/afrobench.md)).
+
 ## Suggested sources to look for next
 
 1. WAXAL paper (arXiv 2602.02734) revision diff — resolve the language/hour discrepancies.

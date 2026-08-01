@@ -1,0 +1,14 @@
+[package]
+name = "afreval-context-score"
+version = "0.1.0"
+edition = "2021"
+description = "Deterministic Context Score scorer for Milimo AfrEval (§3.2, Phase 1)"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+clap = { version = "4", features = ["derive"] }
+
+[lib]
+name = "afreval_context_score"

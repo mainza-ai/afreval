@@ -1,0 +1,10 @@
+vertical: telco
+version: 1
+weights:
+  linguistic_fidelity: 0.50
+  cultural_safety: 0.20
+  structural_economics: 0.30
+linguistic_fidelity_internal:
+  acoustic: 0.60
+  textual: 0.40
+threshold: 70.0

@@ -17,7 +17,9 @@ enum Cmd {
         #[arg(long)]
         policy: PathBuf,
         #[arg(long)]
-        call: PathBuf,
+        call: Option<PathBuf>,
+        #[arg(long)]
+        batch: bool,
     },
     Grant {
         #[arg(long)]
@@ -26,6 +28,10 @@ enum Cmd {
         tool: String,
         #[arg(long, name = "age-secs")]
         age_secs: u64,
+    },
+    Sanitize {
+        #[arg(long)]
+        policy: PathBuf,
     },
 }
 
@@ -36,7 +42,7 @@ fn load_policy(path: &PathBuf) -> Result<Policy, String> {
 
 fn run(cli: Cli) -> i32 {
     match cli.cmd {
-        Cmd::Validate { policy, call } => {
+        Cmd::Validate { policy, call, batch } => {
             let policy = match load_policy(&policy) {
                 Ok(p) => p,
                 Err(e) => {
@@ -44,10 +50,20 @@ fn run(cli: Cli) -> i32 {
                     return 2;
                 }
             };
-            let cs = match fs::read_to_string(&call) {
+            if batch {
+                return validate_batch(&policy);
+            }
+            let call_path = match call {
+                Some(p) => p,
+                None => {
+                    eprintln!("error: --call required unless --batch");
+                    return 2;
+                }
+            };
+            let cs = match fs::read_to_string(&call_path) {
                 Ok(s) => s,
                 Err(e) => {
-                    eprintln!("error: read {}: {e}", call.display());
+                    eprintln!("error: read {}: {e}", call_path.display());
                     return 2;
                 }
             };
@@ -85,7 +101,52 @@ fn run(cli: Cli) -> i32 {
                 }
             }
         }
+        Cmd::Sanitize { policy } => {
+            use std::io::Read;
+            let policy = match load_policy(&policy) {
+                Ok(p) => p,
+                Err(e) => {
+                    eprintln!("error: {e}");
+                    return 2;
+                }
+            };
+            let mut buf = Vec::new();
+            if std::io::stdin().read_to_end(&mut buf).is_err() {
+                eprintln!("error: read stdin");
+                return 2;
+            }
+            match afreval_airlock::sanitize_output(&buf, &policy) {
+                Ok(masked) => {
+                    println!("{}", String::from_utf8_lossy(&masked));
+                    0
+                }
+                Err(e) => {
+                    eprintln!("error: {e}");
+                    1
+                }
+            }
+        }
     }
+}
+
+fn validate_batch(policy: &Policy) -> i32 {
+    use std::io::Read;
+    let mut buf = String::new();
+    if std::io::stdin().read_to_string(&mut buf).is_err() {
+        eprintln!("error: read stdin");
+        return 2;
+    }
+    let calls: Vec<ToolCall> = match serde_json::from_str(&buf) {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!("error: {e}");
+            return 2;
+        }
+    };
+    let now = clearance::now_secs();
+    let verdicts: Vec<_> = calls.iter().map(|c| afreval_airlock::validate(c, policy, now)).collect();
+    println!("{}", serde_json::to_string_pretty(&verdicts).unwrap());
+    0
 }
 
 fn main() {

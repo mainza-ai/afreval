@@ -1,0 +1,35 @@
+# Regulatory citations registry — the MUTABLE artifact of §3.6.
+# Each citation must resolve (HTTP 200) AND contain its key_phrase at the
+# authoritative source. url: TBD = not yet sourced (the checker reports it as
+# unverified — that is a failure state, not a passing one).
+
+jurisdictions:
+  - jurisdiction: AU
+    instruments:
+      - name: Continental AI Strategy
+        adopted: 2024-07
+        requirement: ethical AI development, human rights, digital sovereignty
+        citations:
+          - { label: AU-AI-Strategy, url: TBD, key_phrase: TBD }
+
+  - jurisdiction: AU
+    instruments:
+      - name: Malabo Convention
+        adopted: 2014
+        requirement: continental baseline for cybersecurity and personal data protection
+        citations:
+          - { label: Malabo-Convention, url: TBD, key_phrase: TBD }
+
+  - jurisdiction: Kenya
+    instruments:
+      - name: Data Protection Act (ODPC)
+        requirement: data localization for protected data; ODPC enforcement
+        citations:
+          - { label: Kenya-ODPC, url: "https://www.odpc.go.ke/", key_phrase: "Data Protection" }
+
+  - jurisdiction: Nigeria
+    instruments:
+      - name: Data Protection Commission (NDPC)
+        requirement: NDPC guidelines on data protection
+        citations:
+          - { label: Nigeria-NDPC, url: "https://ndpc.gov.ng/", key_phrase: "Data Protection" }

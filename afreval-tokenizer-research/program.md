@@ -44,6 +44,16 @@ regression on either.
   must find the Pareto frontier — candidates that hold English CPT ≥ 5.45
   while cutting African premiums (e.g. augment an English-efficient vocab with
   African merges rather than training from scratch).
+- **PASS candidates** (English CPT preserved, Ethiopic 7.83→3.38):
+  - `ScriptAwareCandidate`: o200k for Latin, trained BPE for Ethiopic/N'Ko.
+  - `EfficientRouteCandidate`: min(o200k.count, bpe.count) per utterance —
+    content-driven routing, no language/script hardcoding.
+- **Latin-African gap (finding)**: both PASS candidates leave Latin premiums at
+  baseline because the BPE loses to o200k on Latin text (Yoruba 3.89 vs 2.83
+  tokens/word) — the training corpus (reference suite + WAXAL ASR transcriptions)
+  has no Yoruba/Hausa/Igbo/Swahili (they are WAXAL TTS-only). Improving Latin
+  premiums requires an African-Latin training corpus — the pinned FLORES/SIB-200/
+  MAFAND-MT corpora (§2.3) are the right source but are not yet vendored locally.
 
 ## Rules
 

@@ -106,5 +106,22 @@ class ScriptAwareCandidate:
         return self._latin.count(text)
 
 
+class EfficientRouteCandidate:
+    """Content-driven routing: tokenize with both o200k_base and the trained
+    BPE, keep the fewer tokens. English text -> o200k (English-efficient);
+    African text (any script) -> BPE (African merges). No language tags, no
+    hardcoding — the routing is purely "pick the more efficient tokenizer".
+    """
+
+    id = "candidate/efficient-route-v0"
+
+    def __init__(self):
+        self._o200k = from_afri_fertility("openai/o200k_base")
+        self._bpe = TrainedBPE()
+
+    def count(self, text: str) -> int:
+        return min(self._o200k.count(text), self._bpe.count(text))
+
+
 # The agent swaps the active candidate here (or adds new classes above).
-ACTIVE_CANDIDATE = ScriptAwareCandidate
+ACTIVE_CANDIDATE = EfficientRouteCandidate

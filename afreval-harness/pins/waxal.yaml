@@ -43,7 +43,7 @@ acquisition_strategy:   # two-stage, eval-first (NOT a full ~1,250h pull)
   never: "unlabeled split (pretraining-only; AfrEval does not pretrain) and the full 1,250h materialization"
   default_splits: [validation, test]
 acquisition_records:   # Stage A run, verified 2026-07-31
-  status: acquired-awaiting-QA   # QA pass 2 uses WAXAL-tuned ASRs (Ethio-ASR + Sunbird); see qa_findings
+  status: QA-COMPLETE-AWAITING-APPROVAL   # 74,400 clips QA'd; human reviews qa2_review.md, approves drops, then freeze
   date: 2026-07-31
   revision: e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2
   configs_acquired: 19
@@ -53,6 +53,12 @@ acquisition_records:   # Stage A run, verified 2026-07-31
   raw_parquet_bytes: "~18 GB local (data/waxal/raw/ — not committed to git)"
   method: snapshot_download allow_patterns="data/ASR/*/*-{validation,test}-*.parquet" (never unlabeled/TTS/train)
   loader_caveat: "datasets.load_dataset() materializes the whole config incl. unlabeled — do NOT use it for acquisition; the script reads local parquet via pyarrow"
+qa_results:   # pass 2 complete 2026-08-01 — WAXAL-tuned ASRs (Ethio-ASR 5 langs + Sunbird 13 langs)
+  rows_qaed: 74400
+  flagged_for_review: 2255   # 3% — adaptive per-language threshold (max(0.40, median+4*1.4826*MAD)) or WER>=1.0 or decode_failed
+  review_artifact: "data/waxal/qa2_review.md + qa2_drops.json (human approval required before drop)"
+  high_rate_configs: {kpo_asr: 747, lin_asr: 337, tir_asr: 267, wal_asr: 232, mlg_asr: 173}
+  next: "human reviews qa2_review.md -> finalize_waxal.py --apply (writes filtered manifests) -> freeze_checksums.py --pin waxal.yaml"
 qa_findings:   # 2026-07-31 — CORRECTED after false alarm
   conclusion: "CORPUS IS VALID. WAXAL audio contains the transcribed speech. QA-BLOCKED lifted (2026-07-31)."
   initial_false_alarm: "General ASRs (Whisper-ctranslate2, Whisper-MLX, Meta MMS) catastrophically failed (degeneration/garbage) + spectrogram/'silence' analysis suggested non-speech. WRONG interpretation — these are model-choice artifacts, not corpus defects."

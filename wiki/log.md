@@ -115,7 +115,11 @@ Rust tool-call validator (§3.5) in-tree: seam 1 deny-by-default allowlist, seam
 - **Security dashboard surface** in `afreval-onprem`: `security_report` command → last hardening-loop report rendered (per-seam bypass rates, never aggregated).
 - **Wiki**: phases.md Phase 0/1/2 statuses, repository-layout implemented-repos list.
 
-## [2026-08-01] impl | §3.3 BiasScope probe loop + §3.6 compliance loop + §3.2.1 cert pipeline + dashboard
+## [2026-08-01] qa | WAXAL QA pass 2 COMPLETE (74,400 clips)
+
+Sunbird pass finished (sna, sog last). Total: **74,400 clips QA'd across 18 languages** (Ethio-ASR 5 + Sunbird 13; `mas_asr` has no model coverage). `finalize_waxal.py` → **2,255 clips (3%) flagged** for human review (adaptive per-language threshold or WER≥1.0 or decode_failed), written to `data/waxal/qa2_review.md` + `qa2_drops.json`. Notable high-rate configs: **kpo 747 (21%)**, lin 337 (9%), tir 267, wal 232, mlg 173. Pin status: **QA-COMPLETE-AWAITING-APPROVAL**. Next: human reviews the drop list → `finalize_waxal.py --apply` → `freeze_checksums.py --pin waxal.yaml` → **Phase 0 closed**.
+
+## [2026-08-01] impl | §3.3 BiasScope probe loop + §3.6 compliance loop + afreval-dashboard + onprem vault
 
 - **afreval-biasscope** (§3.3): `probes/perturbation_program.py` (mutable; seeds from the pinned reference suite's parallel translations), `judge/backends.py` (frozen harness: mock deterministic / omlx real / api placeholder), `run_probe.py` (reports the §3.3 metric — acceptance-rate delta across languages under a fixed threshold), `program.md` (cost-bounded instructions). Mock demo shows the blind spot deterministically (English rejected, low-resource generously accepted → 1.0 delta); 4 tests.
 - **afreval-compliance** (§3.6): `citations/africa.yaml` (mutable mapping), `check_currency.py` (citation resolves + key phrase at authoritative source; --offline), `program.md`. Kenya ODPC + Nigeria NDPC **current**; AU AI Strategy + Malabo Convention **unverified** (TBD — must be sourced from official AU pages; a failure state, not a placeholder); 3 offline tests.

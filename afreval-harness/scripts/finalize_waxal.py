@@ -66,8 +66,6 @@ def main() -> int:
 
     if args.apply:
         for cfg, ids in drops.items():
-            if not ids:
-                continue
             man = WAXAL / f"{cfg}.jsonl"
             if not man.exists():
                 continue

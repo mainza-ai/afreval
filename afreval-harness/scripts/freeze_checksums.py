@@ -55,12 +55,15 @@ def main() -> int:
             print(f"[warn] {slug} status={pin.get('status')!r} — refusing to write checksums for a non-frozen pin", file=sys.stderr)
             continue
 
-        # WAXAL: freeze the per-language corpora if present (globs), else only audit log.
+        # WAXAL: freeze the per-language QA-approved (filtered) manifests, else
+        # the original manifests, plus the transcription audit.
         entries = dict(ARTIFACTS[slug])
         if slug == "waxal.yaml":
             corpus_dir = HARNESS_ROOT / "data/waxal"
             if corpus_dir.exists():
-                for f in sorted(corpus_dir.glob("*_asr.jsonl")):
+                filtered = sorted(corpus_dir.glob("*_asr_filtered.jsonl"))
+                manifests = filtered or sorted(corpus_dir.glob("*_asr.jsonl"))
+                for f in manifests:
                     entries[f"waxal_{f.stem}"] = f"data/waxal/{f.name}"
 
         missing = []

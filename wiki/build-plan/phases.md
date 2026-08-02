@@ -10,11 +10,11 @@ Six phases with explicit gates and acceptance criteria. The through-line: **noth
 
 ## Phase 0 — Harness freeze (weeks 1–3)
 
-**Status: WAXAL QA pass 2 running.** `afreval-harness/` in-tree: pins, `tokenizer_eval.py`, `waxal_eval.py`, `afrobench_eval.py`, acquisition/freeze/bump scripts, checksums frozen for afri-fertility + AfroBench-LITE. WAXAL Stage A eval-split acquisition complete (**76,107 rows, 19 configs, 0 empties**); the §2.1.1 QA pass 2 runs **Ethio-ASR + Sunbird** (WAXAL-tuned ASRs — general zero-shot ASRs fail on spontaneous WAXAL audio, which *empirically reproduces the WAXAL-NET thesis*); Ethio pass done, Sunbird ~13h. Remaining: Sunbird QA → review `qa2_summary.json` flags → drop high-divergence rows → `freeze_checksums.py --pin waxal.yaml` ([waxal.md](../substrates/waxal.md)).
+**Status: COMPLETE (2026-08-01).** All three pins **frozen**: `afri_fertility.yaml` + `afrobench_lite.yaml` (since v0.1.0) and `waxal.yaml` — QA pass 2 finished (74,400 clips, Ethio-ASR + Sunbird), 2,255 drops applied via `finalize_waxal.py --apply`, **QA-approved corpus = 72,145 clips / 18 languages**, checksummed. The WAXAL-NET thesis was reproduced empirically (general zero-shot ASRs fail on WAXAL's spontaneous audio; WAXAL-tuned models succeed). **Phase 0 gate passed — downstream loops can now score against frozen harnesses.**
 
 Pin exact versions of [WAXAL](../substrates/waxal.md), [AfroBench(-LITE)](../substrates/afrobench.md), and [afri-fertility](../substrates/afri-fertility.md). Build `harness/` for each as read-only, checksummed artifacts. For WAXAL this is not complete until the §2.1.1 four-step acquisition/QA task list has run end-to-end and its provenance record committed — **a raw, un-audited pull does not satisfy the gate.**
 
-**Acceptance:** harness repo tagged `v0.1.0`, checksums committed, documented procedure for pin bumps (WAXAL and AfroBench are active projects — an unplanned silent bump invalidates historical Context Scores). WAXAL per-language pre/post-filter row counts and edit-distance QA results present in the harness README.
+**Acceptance:** harness repo tagged `v0.1.0`, checksums committed, documented procedure for pin bumps (WAXAL and AfroBench are active projects — an unplanned silent bump invalidates historical Context Scores). WAXAL per-language pre/post-filter row counts and edit-distance QA results present in the harness README. ✓
 
 ## Phase 1 — Tokenizer & Context Score core (weeks 3–8)
 

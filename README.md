@@ -10,7 +10,7 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 
 | Area | Repo | Status |
 |---|---|---|
-| Phase 0 — frozen harnesses | `afreval-harness/` | ✅ Pins + checksums for afri-fertility & AfroBench-LITE frozen (tagged `v0.1.0`); WAXAL acquired (76,107 eval rows, 19 languages) — **QA pass 2 running** (WAXAL-tuned Ethio-ASR + Sunbird); finalize → freeze is the open gate |
+| Phase 0 — frozen harnesses | `afreval-harness/` | ✅ **COMPLETE** — all three pins frozen; WAXAL QA pass 2 finished (74,400 clips) with 2,255 drops applied → **QA-approved corpus 72,145 clips / 18 languages** checksummed |
 | Phase 1 — Context Score core | `afreval-context-score/` | ✅ Deterministic Rust scorer (bit-identical repeated runs — the acceptance criterion) + deterministic certification pipeline with auditable sha256 certs |
 | Phase 1 — tokenizer search | `afreval-tokenizer-research/` | ✅ §3.1 search loop with trained BPE candidates; **script-aware candidate PASSES** (Ethiopic premium 7.83→3.38 at zero English-CPT regression) |
 | Phase 2 — execution boundary | `afreval-airlock/` | ✅ Four defensive seams incl. JWS HS256 clearance; §3.5 red-team hardening loop — **19 regression tests, 0 bypasses** |
@@ -22,7 +22,7 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 | Phase 4 — field app | `afreval-field-app/` | ⏸ Gates on WAXAL-NET (Flutter) |
 | Phase 5 — SDK | `afreval-sdk/` | ⏸ Gates on the certification API being live |
 
-**Current critical path:** WAXAL QA pass 2 (Sunbird, ~11.5h) → `finalize_waxal.py --apply` (drop ~2% flagged rows) → human review → `freeze_checksums.py --pin waxal.yaml` → **Phase 0 closed** → Phase 4 (WAXAL-NET) unblocks.
+**Current status:** Phase 0 **closed** (all harnesses frozen, WAXAL QA-approved at 72,145 clips). Phases 1–2 core built. Next: Phase 4 (WAXAL-NET edge ASR) — unblocked by the Phase 0 close.
 
 ## Repository structure
 

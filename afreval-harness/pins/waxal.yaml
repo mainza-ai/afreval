@@ -1,76 +1,152 @@
-# Pin record — WAXAL (acoustic substrate, §2.1).
-# Phase 0 is NOT complete for WAXAL until acquisition + QA (§2.1.1, four steps) has
-# run end-to-end, per-language pre/post-filter row counts and edit-distance QA results
-# are recorded, and the corpus is checksummed. A raw, un-audited pull does NOT satisfy
-# the Phase 0 gate.
-#
-# Hub ground truth (verified 2026-07-31, repo sha e0a62aa):
-#   - google/WaxalNLP is organized per-language, per-task as configs ({lang}_asr, {lang}_tts).
-#   - Each _asr config ships train / validation / test (labeled; every row carries
-#     'transcription') PLUS a large 'unlabeled' split (rows have transcription == "").
-#   - Transcribed-vs-untranscribed is separated BY SPLIT, not by a filter inside the
-#     labeled data. Acquire labeled splits only; the QA/edit-distance pass is the real
-#     filtering work (per the galsenai/WaxalNLP community fork).
 substrate: waxal
-variant: asr   # image-prompted spontaneous speech; TTS excluded unless a subsystem needs it
-pinned_version: TBD   # set when acquired & QA'd
+variant: asr
+pinned_version: TBD
 hf_repo: google/WaxalNLP
-hf_revision: e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2   # verified repo revision (2026-07-31)
+hf_revision: e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2
 upstream: https://github.com/Waxal-Multilingual/speech-data
 paper: https://arxiv.org/abs/2602.02734
-pinned_date: 2026-07-31
-status: pending-freeze   # acquisition & QA required before freeze
+pinned_version: "2026-08-01-qa2"   # acquired + QA'd + frozen
+pinned_date: 2026-08-01
+status: frozen   # Phase 0 complete 2026-08-01: QA-approved filtered corpus checksummed (72,145 clips, 18 languages)
 structure:
   configs: per-language, per-task ({lang}_asr / {lang}_tts)
   asr_config_count: 19
-  asr_languages: [ach, aka, amh, dag, dga, ewe, ful, kpo, lin, lug, mas, mlg, nyn, orm, sid, sna, sog, tir, wal]
-  labeled_splits: [train, validation, test]   # every row carries 'transcription'
-  unlabeled_split: unlabeled                  # transcription == ""; NOT acquired
-  schema: [id, speaker_id, transcription, language, gender, audio]
+  asr_languages:
+  - ach
+  - aka
+  - amh
+  - dag
+  - dga
+  - ewe
+  - ful
+  - kpo
+  - lin
+  - lug
+  - mas
+  - mlg
+  - nyn
+  - orm
+  - sid
+  - sna
+  - sog
+  - tir
+  - wal
+  labeled_splits:
+  - train
+  - validation
+  - test
+  unlabeled_split: unlabeled
+  schema:
+  - id
+  - speaker_id
+  - transcription
+  - language
+  - gender
+  - audio
   audio_format: mp3
 scale:
-  asr_hours: "~1250 transcribed (pin exact paper revision)"
-  tts_hours: "~180-235 (varies by paper revision — pin exact; TTS configs excluded from harness)"
-  note: "the paper's '~10% of collected audio transcribed' describes pre-release collection; on the Hub the transcribed subset is train/val/test and the remainder ships as the unlabeled split"
+  asr_hours: ~1250 transcribed (pin exact paper revision)
+  tts_hours: "~180-235 (varies by paper revision \u2014 pin exact; TTS configs excluded\
+    \ from harness)"
+  note: the paper's '~10% of collected audio transcribed' describes pre-release collection;
+    on the Hub the transcribed subset is train/val/test and the remainder ships as
+    the unlabeled split
 collection:
   method: image-prompted speech in natural environments
   min_clip_seconds: 15
   metadata: speaker age/gender/language/environment
   transcribed_by: paid local linguistic experts, local scripts where available
-acquisition_strategy:   # two-stage, eval-first (NOT a full ~1,250h pull)
-  stage_a: "Phase 0 (now): acquire validation + test only — the frozen WER/CER eval harness (§3.4 'held-out eval split'); ~2% of the collection (~1-2 days)"
-  stage_b: "Phase 4 (deferred): acquire labeled train per language as the WAXAL-NET fine-tuning substrate, on-demand; still excludes unlabeled"
-  never: "unlabeled split (pretraining-only; AfrEval does not pretrain) and the full 1,250h materialization"
-  default_splits: [validation, test]
-acquisition_records:   # Stage A run, verified 2026-07-31
-  status: QA-COMPLETE-AWAITING-APPROVAL   # 74,400 clips QA'd; human reviews qa2_review.md, approves drops, then freeze
+acquisition_strategy:
+  stage_a: "Phase 0 (now): acquire validation + test only \u2014 the frozen WER/CER\
+    \ eval harness (\xA73.4 'held-out eval split'); ~2% of the collection (~1-2 days)"
+  stage_b: 'Phase 4 (deferred): acquire labeled train per language as the WAXAL-NET
+    fine-tuning substrate, on-demand; still excludes unlabeled'
+  never: unlabeled split (pretraining-only; AfrEval does not pretrain) and the full
+    1,250h materialization
+  default_splits:
+  - validation
+  - test
+acquisition_records:
+  status: QA-COMPLETE-AWAITING-APPROVAL
   date: 2026-07-31
   revision: e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2
   configs_acquired: 19
   total_rows: 76107
-  empty_transcriptions: 0   # verified; no filter needed (audit log: data/waxal/transcription_audit.json)
-  audio_bytes: "~21 GB local (data/waxal/audio/ — not committed to git; re-pullable from pinned revision)"
-  raw_parquet_bytes: "~18 GB local (data/waxal/raw/ — not committed to git)"
-  method: snapshot_download allow_patterns="data/ASR/*/*-{validation,test}-*.parquet" (never unlabeled/TTS/train)
-  loader_caveat: "datasets.load_dataset() materializes the whole config incl. unlabeled — do NOT use it for acquisition; the script reads local parquet via pyarrow"
-qa_results:   # pass 2 complete 2026-08-01 — WAXAL-tuned ASRs (Ethio-ASR 5 langs + Sunbird 13 langs)
+  empty_transcriptions: 0
+  audio_bytes: "~21 GB local (data/waxal/audio/ \u2014 not committed to git; re-pullable\
+    \ from pinned revision)"
+  raw_parquet_bytes: "~18 GB local (data/waxal/raw/ \u2014 not committed to git)"
+  method: snapshot_download allow_patterns="data/ASR/*/*-{validation,test}-*.parquet"
+    (never unlabeled/TTS/train)
+  loader_caveat: "datasets.load_dataset() materializes the whole config incl. unlabeled\
+    \ \u2014 do NOT use it for acquisition; the script reads local parquet via pyarrow"
+qa_results:
   rows_qaed: 74400
-  flagged_for_review: 2255   # 3% — adaptive per-language threshold (max(0.40, median+4*1.4826*MAD)) or WER>=1.0 or decode_failed
-  review_artifact: "data/waxal/qa2_review.md + qa2_drops.json (human approval required before drop)"
-  high_rate_configs: {kpo_asr: 747, lin_asr: 337, tir_asr: 267, wal_asr: 232, mlg_asr: 173}
-  next: "human reviews qa2_review.md -> finalize_waxal.py --apply (writes filtered manifests) -> freeze_checksums.py --pin waxal.yaml"
-qa_findings:   # 2026-07-31 — CORRECTED after false alarm
-  conclusion: "CORPUS IS VALID. WAXAL audio contains the transcribed speech. QA-BLOCKED lifted (2026-07-31)."
-  initial_false_alarm: "General ASRs (Whisper-ctranslate2, Whisper-MLX, Meta MMS) catastrophically failed (degeneration/garbage) + spectrogram/'silence' analysis suggested non-speech. WRONG interpretation — these are model-choice artifacts, not corpus defects."
-  decisive_evidence: "badrex/Ethio-ASR-multilingual-600M (wav2vec2-bert-2.0 fine-tuned ON google/WaxalNLP, CTC, cannot loop) transcribes the same amh clip at WER 0.286-0.314 (correct sentence). Across amh/tir/orm/sid/wal validation clips: mean WER 0.18-0.46 — consistent with the model card's WAXAL test-set WERs (amh 22.9, tir 35.2, orm 24.4, sid 31.7, wal 38.2)."
-  why_general_asrs_fail: "WAXAL is spontaneous, natural-environment speech (image-prompted, field recordings, quiet/sparse). Zero-shot foundation ASRs trained on clean studio speech fail on it — this EMPIRICALLY REPRODUCES the WAXAL-NET thesis (§2.1): fine-tuned/tuned models beat zero-shot foundations on spontaneous African speech."
-  correct_qa_asr: "Second-ASR pass must use WAXAL-tuned models: Ethio-ASR (badrex/Ethio-ASR-multilingual-600M) for amh/tir/orm/sid/wal (open); Sunbird/asr-whisper-51-african-languages for the other 14 (ach, aka, dag, dga, ewe, ful, kpo, lin, lug, mlg, nyn, sna, sog/xog, tir...; GATED — requires HF login/token). mas likely uncovered by both."
-  next_steps: ["run full QA pass 2 with Ethio-ASR (5 langs, no token needed) + Sunbird (14 langs, needs HF token for gated model)", "record per-language WER distributions + adaptive outlier flags", "freeze after QA"]
-qa_required:   # §2.1.1, corrected for split-separated labels
-  step1_pull_by_config: "pull {lang}_asr configs, requested splits only; allow_patterns never match *-unlabeled-*"
-  step2_materialize: "decode each clip; corrupt/unreadable audio raises and never enters the harness"
-  step3_empty_transcription_audit: "verify empties are (near-)absent in labeled splits; filter only if >0.1% (don't assume)"
-  step4_qa_pass: "second-ASR edit distance is the REAL filter — flag/drop high-divergence rows"
-  step5_checksum_and_freeze: "checksummed filtered corpus + provenance record in README"
+  flagged_for_review: 2255
+  review_artifact: data/waxal/qa2_review.md + qa2_drops.json (human approval required
+    before drop)
+  high_rate_configs:
+    kpo_asr: 747
+    lin_asr: 337
+    tir_asr: 267
+    wal_asr: 232
+    mlg_asr: 173
+  next: human reviews qa2_review.md -> finalize_waxal.py --apply (writes filtered
+    manifests) -> freeze_checksums.py --pin waxal.yaml
+qa_findings:
+  conclusion: CORPUS IS VALID. WAXAL audio contains the transcribed speech. QA-BLOCKED
+    lifted (2026-07-31).
+  initial_false_alarm: "General ASRs (Whisper-ctranslate2, Whisper-MLX, Meta MMS)\
+    \ catastrophically failed (degeneration/garbage) + spectrogram/'silence' analysis\
+    \ suggested non-speech. WRONG interpretation \u2014 these are model-choice artifacts,\
+    \ not corpus defects."
+  decisive_evidence: "badrex/Ethio-ASR-multilingual-600M (wav2vec2-bert-2.0 fine-tuned\
+    \ ON google/WaxalNLP, CTC, cannot loop) transcribes the same amh clip at WER 0.286-0.314\
+    \ (correct sentence). Across amh/tir/orm/sid/wal validation clips: mean WER 0.18-0.46\
+    \ \u2014 consistent with the model card's WAXAL test-set WERs (amh 22.9, tir 35.2,\
+    \ orm 24.4, sid 31.7, wal 38.2)."
+  why_general_asrs_fail: "WAXAL is spontaneous, natural-environment speech (image-prompted,\
+    \ field recordings, quiet/sparse). Zero-shot foundation ASRs trained on clean\
+    \ studio speech fail on it \u2014 this EMPIRICALLY REPRODUCES the WAXAL-NET thesis\
+    \ (\xA72.1): fine-tuned/tuned models beat zero-shot foundations on spontaneous\
+    \ African speech."
+  correct_qa_asr: "Second-ASR pass must use WAXAL-tuned models: Ethio-ASR (badrex/Ethio-ASR-multilingual-600M)\
+    \ for amh/tir/orm/sid/wal (open); Sunbird/asr-whisper-51-african-languages for\
+    \ the other 14 (ach, aka, dag, dga, ewe, ful, kpo, lin, lug, mlg, nyn, sna, sog/xog,\
+    \ tir...; GATED \u2014 requires HF login/token). mas likely uncovered by both."
+  next_steps:
+  - run full QA pass 2 with Ethio-ASR (5 langs, no token needed) + Sunbird (14 langs,
+    needs HF token for gated model)
+  - record per-language WER distributions + adaptive outlier flags
+  - freeze after QA
+qa_required:
+  step1_pull_by_config: pull {lang}_asr configs, requested splits only; allow_patterns
+    never match *-unlabeled-*
+  step2_materialize: decode each clip; corrupt/unreadable audio raises and never enters
+    the harness
+  step3_empty_transcription_audit: verify empties are (near-)absent in labeled splits;
+    filter only if >0.1% (don't assume)
+  step4_qa_pass: "second-ASR edit distance is the REAL filter \u2014 flag/drop high-divergence\
+    \ rows"
+  step5_checksum_and_freeze: checksummed filtered corpus + provenance record in README
 acquisition_script: scripts/acquire_waxal.py
-checksums: []
+checksums:
+  waxal_transcription_audit: 1bfb281f4b1490641cab42af7d26f2d35ecaaff5e2b5372177a2f4bb6cbde900
+  waxal_ach_asr_filtered: 2bdb350476bc3f079c1ae06afdfbc5d1bb99763df897b07d7dd0d08b2ac0eba9
+  waxal_aka_asr_filtered: a072b52922db010f188ad1baf78f28222b4d247a276da0bb15a2dc7e66b273fb
+  waxal_amh_asr_filtered: 8c73a06239e868d5b79b1c9cb88b3b39e9d0fdabe4b681f9f6a8a200263ac3d0
+  waxal_dag_asr_filtered: ac72b7d4f5004a1ca30c22056beca85f5e1881e50de8edfa56359364a869bd1a
+  waxal_dga_asr_filtered: 31ea3c317f9b5da2fe6f8f91af66dcfb4a5dbd0083c7a5dfef09221670ef8735
+  waxal_ewe_asr_filtered: b669b28206121efe7b142f38ce891e0b851f16bde3026906ed2f0a786933dc95
+  waxal_ful_asr_filtered: 8668d7fecc856ea9910a239e3eaa8ad035f03a9b44dcbbf2cce30df5b071eff4
+  waxal_kpo_asr_filtered: c3ae4d3a26e7034ab9afb5839d214704c7102ac511e4b9cbedbfb16fd136c9d4
+  waxal_lin_asr_filtered: e9d2f3ce203d9a8bc27980069ccc16e688f893c47a0976554bf8a262fc56fcc5
+  waxal_lug_asr_filtered: 92af7e683b0324607b1f4fed7e5f807f5ec573676763ed8cb8472ddb412e37e4
+  waxal_mlg_asr_filtered: 14561f70c1c0593c8a0165f6aaf49d5e7d7910d81fe9e9923ea26ee41c1ec245
+  waxal_nyn_asr_filtered: 8406b702ea2b0c1a5c0f0954c388f77093694d9fe7fec16e80d39915230b0519
+  waxal_orm_asr_filtered: 83527c0acd6f36e5c80b02ec36f297707044400ee9fb185bf6132735a5ac9212
+  waxal_sid_asr_filtered: a6a40ba989e9ff7e4326ad274bbfac91f4cf6bc3a295df20f01e6785a5d09e69
+  waxal_sna_asr_filtered: 2c72f3f75f3701e2a5f04993fcf57023312eeefcc2cfbf528986387e85b57263
+  waxal_sog_asr_filtered: 2ad0f3d890cfd186a508a36862a376546518ad5ff0d714e1a94163d45091b8d7
+  waxal_tir_asr_filtered: 0f84a2a5b31fe6f0f11f426c1e93ecf1663c2ec8334f34309f31ae3b8046280b
+  waxal_wal_asr_filtered: bba19d84fd43fab0259eba79e4ebb78d7539245ea53b43b9b9a9c33afb0ec457

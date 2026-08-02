@@ -119,6 +119,10 @@ Rust tool-call validator (§3.5) in-tree: seam 1 deny-by-default allowlist, seam
 
 Sunbird pass finished (sna, sog last). Total: **74,400 clips QA'd across 18 languages** (Ethio-ASR 5 + Sunbird 13; `mas_asr` has no model coverage). `finalize_waxal.py` → **2,255 clips (3%) flagged** for human review (adaptive per-language threshold or WER≥1.0 or decode_failed), written to `data/waxal/qa2_review.md` + `qa2_drops.json`. Notable high-rate configs: **kpo 747 (21%)**, lin 337 (9%), tir 267, wal 232, mlg 173. Pin status: **QA-COMPLETE-AWAITING-APPROVAL**. Next: human reviews the drop list → `finalize_waxal.py --apply` → `freeze_checksums.py --pin waxal.yaml` → **Phase 0 closed**.
 
+## [2026-08-01] impl | Phase 0 CLOSED — WAXAL frozen (72,145 clips)
+
+Per the proceed directive: applied the QA drop list (`finalize_waxal.py --apply`) and froze `waxal.yaml`. **QA-approved frozen corpus = 72,145 clips / 18 languages** (`mas_asr` excluded — no ASR-model coverage). Fixed two freeze bugs en route: (1) configs with zero flagged rows weren't getting a filtered manifest (their rows vanished from the frozen corpus — e.g. Luganda's 1,302); (2) `freeze_checksums` globbed the original manifests instead of the QA-approved filtered ones. All three pins now **frozen**; PROVENANCE.md records the freeze. **Phase 0 complete — Phase 4 (WAXAL-NET) unblocks.**
+
 ## [2026-08-01] impl | §3.3 BiasScope probe loop + §3.6 compliance loop + afreval-dashboard + onprem vault
 
 - **afreval-biasscope** (§3.3): `probes/perturbation_program.py` (mutable; seeds from the pinned reference suite's parallel translations), `judge/backends.py` (frozen harness: mock deterministic / omlx real / api placeholder), `run_probe.py` (reports the §3.3 metric — acceptance-rate delta across languages under a fixed threshold), `program.md` (cost-bounded instructions). Mock demo shows the blind spot deterministically (English rejected, low-resource generously accepted → 1.0 delta); 4 tests.

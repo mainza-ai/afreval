@@ -51,6 +51,6 @@ Both documents agree on: the Context Score's three vectors; WAXAL's ~1,250h ASR 
 4. agent-airlock upstream releases (security feed, per §3.5) — the Mobile MCP `mobile_open_url` preset pattern.
 5. AU Continental AI Strategy implementation progress — to anchor §3.6 citation-currency checks.
 
-## Blocking issue (Phase 0) — RESOLVED
+## Blocking issue (Phase 0) — RESOLVED AND COMPLETE
 
-**WAXAL corpus confirmed VALID (2026-07-31).** An earlier alarm (general ASRs — Whisper/MMS — degenerating on WAXAL clips, plus spectrogram/silence analysis) was a **false alarm caused by the wrong ASR choice**. Decisive evidence: `badrex/Ethio-ASR-multilingual-600M` (fine-tuned **on WAXAL**, CTC) transcribes the exact clips at WER 0.18–0.46 across amh/tir/orm/sid/wal, consistent with its model-card WAXAL test-set numbers. This **empirically reproduces the WAXAL-NET thesis**: zero-shot foundation ASRs fail on spontaneous African speech while tuned models succeed. **QA-BLOCKED lifted**; the QA second pass will use WAXAL-tuned ASRs (Ethio-ASR open; Sunbird 51-language gated). See [waxal.md](substrates/waxal.md) and the pin's `qa_findings`.
+**Phase 0 is fully closed (2026-08-01).** The earlier false alarm (general ASRs degenerating on WAXAL clips) was a **model-choice artifact**, not a corpus defect — WAXAL-tuned ASRs (Ethio-ASR, Sunbird) transcribe the corpus at normal WER, *empirically reproducing the WAXAL-NET thesis* (zero-shot foundation ASRs fail on spontaneous African speech; tuned models succeed). QA pass 2 scored all 74,400 eval clips; **2,255 dropped after review; the frozen QA-approved corpus is 72,145 clips / 18 languages** (`mas_asr` excluded — no ASR-model coverage). See [waxal.md](substrates/waxal.md) and the pin's `qa_findings`.

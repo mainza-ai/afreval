@@ -40,6 +40,8 @@ Bring up §3.1's search variant, §3.2's calibration loop, [§3.3 BiasScope](../
 
 ## Phase 4 — WAXAL-NET edge loop + field app (weeks 16–26)
 
+**Status: scaffolding + baseline live.** `afreval-waxal-net/`: eval harness + **zero-shot baseline 41.0% language-macro WER** (18 languages; lug 0.21 best → kpo 0.80 worst) established from QA pass 2; `program.md` (training-style, target-edge-hardware + fail-loud hardware assertion), mutable `configs/fine_tune.yaml`, `train.py` entry. **Blocking:** Stage B labeled-train acquisition (pull `--splits train validation test`) then real fine-tuning on MLX; the Dart/Flutter field app builds in parallel.
+
 Requires the MLX/ONNX-mobile fork lineage ([platform caveat](../concepts/karpathy-loop.md)). Build the Dart/Flutter field app in parallel — it depends only on the WAXAL image-prompted-elicitation methodology, not on the training loop finishing.
 
 **Acceptance:** a fine-tuned edge model **beats the relevant zero-shot foundation-model baseline on macro-WER over the 19-language WAXAL-NET set**, run on hardware comparable to the actual target device class, with the **OOD-generalization secondary metric also reported** (not cherry-picked in-distribution only).

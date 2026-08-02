@@ -6,7 +6,7 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 
 ## Implementation status
 
-**8 of 11 target repos are implemented in-tree** (all pushed to this repo). The remaining three are gated on downstream prerequisites, not neglected.
+**9 of 11 target repos are implemented in-tree** (all pushed to this repo). The remaining two are gated on downstream prerequisites, not neglected.
 
 | Area | Repo | Status |
 |---|---|---|
@@ -16,13 +16,13 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 | Phase 2 — execution boundary | `afreval-airlock/` | ✅ Four defensive seams incl. JWS HS256 clearance; §3.5 red-team hardening loop — **19 regression tests, 0 bypasses** |
 | Phase 2 — evaluation bias | `afreval-biasscope/` | ✅ §3.3 probe loop (mock/omlx judge backends; acceptance-rate-gap metric) |
 | Phase 2 — compliance | `afreval-compliance/` | ✅ §3.6 citation-currency loop (Kenya ODPC + Nigeria NDPC verified current) |
+| Phase 4 — edge ASR | `afreval-waxal-net/` | ✅ Loop scaffolding + **zero-shot baseline 41.0% macro-WER**; fine-tuning gates on Stage B train split |
+| Phase 4 — field app | `afreval-field-app/` | ⏸ Gates on WAXAL-NET (Flutter) |
 | Phase 5 — on-prem client | `afreval-onprem/` | 🚧 Tauri 2 skeleton embedding scorer + airlock; trust-root vault + security-dashboard surface (Stronghold, dashboard reuse, local MCP server: post-MVP) |
 | Phase 5 — dashboard | `afreval-dashboard/` | ✅ Certification + security web surface (build-target-agnostic) |
-| Phase 4 — edge ASR | `afreval-waxal-net/` | ⏸ Gates on WAXAL QA completion |
-| Phase 4 — field app | `afreval-field-app/` | ⏸ Gates on WAXAL-NET (Flutter) |
 | Phase 5 — SDK | `afreval-sdk/` | ⏸ Gates on the certification API being live |
 
-**Current status:** Phase 0 **closed** (all harnesses frozen, WAXAL QA-approved at 72,145 clips). Phases 1–2 core built. Next: Phase 4 (WAXAL-NET edge ASR) — unblocked by the Phase 0 close.
+**Current status:** Phase 0 **closed** (all harnesses frozen, WAXAL QA-approved at 72,145 clips). Phases 1–2 core built; Phase 4 WAXAL-NET scaffolding live (baseline 41.0% macro-WER to beat).
 
 ## Repository structure
 

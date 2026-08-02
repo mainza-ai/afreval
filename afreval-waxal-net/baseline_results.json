@@ -1,0 +1,25 @@
+{
+  "mode": "zero-shot baseline (Sunbird + Ethio-ASR via QA pass 2)",
+  "languages": {
+    "ach": 0.3617,
+    "aka": 0.3412,
+    "amh": 0.3283,
+    "dag": 0.3384,
+    "dga": 0.3577,
+    "ewe": 0.3949,
+    "ful": 0.4644,
+    "kpo": 0.7995,
+    "lin": 0.465,
+    "lug": 0.2069,
+    "mlg": 0.2287,
+    "nyn": 0.3933,
+    "orm": 0.3994,
+    "sid": 0.4217,
+    "sna": 0.3311,
+    "sog": 0.5049,
+    "tir": 0.5318,
+    "wal": 0.505
+  },
+  "language_macro_wer": 0.4097,
+  "n_languages": 18
+}

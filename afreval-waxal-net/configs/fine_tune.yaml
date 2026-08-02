@@ -1,0 +1,29 @@
+# §3.4 fine-tune config — THE MUTABLE ARTIFACT. The agent edits this file.
+# Device layer asserts hardware class: this must run on the TARGET edge class,
+# not a workstation GPU, or the claim is invalid (§3.4).
+
+model:
+  base: mlx-community/whisper-large-v3-turbo   # edge-friendly seed (or compact-whisper)
+  adapter: lora
+  lora_rank: 16
+
+train:
+  batch_size: 8
+  lr: 5.0e-05
+  epochs: 3
+  warmup_steps: 100
+  grad_accum_steps: 4
+  fp16: true
+
+data:
+  train_split: [train]
+  max_audio_secs: 30
+  language_weighting: balanced   # avoid overfitting high-resource languages
+
+eval:
+  metric: [wer, cer]
+  ood_secondary: true
+  hardware_class: low-end-mobile   # asserted by the device layer; fail-loud on mismatch
+
+export:
+  format: [onnx, tflite]

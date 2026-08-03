@@ -1,0 +1,21 @@
+name: afreval_field_app
+description: "Milimo AfrEval field data collection (image-prompted speech elicitation + on-device eval telemetry)."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  record: ^5.0.0        # audio recording
+  path_provider: ^2.1.0  # on-device storage
+  image_picker: ^1.0.0   # image prompts
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

@@ -10,7 +10,7 @@ jurisdictions:
         adopted: 2024-07
         requirement: ethical AI development, human rights, digital sovereignty
         citations:
-          - { label: AU-AI-Strategy, url: TBD, key_phrase: TBD }
+          - { label: AU-AI-Strategy, url: "https://au.int/en/documents/20240809/continental-artificial-intelligence-strategy", key_phrase: "Continental Artificial Intelligence Strategy" }
 
   - jurisdiction: AU
     instruments:
@@ -18,7 +18,7 @@ jurisdictions:
         adopted: 2014
         requirement: continental baseline for cybersecurity and personal data protection
         citations:
-          - { label: Malabo-Convention, url: TBD, key_phrase: TBD }
+          - { label: Malabo-Convention, url: "https://au.int/en/treaties/african-union-convention-cyber-security-and-personal-data-protection", key_phrase: "Cyber Security and Personal Data Protection" }
 
   - jurisdiction: Kenya
     instruments:

@@ -1,3 +1,93 @@
 [note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
 [1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
-Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:   0%|          | 1/211 [00:00<01:03,  3.33it/s]Fetching 211 files:   2%|▏         | 4/211 [00:00<00:28,  7.25it/s]Fetching 211 files:   3%|▎         | 6/211 [00:00<00:29,  6.90it/s]Fetching 211 files:   4%|▍         | 8/211 [00:01<00:29,  6.78it/s]Fetching 211 files:   5%|▍         | 10/211 [00:01<00:30,  6.65it/s]Fetching 211 files:   6%|▌         | 12/211 [00:01<00:30,  6.57it/s]Fetching 211 files:   7%|▋         | 14/211 [00:02<00:33,  5.81it/s]Fetching 211 files:   8%|▊         | 16/211 [00:04<01:33,  2.10it/s]
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:   0%|          | 1/211 [00:00<01:03,  3.33it/s]Fetching 211 files:   2%|▏         | 4/211 [00:00<00:28,  7.25it/s]Fetching 211 files:   3%|▎         | 6/211 [00:00<00:29,  6.90it/s]Fetching 211 files:   4%|▍         | 8/211 [00:01<00:29,  6.78it/s]Fetching 211 files:   5%|▍         | 10/211 [00:01<00:30,  6.65it/s]Fetching 211 files:   6%|▌         | 12/211 [00:01<00:30,  6.57it/s]Fetching 211 files:   7%|▋         | 14/211 [00:02<00:33,  5.81it/s]Fetching 211 files:   8%|▊         | 16/211 [00:04<01:33,  2.10it/s]Fetching 211 files:   8%|▊         | 17/211 [04:33<2:41:46, 50.03s/it]Fetching 211 files:   9%|▊         | 18/211 [05:18<2:37:05, 48.84s/it]Fetching 211 files:   9%|▉         | 19/211 [05:18<2:00:55, 37.79s/it]Fetching 211 files:   9%|▉         | 20/211 [05:20<1:31:48, 28.84s/it]Fetching 211 files:  10%|▉         | 21/211 [05:20<1:07:44, 21.39s/it]Fetching 211 files:  10%|█         | 22/211 [05:21<49:33, 15.73s/it]  Fetching 211 files:  11%|█         | 23/211 [05:22<37:01, 11.82s/it]Fetching 211 files:  11%|█         | 23/211 [09:14<1:15:28, 24.09s/it]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1457, in _hf_hub_download_to_local_dir
+    _download_to_tmp_and_move(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        incomplete_path=paths.incomplete_path(etag),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1932, in _download_to_tmp_and_move
+    xet_get(
+    ~~~~~~~^
+        incomplete_path=tmp_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 565, in xet_get
+    with session.new_file_download_group(
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        token_refresh_url=xet_file_data.refresh_route,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_callback=progress.update_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as group:
+    ^
+RuntimeError: Task error: File reconstruction error: CAS Client Error: Request error: HTTP status client error (404 Not Found), domain: https://cas-server.xethub.hf.co/v1/reconstructions/5a0d21fd07602da41b9c9febdfcfef3eb4af43ee05cad89c42ca372e9541e86f

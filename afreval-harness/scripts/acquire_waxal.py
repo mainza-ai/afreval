@@ -202,9 +202,16 @@ def main() -> int:
     args = ap.parse_args()
 
     pin = yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
-    if pin.get("status") == "frozen":
-        print(f"[error] waxal pin is already frozen ({pin['pinned_version']}); a freeze bump is required to re-acquire", file=sys.stderr)
+    FROZEN_EVAL_SPLITS = {"validation", "test"}
+    if pin.get("status") == "frozen" and set(args.splits) & FROZEN_EVAL_SPLITS:
+        print(
+            "[error] waxal pin is frozen; re-acquiring eval splits (validation/test) would "
+            "invalidate the frozen harness. A freeze bump is required for that.",
+            file=sys.stderr,
+        )
         return 1
+    if pin.get("status") == "frozen" and set(args.splits) == {"train"}:
+        print("[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)")
 
     if "unlabeled" in args.splits:
         print("[error] the unlabeled split is never acquired (pretraining-only; not needed by AfrEval)", file=sys.stderr)

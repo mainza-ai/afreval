@@ -57,10 +57,8 @@ collection:
   metadata: speaker age/gender/language/environment
   transcribed_by: paid local linguistic experts, local scripts where available
 acquisition_strategy:
-  stage_a: "Phase 0 (now): acquire validation + test only \u2014 the frozen WER/CER\
-    \ eval harness (\xA73.4 'held-out eval split'); ~2% of the collection (~1-2 days)"
-  stage_b: 'Phase 4 (deferred): acquire labeled train per language as the WAXAL-NET
-    fine-tuning substrate, on-demand; still excludes unlabeled'
+  stage_a: "DONE — Phase 0 complete 2026-08-01: eval split (validation+test) frozen at 72,145 clips / 18 languages"
+  stage_b: "BLOCKED (upstream): labeled train for WAXAL-NET fine-tuning — HF Xet storage serving 404s for train blobs at pinned revision e0a62aa (resolve + CAS reconstruction both fail; transient, retry later). Resumable from cached shards; run: acquire_waxal.py --splits train"
   never: unlabeled split (pretraining-only; AfrEval does not pretrain) and the full
     1,250h materialization
   default_splits:

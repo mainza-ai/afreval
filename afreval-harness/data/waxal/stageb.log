@@ -91,3 +91,1805 @@ Traceback (most recent call last):
     ) as group:
     ^
 RuntimeError: Task error: File reconstruction error: CAS Client Error: Request error: HTTP status client error (404 Not Found), domain: https://cas-server.xethub.hf.co/v1/reconstructions/5a0d21fd07602da41b9c9febdfcfef3eb4af43ee05cad89c42ca372e9541e86f
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:01<00:06, 27.45it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1457, in _hf_hub_download_to_local_dir
+    _download_to_tmp_and_move(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        incomplete_path=paths.incomplete_path(etag),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1932, in _download_to_tmp_and_move
+    xet_get(
+    ~~~~~~~^
+        incomplete_path=tmp_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 565, in xet_get
+    with session.new_file_download_group(
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        token_refresh_url=xet_file_data.refresh_route,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_callback=progress.update_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as group:
+    ^
+RuntimeError: Task error: File reconstruction error: CAS Client Error: Request error: HTTP status client error (404 Not Found), domain: https://cas-server.xethub.hf.co/v1/reconstructions/70204668664784b80c95df0a14adfce6ed5326796d336a1589defdc9cb4f8c49
+attempt 1 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:01<00:06, 27.25it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1457, in _hf_hub_download_to_local_dir
+    _download_to_tmp_and_move(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        incomplete_path=paths.incomplete_path(etag),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1932, in _download_to_tmp_and_move
+    xet_get(
+    ~~~~~~~^
+        incomplete_path=tmp_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 565, in xet_get
+    with session.new_file_download_group(
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        token_refresh_url=xet_file_data.refresh_route,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_callback=progress.update_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as group:
+    ^
+RuntimeError: Task error: File reconstruction error: CAS Client Error: Request error: HTTP status client error (404 Not Found), domain: https://cas-server.xethub.hf.co/v1/reconstructions/5a0d21fd07602da41b9c9febdfcfef3eb4af43ee05cad89c42ca372e9541e86f
+attempt 2 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:01<00:07, 24.05it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1457, in _hf_hub_download_to_local_dir
+    _download_to_tmp_and_move(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        incomplete_path=paths.incomplete_path(etag),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1932, in _download_to_tmp_and_move
+    xet_get(
+    ~~~~~~~^
+        incomplete_path=tmp_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 565, in xet_get
+    with session.new_file_download_group(
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        token_refresh_url=xet_file_data.refresh_route,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_callback=progress.update_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as group:
+    ^
+RuntimeError: Task error: File reconstruction error: CAS Client Error: Request error: HTTP status client error (404 Not Found), domain: https://cas-server.xethub.hf.co/v1/reconstructions/f74b517f1a85e9b04316982589416e18233880663fc42a9827f30c75eea691d4
+attempt 3 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:05, 33.72it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1457, in _hf_hub_download_to_local_dir
+    _download_to_tmp_and_move(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        incomplete_path=paths.incomplete_path(etag),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1932, in _download_to_tmp_and_move
+    xet_get(
+    ~~~~~~~^
+        incomplete_path=tmp_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 565, in xet_get
+    with session.new_file_download_group(
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        token_refresh_url=xet_file_data.refresh_route,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_callback=progress.update_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as group:
+    ^
+RuntimeError: Task error: File reconstruction error: CAS Client Error: Request error: HTTP status client error (404 Not Found), domain: https://cas-server.xethub.hf.co/v1/reconstructions/70204668664784b80c95df0a14adfce6ed5326796d336a1589defdc9cb4f8c49
+attempt 4 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:05, 30.66it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1457, in _hf_hub_download_to_local_dir
+    _download_to_tmp_and_move(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        incomplete_path=paths.incomplete_path(etag),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1932, in _download_to_tmp_and_move
+    xet_get(
+    ~~~~~~~^
+        incomplete_path=tmp_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 565, in xet_get
+    with session.new_file_download_group(
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        token_refresh_url=xet_file_data.refresh_route,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_callback=progress.update_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as group:
+    ^
+RuntimeError: Task error: File reconstruction error: CAS Client Error: Request error: HTTP status client error (404 Not Found), domain: https://cas-server.xethub.hf.co/v1/reconstructions/96d2829889ba4bc0cbfcc09fe4155b20cdcfcd5035fed6cde8bdc61c934a0562
+attempt 5 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:01<00:06, 28.94it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1457, in _hf_hub_download_to_local_dir
+    _download_to_tmp_and_move(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        incomplete_path=paths.incomplete_path(etag),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1932, in _download_to_tmp_and_move
+    xet_get(
+    ~~~~~~~^
+        incomplete_path=tmp_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 565, in xet_get
+    with session.new_file_download_group(
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        token_refresh_url=xet_file_data.refresh_route,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_callback=progress.update_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as group:
+    ^
+RuntimeError: Task error: File reconstruction error: CAS Client Error: Request error: HTTP status client error (404 Not Found), domain: https://cas-server.xethub.hf.co/v1/reconstructions/2d29aad246f404c57b5d6a2bc9ed9063f254248ffe38fe55661c618cf0e1e567
+attempt 6 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:01<00:10, 17.44it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1457, in _hf_hub_download_to_local_dir
+    _download_to_tmp_and_move(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        incomplete_path=paths.incomplete_path(etag),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1932, in _download_to_tmp_and_move
+    xet_get(
+    ~~~~~~~^
+        incomplete_path=tmp_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 565, in xet_get
+    with session.new_file_download_group(
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        token_refresh_url=xet_file_data.refresh_route,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_callback=progress.update_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as group:
+    ^
+RuntimeError: Task error: File reconstruction error: CAS Client Error: Request error: HTTP status client error (404 Not Found), domain: https://cas-server.xethub.hf.co/v1/reconstructions/f74b517f1a85e9b04316982589416e18233880663fc42a9827f30c75eea691d4
+attempt 7 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:01, 99.01it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00001.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a71265c-6fd8021d376eea4152b88dbd;8dce50e3-7bf1-4ff9-acd8-2255f9e06a05)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00001.parquet.
+attempt 1 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:02, 84.63it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00000.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a71267a-7bf8d7703af6c2f134d3f4fa;43217667-9483-478d-96f1-c6e299f767ed)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00000.parquet.
+attempt 2 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:02, 71.92it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00002.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a712699-4e6cb05e267659dc56514429;878f9d7d-81ca-47cb-87a0-41b9034a55fc)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00002.parquet.
+attempt 3 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:02, 87.85it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00006.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a7126b8-235888ed25af375573b8688d;9b12ca18-c8f3-4fb9-b605-5cc91eec7209)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00006.parquet.
+attempt 4 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:01, 92.24it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00000.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a7126d7-49aa3df05853807f0b3f4293;fc7ee411-881c-4cee-a6b4-ddef35fc0adf)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00000.parquet.
+attempt 5 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:02, 70.36it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00007.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a7126f5-75c903e74909193a06c865eb;24bd2a6a-c20d-43d2-857f-7063e37ca044)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00007.parquet.
+attempt 6 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:02, 67.22it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00001.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a712714-4e9d87ff5c8d6bb25be64644;2650f47a-e844-479a-aa25-20a61bd39356)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00001.parquet.
+attempt 7 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:02, 66.63it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00000.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a712733-0800ce793f1ebbfb22145494;ec993e28-c830-4cf8-9e84-ce177480062d)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00000.parquet.
+attempt 8 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:02, 70.01it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00000.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a712752-1bef7dfd65528a8d7113b3dc;585d41bd-808e-4f6c-aa32-da7c8512937a)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00000.parquet.
+attempt 9 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:03, 49.20it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00003.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a712770-12bba1bf5def62b835dedeb3;06efff68-e223-45b9-ad75-9daacbfea53c)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00003.parquet.
+attempt 10 failed; retrying in 30s
+[note] frozen pin; acquiring train split only (Stage B fine-tuning substrate — separate from the frozen eval split)
+[1] downloading train splits for 19 configs (no unlabeled, no TTS) ...
+Fetching 211 files:   0%|          | 0/211 [00:00<?, ?it/s]Fetching 211 files:  14%|█▍        | 30/211 [00:00<00:02, 77.49it/s]
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '404 Not Found' for url 'https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00000.parquet'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 253, in main
+    download_splits(repo, revision, args.splits, raw_dir)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/scripts/acquire_waxal.py", line 99, in download_splits
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        repo_id=hf_repo,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        local_dir=str(raw_dir),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 522, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/_snapshot_download.py", line 502, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 998, in hf_hub_download
+    return _hf_hub_download_to_local_dir(
+        # Destination
+    ...<16 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1317, in _hf_hub_download_to_local_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_id=repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tree_cache_folder=tree_cache_folder,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1713, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+        url=url,
+    ...<4 lines>...
+        retry_on_errors=retry_on_errors,
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/file_download.py", line 1621, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+        method="HEAD", url=url, headers=hf_headers, timeout=timeout, retry_on_errors=retry_on_errors
+    )
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/mck/Desktop/afreval/afreval-harness/.venv/lib/python3.14/site-packages/huggingface_hub/utils/_http.py", line 815, in hf_raise_for_status
+    raise _format(RemoteEntryNotFoundError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.RemoteEntryNotFoundError: 404 Client Error. (Request ID: Root=1-6a71278f-360e4d9f257150a465cb00a8;252468c7-fd5c-46fa-ae89-cfd54e6ab57a)
+
+Entry Not Found for url: https://huggingface.co/datasets/google/WaxalNLP/resolve/e0a62aaebc61bd5bb8cac17a08d1b42c65551dd2/data/ASR/dag/dag-train-00000.parquet.
+attempt 11 failed; retrying in 30s

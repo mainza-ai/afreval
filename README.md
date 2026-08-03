@@ -6,7 +6,7 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 
 ## Implementation status
 
-**9 of 11 target repos are implemented in-tree** (all pushed to this repo). The remaining two are gated on downstream prerequisites, not neglected.
+**All 11 target repos have in-tree presence** (all pushed to this repo). Remaining work is operational, not scaffold: Stage B train pull, live BiasScope run, compliance citation sourcing, and the server-side isolation tiers (gVisor/Firecracker/Envoy).
 
 | Area | Repo | Status |
 |---|---|---|
@@ -17,10 +17,10 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 | Phase 2 — evaluation bias | `afreval-biasscope/` | ✅ §3.3 probe loop (mock/omlx judge backends; acceptance-rate-gap metric) |
 | Phase 2 — compliance | `afreval-compliance/` | ✅ §3.6 citation-currency loop (Kenya ODPC + Nigeria NDPC verified current) |
 | Phase 4 — edge ASR | `afreval-waxal-net/` | ✅ Loop scaffolding + **zero-shot baseline 41.0% macro-WER**; fine-tuning gates on Stage B train split |
-| Phase 4 — field app | `afreval-field-app/` | ⏸ Gates on WAXAL-NET (Flutter) |
+| Phase 4 — field app | `afreval-field-app/` | ✅ Flutter scaffold (elicitation UI + on-device telemetry; needs Flutter SDK to build) |
 | Phase 5 — on-prem client | `afreval-onprem/` | 🚧 Tauri 2 skeleton embedding scorer + airlock; trust-root vault + security-dashboard surface (Stronghold, dashboard reuse, local MCP server: post-MVP) |
 | Phase 5 — dashboard | `afreval-dashboard/` | ✅ Certification + security web surface (build-target-agnostic) |
-| Phase 5 — SDK | `afreval-sdk/` | ⏸ Gates on the certification API being live |
+| Phase 5 — SDK | `afreval-sdk/` | ✅ Python client SDK (working) + TypeScript client shape (gates on live API) |
 
 **Current status:** Phase 0 **closed** (all harnesses frozen, WAXAL QA-approved at 72,145 clips). Phases 1–2 core built; Phase 4 WAXAL-NET scaffolding live (baseline 41.0% macro-WER to beat).
 

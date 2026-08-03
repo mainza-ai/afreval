@@ -123,6 +123,12 @@ Sunbird pass finished (sna, sog last). Total: **74,400 clips QA'd across 18 lang
 
 Per the proceed directive: applied the QA drop list (`finalize_waxal.py --apply`) and froze `waxal.yaml`. **QA-approved frozen corpus = 72,145 clips / 18 languages** (`mas_asr` excluded — no ASR-model coverage). Fixed two freeze bugs en route: (1) configs with zero flagged rows weren't getting a filtered manifest (their rows vanished from the frozen corpus — e.g. Luganda's 1,302); (2) `freeze_checksums` globbed the original manifests instead of the QA-approved filtered ones. All three pins now **frozen**; PROVENANCE.md records the freeze. **Phase 0 complete — Phase 4 (WAXAL-NET) unblocks.**
 
+## [2026-08-01] impl | Final repos — afreval-sdk + afreval-field-app (all 11 in-tree)
+
+- **afreval-sdk**: Python client SDK (`AfrevalClient.certify`) wrapping the deterministic Rust scorer — auditable certs with sha256, 2 tests passing; TypeScript client shape for the future SaaS API.
+- **afreval-field-app**: Flutter scaffold — image-prompted elicitation UI + on-device eval telemetry (local WER, queued sync); spec scaffold, needs the Flutter SDK (not installed). Builds in parallel with WAXAL-NET per §3.4.
+- **All 11 target repos now have in-tree presence.** Remaining is operational: Stage B train pull (background), live BiasScope run via omlx, compliance citation sourcing (AU/Malabo), and the server-side isolation tiers (gVisor/Firecracker/Envoy — laptop-unbuildable).
+
 ## [2026-08-01] impl | §3.3 BiasScope probe loop + §3.6 compliance loop + afreval-dashboard + onprem vault
 
 - **afreval-biasscope** (§3.3): `probes/perturbation_program.py` (mutable; seeds from the pinned reference suite's parallel translations), `judge/backends.py` (frozen harness: mock deterministic / omlx real / api placeholder), `run_probe.py` (reports the §3.3 metric — acceptance-rate delta across languages under a fixed threshold), `program.md` (cost-bounded instructions). Mock demo shows the blind spot deterministically (English rejected, low-resource generously accepted → 1.0 delta); 4 tests.
@@ -130,4 +136,4 @@ Per the proceed directive: applied the QA drop list (`finalize_waxal.py --apply`
 - **afreval-dashboard**: Phase 5 certification & security web surface (certs + per-seam bypass rates from state.json; the build-target-agnostic UI the onprem client mounts).
 - **afreval-onprem**: seam-4 trust-root `Vault` stub ($AFREVAL_TRUST_KEY; Stronghold post-MVP) + `sign_grant` command.
 
-**8 of 11 target repos now have real in-tree implementation.** Remaining (`afreval-waxal-net`, `afreval-field-app`, `afreval-sdk`) are intentionally deferred: Phase 4 ML/mobile work gates on WAXAL QA/fine-tuning substrate; the SDK gates on the certification API being live. The Phase 3 autonomous loops gate on fitness/incident data + human sign-off.
+All 11 target repos now have in-tree presence (see the entry above).

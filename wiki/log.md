@@ -151,6 +151,15 @@ All 11 target repos now have in-tree presence (see the entry above).
 
 Train-split download hit **HF Xet storage 404s** at pinned revision `e0a62aa` (resolve + CAS reconstruction both fail for train blobs; Stage A val/test pulled fine). Retry loop killed; resumable from cached shards when HF recovers. **Stage B is a Phase 4 substrate, not a Phase 0 blocker** (Phase 0 frozen). Recorded in `pins/waxal.yaml` + `data/waxal/stageb.log` (commit `cea785ca`).
 
+## [2026-08-05] impl | §3.5 hardening round — 2 bypasses found, both fixed
+
+Expanded the `afreval-airlock` attack catalogue 20 → 31 variants (unicode homoglyphs, fullwidth confusables, nested-ghost smuggling, capitalized/homoglyph params). The loop found **two real bypasses**, both promoted to permanent regression tests and fixed:
+
+1. **Seam 3 — unicode confusable PII**: `alice@corp.ｉｏ` (fullwidth TLD) evaded the ASCII-only email regex → NFKC normalization added before masking (`src/sanitize.rs`).
+2. **Seam 2 — duplicate-key smuggling**: `{"customer_id":"c1","customer_id":"DROP TABLE x"}` deserialized last-wins (RFC 8259 undefined behavior), swallowing the injected value with no ghost-arg strip → `StrictArgs` deserializer rejects duplicate keys at parse (`src/ghost_args.rs`, custom `ToolCall` Deserialize).
+
+The dup-key case is a wire-level defense, regression-tested in `tests/redteam.rs::seam2_duplicate_keys_are_rejected` (not transmittable through the JS harness — `JSON.parse` collapses it first). Rebuilt: **31 variants, 0 bypasses, 21 tests passing.**
+
 ## [2026-08-05] impl | §3.3 live BiasScope run — real judge, genuine cross-language gap
 
 Ran the BiasScope loop end-to-end against a real judge for the first time: **Qwen3.6-35B-A3B via local omlx** (started `omlx serve --model-dir ~/.omlx/models`, port 8787; machine idle 128GB/no swap). Four real perturbation styles implemented in `probes/perturbation_program.py` (was a placeholder that ignored the style parameter): code_switch, colloquial, formal, high_perplexity. Two harness defects fixed: (1) `--max-calls` budget left unscored languages → ZeroDivisionError; (2) judge's thinking preamble broke float parsing → every score silently fell back to 50.0, fixed via `chat_template_kwargs: {enable_thinking: false}`.

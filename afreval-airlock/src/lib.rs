@@ -2,7 +2,7 @@ pub mod clearance;
 pub mod ghost_args;
 pub mod sanitize;
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, Deserialize)]
@@ -35,11 +35,33 @@ pub struct Policy {
     pub reauth_tools: Vec<String>,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Serialize, PartialEq)]
 pub struct ToolCall {
     pub tool: String,
     pub arguments: serde_json::Value,
     pub grant: Option<String>,
+}
+
+// Strict-args deserializer: reject duplicate keys in `arguments` (last-wins
+// would let an injected value through — seam-2 finding 2026-08-05).
+impl<'de> Deserialize<'de> for ToolCall {
+    fn deserialize<D>(d: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        #[derive(Deserialize)]
+        struct Raw {
+            tool: String,
+            arguments: ghost_args::StrictArgs,
+            grant: Option<String>,
+        }
+        let raw = Raw::deserialize(d)?;
+        Ok(ToolCall {
+            tool: raw.tool,
+            arguments: raw.arguments.0,
+            grant: raw.grant,
+        })
+    }
 }
 
 #[derive(Debug, Clone, Serialize, PartialEq)]

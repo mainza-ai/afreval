@@ -26,7 +26,7 @@ Build [§3.1 tokenizer search](../subsystems/tokenizer-search.md) and the **dete
 
 ## Phase 2 — Isolation & MCP boundary (weeks 6–12, overlapping Phase 1)
 
-**Status: software seams done; server infra pending.** `afreval-airlock` (Rust) implements all **four** defensive seams — deny-by-default allowlist, ghost-arg stripping/schema, output sanitization (PII+cap), and **seam 4 per-call reauthorization (JWS HS256 clearance — the genuinely-unbuilt upstream piece)** — plus the §3.5 hardening loop (attack program → per-seam bypass rate; **0 bypasses, 19 regression tests**). Still to stand up (server infra, not laptop-testable): [gVisor](../infrastructure/isolation-tiers.md) + Firecracker tiers and Envoy credential injection.
+**Status: software seams done; server infra pending.** `afreval-airlock` (Rust) implements all **four** defensive seams — deny-by-default allowlist, ghost-arg stripping/schema, output sanitization (PII+cap), and **seam 4 per-call reauthorization (JWS HS256 clearance — the genuinely-unbuilt upstream piece)** — plus the §3.5 hardening loop (attack program → per-seam bypass rate). **2026-08-05 round: 31 variants, 0 bypasses, 21 tests** — the loop found and fixed 2 real bypasses (unicode-confusable PII evasion via NFKC; duplicate-key smuggling via strict deserializer). Still to stand up (server infra, not laptop-testable): [gVisor](../infrastructure/isolation-tiers.md) + Firecracker tiers and Envoy credential injection.
 
 Stand up the [gVisor tier](../infrastructure/isolation-tiers.md), Firecracker tier, Envoy credential injection, and fork/extend [agent-airlock](../subsystems/agent-airlock.md) for the fourth seam (per-call reauthorization). Infrastructure, not research — **no autonomous loop yet, just build it correctly.**
 

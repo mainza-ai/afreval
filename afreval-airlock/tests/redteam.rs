@@ -158,3 +158,28 @@ fn seam3_pii_never_leaks() {
     assert!(!s.contains("+233"));
     assert!(!s.contains("9988776655"));
 }
+
+// ---- regression tests promoted from §3.5 hardening-loop bypasses (2026-08-05) ----
+
+#[test]
+fn seam3_unicode_confusable_pii_is_masked() {
+    // Bypass found 2026-08-05: alice@corp.ｉｏ (fullwidth dot + fullwidth
+    // TLD) evaded the ASCII-only email regex and leaked unmasked. NFKC
+    // normalization fixes it.
+    let p = policy();
+    let out = afreval_airlock::sanitize_output("customer alice@corp.\u{ff49}o logged in".as_bytes(), &p).unwrap();
+    let s = String::from_utf8(out).unwrap();
+    assert!(!s.contains("alice"), "fullwidth-TLD email leaked: {s}");
+    assert!(s.contains("[EMAIL]"));
+}
+
+#[test]
+fn seam2_duplicate_keys_are_rejected() {
+    // Bypass found 2026-08-05: {"customer_id":"c1","customer_id":"DROP TABLE x"}
+    // deserialized last-wins, letting an injected value through the schema
+    // with no ghost-arg strip. RFC 8259: duplicate keys are undefined behavior;
+    // the validator now denies them at parse time.
+    let raw = r#"{"tool":"query_customer","arguments":{"customer_id":"c1","customer_id":"DROP TABLE x"},"grant":null}"#;
+    let result: Result<afreval_airlock::ToolCall, _> = serde_json::from_str(raw);
+    assert!(result.is_err(), "duplicate keys must not deserialize silently");
+}

@@ -1,12 +1,21 @@
 ---
 type: subsystem
 tags: [agent-airlock, security, adversarial, red-team, MCP, §3.5]
-updated: 2026-07-31
+updated: 2026-08-05
 ---
 
 # Subsystem §3.5 — agent-airlock Hardening Loop
 
 Adversarial red-teaming of AfrEval's own execution boundary. The **[zero-trust sandboxing](../concepts/zero-trust-sandboxing.md)** seam: an agent asked to "clean up disk space" hallucinating `rm -rf /` is intercepted before execution.
+
+## Status: hardening round 2026-08-05 — 2 bypasses found, both fixed
+
+Attack suite expanded 20 → 31 variants (unicode homoglyphs, fullwidth confusables, nested-ghost smuggling, capitalized/homoglyph params). Two real bypasses found and both promoted to permanent regression tests (`tests/redteam.rs`):
+
+1. **Seam 3 — unicode confusable PII evasion**: `alice@corp.ｉｏ` (fullwidth `ｉ`/dot) evaded the ASCII-only email regex and leaked unmasked. Fixed by **NFKC normalization** before masking.
+2. **Seam 2 — duplicate-key smuggling**: `{"customer_id":"c1","customer_id":"DROP TABLE x"}` deserialized **last-wins** (RFC 8259: duplicate keys are undefined behavior), silently letting the injected value through with no ghost-arg strip. Fixed by a **StrictArgs deserializer** that rejects duplicate keys at parse time.
+
+The dup-key case is a wire-level defense (not transmittable through the JS harness, whose `JSON.parse` collapses the keys first — the regression test covers the raw wire). Rebuilt: **31 variants, 0 bypasses, 21 tests passing.**
 
 ## Dependency strategy — the one deliberate exception
 

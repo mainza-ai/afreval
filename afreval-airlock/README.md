@@ -56,6 +56,21 @@ The mutable artifact is the **attacker's payload-generation strategy** (a red-te
 aggregated). Every confirmed bypass is added to `tests/seams.rs` as a permanent
 regression test — that is what makes the loop harden the system over time.
 
+## Hardening round 2026-08-05 — 2 bypasses found, both fixed
+
+Attack suite expanded 20 → 31 variants (unicode homoglyphs, fullwidth confusables,
+nested-ghost smuggling, capitalized/homoglyph params). Two real bypasses found,
+both promoted to regression tests in `tests/redteam.rs`:
+
+| Bypass | Root cause | Fix |
+|---|---|---|
+| seam 3: `alice@corp.ｉｏ` (fullwidth TLD) leaked unmasked | ASCII-only email regex evadable by unicode confusables | **NFKC normalization** before masking (`src/sanitize.rs`) |
+| seam 2: duplicate keys `{"customer_id":"c1","customer_id":"DROP TABLE x"}` deserialized last-wins | RFC 8259: dup keys are undefined behavior; last-wins silently swallowed the injected value | **StrictArgs deserializer** rejects duplicate keys at parse (`src/ghost_args.rs` + custom `ToolCall` Deserialize) |
+
+The dup-key case is covered at the wire level in the regression test; it is not
+transmittable through the JS harness (`JSON.parse` collapses it first). Rebuilt:
+**31 variants, 0 bypasses, 21 tests passing.**
+
 ## Dependency strategy note
 
 The reference implementation is `sattyamjjain/agent-airlock` (deny-by-default,

@@ -1,12 +1,26 @@
 ---
 type: subsystem
 tags: [biasscope, adversarial, llm-judge, probes, §3.3]
-updated: 2026-07-31
+updated: 2026-08-05
 ---
 
 # Subsystem §3.3 — BiasScope Adversarial Probe Discovery Loop
 
 Defends the Cultural Safety vector by actively discovering judge-bias blind spots before they reach production. Grounding: [BiasScope](https://arxiv.org/html/2602.09383v1) (automated bias detection in LLM-as-a-Judge) and [LLM Evaluators are Biased across Languages](https://arxiv.org/html/2607.14480v1).
+
+## Status: first live judge run (2026-08-05)
+
+Ran the loop end-to-end against a real judge (**Qwen3.6-35B-A3B via local omlx**, port 8787) across four real perturbation styles (code_switch, colloquial, formal, high_perplexity). The real judge shows a **genuine cross-language acceptance gap** — direction varies by style (not the mock's simple "low-resource = generous" shape):
+
+| style | delta | clearest split (score) |
+|---|---|---|
+| none | 0.5 | amh 60 / ibo 50 vs eng 100 |
+| colloquial | 0.5 | eng 5 vs fra/yor 47.5–57.5 |
+| formal | 1.0 | yor 87.5 accepted vs ibo 2.5 rejected |
+| high_perplexity | 1.0 | swh 90 accepted vs fra 0 rejected |
+| code_switch | 1.0 | eng 97.5/hau 87.5 accepted vs ibo 17.5/swh 20.0 rejected |
+
+Two harness defects fixed en route (recorded in `afreval-biasscope/README.md`): the `--max-calls` budget crashed on unscored languages (ZeroDivisionError), and the judge's thinking preamble silently zeroed every score (fallback 50.0) — fixed with `chat_template_kwargs.enable_thinking=false`. Results committed in `results/run_omlx_*.json`; feeds the Cultural Safety corrective weighting.
 
 | Field | Spec |
 |---|---|

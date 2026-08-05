@@ -1,7 +1,7 @@
 ---
 type: overview
 tags: [log, timeline]
-updated: 2026-07-31
+updated: 2026-08-05
 ---
 
 # Wiki Log
@@ -137,3 +137,32 @@ Per the proceed directive: applied the QA drop list (`finalize_waxal.py --apply`
 - **afreval-onprem**: seam-4 trust-root `Vault` stub ($AFREVAL_TRUST_KEY; Stronghold post-MVP) + `sign_grant` command.
 
 All 11 target repos now have in-tree presence (see the entry above).
+
+## [2026-08-03] impl | acquire_waxal Stage B: train pull allowed on frozen pin
+
+`acquire_waxal.py` frozen-pin guard previously blocked *all* re-acquisition; relaxed to block only the eval split (`validation`/`test`). `--splits train` now proceeds as the Stage B fine-tuning substrate, separate from the frozen eval harness. Stage B train pull launched in background (commit `ce1e435e`).
+
+## [2026-08-03] impl | Compliance 100% citation currency + real frozen-data certification
+
+- **afreval-compliance**: AU Continental AI Strategy → au.int official document page (`20240809/continental-artificial-intelligence-strategy`); Malabo Convention → au.int official treaties page. `check_currency.py` now reports **4/4 current** (AU + Malabo + Kenya ODPC + Nigeria NDPC) — the AU/Malabo failure state from the §3.6 entry above is closed.
+- **Real certification** on frozen-harness data: `certs/zero-shot-baseline.cert.json` — zero-shot baseline Context Score **53.88** (below telco 70 → **fail**, cert sha256 `f52acbb8`). The Language Tax in action on a real certified report.
+
+## [2026-08-03] impl | Stage B blocked on upstream HF Xet 404s (recorded in pin)
+
+Train-split download hit **HF Xet storage 404s** at pinned revision `e0a62aa` (resolve + CAS reconstruction both fail for train blobs; Stage A val/test pulled fine). Retry loop killed; resumable from cached shards when HF recovers. **Stage B is a Phase 4 substrate, not a Phase 0 blocker** (Phase 0 frozen). Recorded in `pins/waxal.yaml` + `data/waxal/stageb.log` (commit `cea785ca`).
+
+## [2026-08-05] impl | §3.3 live BiasScope run — real judge, genuine cross-language gap
+
+Ran the BiasScope loop end-to-end against a real judge for the first time: **Qwen3.6-35B-A3B via local omlx** (started `omlx serve --model-dir ~/.omlx/models`, port 8787; machine idle 128GB/no swap). Four real perturbation styles implemented in `probes/perturbation_program.py` (was a placeholder that ignored the style parameter): code_switch, colloquial, formal, high_perplexity. Two harness defects fixed: (1) `--max-calls` budget left unscored languages → ZeroDivisionError; (2) judge's thinking preamble broke float parsing → every score silently fell back to 50.0, fixed via `chat_template_kwargs: {enable_thinking: false}`.
+
+**Result: genuine cross-language acceptance gap**, direction varying by style (not the mock's simple low-resource-generosity shape). code_switch accepts eng 97.5/hau 87.5 but rejects ibo 17.5/swh 20.0 (delta 1.0); high_perplexity accepts swh 90.0 but rejects fra 0.0; formal accepts yor 87.5 but rejects ibo 2.5. Results in `results/run_omlx_*.json`. Feeds the Cultural Safety corrective weighting. 4 tests passing.
+
+## [2026-08-05] impl | §3.1 Latin-African gap closed — SIB-200 corpus mix
+
+The documented §3.1 open problem was that Latin premiums stayed at baseline because the BPE training corpus had no Yoruba/Hausa/Igbo/Swahili (WAXAL TTS-only). Per §2.3 the pinned SIB-200 corpus is the source for that gap; verified **FLORES is gated, SIB-200 is open** (Davlan/sib200). Extended `train_bpe.py` with `--sib200-per-lang <n>` (6 African-Latin languages, train+test, 5,430 sentences). Trained BPE at 500/2000/2500/5000/8000 merges; the 8,000-merge candidate with `EfficientRouteCandidate` routing gives:
+
+- **latin premium 1.5456 → 1.2876 (−16.7%)**
+- **ethiopic premium 3.377 → 2.8255 (−16.3%)**
+- **english_cpt exactly at baseline 5.7349 (PASS held)**
+
+All five African-Latin reference-suite languages now route to the BPE (yor 0.63×, ibo 0.82×, hau 0.85×, swh 0.93×); eng/fra stay on o200k via min() routing. Logged in `results.tsv` (`candidate/bpe-sib200-v0..v4`). This is the first candidate to improve Latin AND Ethiopic simultaneously. Stage B (WAXAL train) remains blocked upstream — fine-tuning unaffected by this loop.

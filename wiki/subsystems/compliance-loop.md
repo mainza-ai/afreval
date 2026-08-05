@@ -1,12 +1,16 @@
 ---
 type: subsystem
 tags: [compliance, regulatory, citation, documentation, §3.6]
-updated: 2026-07-31
+updated: 2026-08-03
 ---
 
 # Subsystem §3.6 — Compliance & Documentation Loop
 
 Maintains the mapping between AfrEval's certification output and each jurisdiction's actual legal requirements. Not in the original architecture sketch, but required by §5's regulatory-alignment goals — and "the difference between AfrEval being a real compliance layer and being a plausible-sounding one."
+
+## Status: 100% citation currency (4/4 current)
+
+`afreval-compliance/` (`citations/africa.yaml` + `check_currency.py`) verifies every citation resolves (HTTP 200) **and** contains its key phrase at the authoritative source. As of 2026-08-03 all four are current — AU Continental AI Strategy and the Malabo Convention are sourced from official **au.int** pages (document/treaties pages), plus Kenya ODPC and Nigeria NDPC. The earlier "AU/Malabo unverified" state was a failure state, now closed. A url left `TBD` is reported as **unverified** by the checker — never silently passing.
 
 ## The loop
 

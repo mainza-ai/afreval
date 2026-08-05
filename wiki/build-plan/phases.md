@@ -1,7 +1,7 @@
 ---
 type: build-plan
 tags: [phases, milestones, roadmap, plan]
-updated: 2026-07-31
+updated: 2026-08-05
 ---
 
 # Phased Build Plan
@@ -18,7 +18,7 @@ Pin exact versions of [WAXAL](../substrates/waxal.md), [AfroBench(-LITE)](../sub
 
 ## Phase 1 — Tokenizer & Context Score core (weeks 3–8)
 
-**Status: complete (deterministic half).** `afreval-context-score` (Rust, bit-identical repeated runs ✓ — the acceptance criterion), `afreval-tokenizer-research` (§3.1 loop: mutable candidate artifact, runner, program.md; **script-aware candidate PASSES** — Ethiopic premium 7.83→3.38 at zero English-CPT regression), harness→scorer report bridge, and the **§3.2.1 certification pipeline** (`scripts/certify.py` — deterministic, auditable certs with sha256). The *autonomous* search/calibration variants are Phase 3 by design.
+**Status: complete (deterministic half).** `afreval-context-score` (Rust, bit-identical repeated runs ✓ — the acceptance criterion), `afreval-tokenizer-research` (§3.1 loop: mutable candidate artifact, runner, program.md; **script-aware candidate PASSES** — Ethiopic premium 7.83→3.38 at zero English-CPT regression; **SIB-200 corpus mix closes the Latin-African gap** 2026-08-05 — latin 1.55→1.29 & ethiopic 3.38→2.83 simultaneously, English CPT at baseline), harness→scorer report bridge, and the **§3.2.1 certification pipeline** (`scripts/certify.py` — deterministic, auditable certs with sha256). The *autonomous* search/calibration variants are Phase 3 by design.
 
 Build [§3.1 tokenizer search](../subsystems/tokenizer-search.md) and the **deterministic (non-search) half** of [§3.2](../subsystems/context-score-calibration.md) — the Rust scorer that takes a fixed weight config and produces a Context Score, *before* the calibration search loop exists. Ship as an invocable, auditable pipeline first; the autonomous calibration loop is Phase 3.
 
@@ -36,11 +36,13 @@ Stand up the [gVisor tier](../infrastructure/isolation-tiers.md), Firecracker ti
 
 Bring up §3.1's search variant, §3.2's calibration loop, [§3.3 BiasScope](../subsystems/biasscope.md), and §3.5's adversarial hardening loop, in that order — each gated on the corresponding Phase 1/2 deterministic component being stable. Every run produces a log (SeeleAI/Thoth "durable runs, visible ledgers, reviewable verdicts" pattern); a **human reviews and approves** before any loop output changes a production weight config or ships a regression test.
 
+**Status (2026-08-05):** §3.3 BiasScope ran live against Qwen3.6-35B (omlx) — genuine cross-language acceptance gap found (delta up to 1.0). The §3.1 search variant is exercised manually (SIB-200 corpus mix landed 2026-08-05); §3.2's calibration loop still gates on the labeled-outcome dataset (see `afreval-context-score/research/README.md`); §3.5's hardening loop runs in `afreval-airlock`.
+
 **Acceptance:** each loop has run to **at least 50 iterations** against its metric with a documented improvement trajectory (or a documented plateau reason), and a human sign-off log exists for every kept change that reached production.
 
 ## Phase 4 — WAXAL-NET edge loop + field app (weeks 16–26)
 
-**Status: scaffolding + baseline live.** `afreval-waxal-net/`: eval harness + **zero-shot baseline 41.0% language-macro WER** (18 languages; lug 0.21 best → kpo 0.80 worst) established from QA pass 2; `program.md` (training-style, target-edge-hardware + fail-loud hardware assertion), mutable `configs/fine_tune.yaml`, `train.py` entry. **Blocking:** Stage B labeled-train acquisition (pull `--splits train validation test`) then real fine-tuning on MLX; the Dart/Flutter field app builds in parallel.
+**Status: scaffolding + baseline live.** `afreval-waxal-net/`: eval harness + **zero-shot baseline 41.0% language-macro WER** (18 languages; lug 0.21 best → kpo 0.80 worst) established from QA pass 2; `program.md` (training-style, target-edge-hardware + fail-loud hardware assertion), mutable `configs/fine_tune.yaml`, `train.py` entry. **Blocking: Stage B labeled-train acquisition blocked on upstream HF Xet 404s** at pinned revision `e0a62aa` (train blobs unreachable; resumable from cached shards when HF recovers — recorded in `pins/waxal.yaml`, commit `cea785ca`). Real certification on frozen-harness data ran end-to-end (zero-shot baseline Context Score **53.88**, fail below telco 70). Then real fine-tuning on MLX; the Dart/Flutter field app builds in parallel.
 
 Requires the MLX/ONNX-mobile fork lineage ([platform caveat](../concepts/karpathy-loop.md)). Build the Dart/Flutter field app in parallel — it depends only on the WAXAL image-prompted-elicitation methodology, not on the training loop finishing.
 
@@ -49,6 +51,8 @@ Requires the MLX/ONNX-mobile fork lineage ([platform caveat](../concepts/karpath
 ## Phase 5 — Compliance loop + SaaS surface (weeks 20–30)
 
 [§3.6 compliance loop](../subsystems/compliance-loop.md) plus the TypeScript/JavaScript enterprise dashboard, developer SDK, and MCP-based enterprise integrations. **This is the revenue surface — build it last, after the scoring core is trustworthy, not first.**
+
+**§3.6 loop live:** citation-currency at **100% (4/4 current)** — AU Continental AI Strategy + Malabo Convention sourced from official au.int pages, Kenya ODPC + Nigeria NDPC current. `afreval-dashboard` (cert + security web surface) and `afreval-sdk` (Python working, TypeScript shape gating on the live API) scaffolded; `afreval-onprem` Tauri skeleton embeds scorer + airlock with a trust-root vault stub (Stronghold post-MVP). Remaining: on-prem hardening, SDK TypeScript against a live certification API, and the MCP-based enterprise integrations.
 
 ## Related
 

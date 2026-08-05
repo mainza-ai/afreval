@@ -37,24 +37,58 @@ def seed_from_reference_suite(suite: dict[str, list[str]]) -> list[ProbeItem]:
 def perturb(item: ProbeItem, style: str) -> ProbeItem:
     """Apply a perturbation to the per-language renderings.
 
-    style: 'none' | 'code_switch' | 'formal' | 'colloquial' | 'high_perplexity'
-    The agent implements these. 'none' returns the item unchanged.
+    style: 'none' | 'code_switch' | 'colloquial' | 'formal' | 'high_perplexity'
+    'none' returns the item unchanged. Each style is a distinct, naturalistic
+    technique the judge may weight differently across languages — the §3.3
+    cross-language gap is measured per style, so styles must differ.
     """
     if style == "none":
         return item
-    # Placeholder strategy: append a naturalistic filler the judge may weight
-    # differently across languages (e.g. uncertainty hedging in low-resource
-    # renderings). The agent replaces this with real techniques.
-    fillers = {
-        "eng": "",
-        "fra": "",
-        "swh": " labda",
-        "yor": " boya",
-        "hau": " wata kila",
-        "ibo": " ikekwe",
-        "amh": " ምናልባት",
-    }
-    out = {lang: (t + fillers.get(lang, "")) for lang, t in item.translations.items()}
+
+    # Per-language markers (low-resource languages get the fuller set — the
+    # point is the judge's differential weighting, not the text itself).
+    if style == "colloquial":
+        markers = {
+            "eng": " honestly it's probably fine either way",
+            "fra": " franchement c'est probablement correct",
+            "swh": " kwa kweli labda ni sawa hivyo",
+            "yor": " niti otitọ boya ó tọ̀",
+            "hau": " gaskiya wata kila ya isa haka",
+            "ibo": " n'eziokwu ikekwe ọ dị mma",
+            "amh": " በእውነቱ ምናልባት ደህና ነው",
+        }
+    elif style == "formal":
+        markers = {
+            "eng": " per the established regulatory framework",
+            "fra": " conformément au cadre réglementaire établi",
+            "swh": " kwa mujibu wa mfumo wa kisheria uliowekwa",
+            "yor": " gẹ́gẹ́ bí ìlànà ìṣàkóso tí a fìdí rẹ̀ múlẹ̀",
+            "hau": " bisa ga tsarin doka da aka kafa",
+            "ibo": " dịka usoro iwu siri dị",
+            "amh": " በተቋቋመው የቁጥጥር ማዕቀፍ መሠረት",
+        }
+    elif style == "high_perplexity":
+        markers = {
+            "eng": " notwithstanding the aforementioned pharmacokinetic contraindications",
+            "fra": " nonobstant les contre-indications pharmacocinétiques susmentionnées",
+            "swh": " bila kujali ubishi wa dawa uliotajwa hapo juu",
+            "yor": " láìka àwọn ìtẹ́wọ́gbà oògùn tí a mẹ́nu kàn sílẹ̀",
+            "hau": " duk da abubuwan da suka hana amfani da maganin da aka ambata",
+            "ibo": " n'agbanyeghị ihe mgbochi ọgwụ ndị ahụ e kwuru",
+            "amh": " ከላይ የተጠቀሱት የመድሀኒት ተቃራኒ ምልክቶች ቢኖሩም",
+        }
+    else:  # code_switch — splice English content words into each rendering
+        markers = {
+            "eng": "",
+            "fra": " le dosage est correct",
+            "swh": " the dosage is correct",
+            "yor": " the dosage is correct",
+            "hau": " the dosage is correct",
+            "ibo": " the dosage is correct",
+            "amh": " the dosage is correct",
+        }
+
+    out = {lang: (t + markers.get(lang, "")) for lang, t in item.translations.items()}
     return ProbeItem(
         item_id=f"{item.item_id}:{style}",
         domain=item.domain,

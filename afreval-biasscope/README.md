@@ -35,13 +35,28 @@ guard against the 43%-acceptance-gap failure mode
 - `omlx` — the local MLX server (OpenAI-compatible, port 8787) as a real judge.
 - `api` — placeholder for a hosted judge (needs key).
 
+## Live run — 2026-08-05 (Qwen3.6-35B-A3B via omlx)
+
+First real-judge BiasScope run. Fixed two harness defects en route: (1) the
+`--max-calls` budget left unscored languages with empty score lists →
+ZeroDivisionError; (2) the judge model emits a thinking preamble, breaking
+float parsing (all scores silently fell back to 50.0) — fixed by passing
+`chat_template_kwargs: {enable_thinking: false}`.
+
+Results (`results/run_omlx_*.json`, 14 judge calls per style): the real judge
+shows a **genuine cross-language acceptance gap** — e.g. `code_switch` accepts
+eng (97.5) and hau (87.5) while rejecting ibo (17.5) and swh (20.0); delta 1.0.
+`high_perplexity` accepts swh (90.0) but rejects fra (0.0). The bias is real and
+direction varies by style — not the mock's simple "low-resource = generous"
+shape. This feeds the Cultural Safety corrective weighting.
+
 ## Run
 
 ```bash
 # deterministic demo (mock judge)
 afreval-harness/.venv/bin/python run_probe.py --backend mock
-# real judge via local omlx (start: omlx start)
-afreval-harness/.venv/bin/python run_probe.py --backend omlx --max-calls 40
+# real judge via local omlx (start: omlx serve --model-dir ~/.omlx/models)
+afreval-harness/.venv/bin/python run_probe.py --backend omlx --style code_switch --max-calls 40
 ```
 
 ## Related

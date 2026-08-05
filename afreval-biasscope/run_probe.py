@@ -81,7 +81,7 @@ def main() -> int:
         "per_language": {
             lang: {
                 "acceptance_rate": round(rates[lang], 3),
-                "mean_score": round(sum(scores[lang]) / len(scores[lang]), 2),
+                "mean_score": round(sum(scores[lang]) / len(scores[lang]), 2) if scores[lang] else None,
             }
             for lang in languages
         },

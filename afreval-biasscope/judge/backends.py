@@ -58,6 +58,7 @@ class OmlxJudge:
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
             "max_tokens": 8,
+            "chat_template_kwargs": {"enable_thinking": False},
         }).encode()
         req = urllib.request.Request(self.endpoint, data=body, headers={"Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=60) as resp:

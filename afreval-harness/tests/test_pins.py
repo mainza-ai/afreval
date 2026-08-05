@@ -17,9 +17,9 @@ def test_afri_fertility_pin_frozen():
     assert len(pin["vendored_commit"]) == 40
 
 
-def test_waxal_pin_pending():
+def test_waxal_pin_frozen():
     pin = load_all_pins()["waxal.yaml"]
-    assert pin["status"] == "pending-freeze"  # Phase 0 not complete until acquired+QA'd
+    assert pin["status"] == "frozen"  # Phase 0 closed 2026-08-01: QA pass 2 done, drops applied
 
 
 def test_afrobench_lite_matches_vendored():

@@ -6,3 +6,10 @@ HEAD	candidate/bpe-v0	0.9101	1.0617	nan	1.8030	FAIL_CPT_REGRESSION
 HEAD	candidate/script-aware-v0	1.9074	3.3770	nan	5.7349	FAIL_SCRIPT_REGRESSION	
 HEAD	candidate/script-aware-v0	1.5456	3.3770	nan	5.7349	PASS	
 HEAD	candidate/efficient-route-v0	1.5456	3.3770	nan	5.7349	PASS	
+HEAD	candidate/efficient-route-v0	1.5456	3.3770	nan	5.7349	PASS	
+HEAD	candidate/bpe-sib200-v0	0.8573	1.0901	nan	1.8308	FAIL_CPT_REGRESSION	
+HEAD	candidate/efficient-route-v0	1.5456	3.4148	nan	5.7349	PASS	
+HEAD	candidate/efficient-route-v0	1.5074	3.0144	nan	5.7349	PASS	
+HEAD	candidate/efficient-route-v0	1.4437	3.2259	nan	5.7349	PASS	
+HEAD	candidate/efficient-route-v0	1.3593	2.9615	nan	5.7349	PASS	
+HEAD	candidate/efficient-route-v0	1.2876	2.8255	nan	5.7349	PASS	

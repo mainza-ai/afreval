@@ -65,9 +65,18 @@ fn security_report() -> Result<String, String> {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // Fail closed: without a real trust key the client must not start (release
+    // builds only accept file/env keys — the dev fallback is debug-only).
+    let vault = match Vault::from_env() {
+        Ok(v) => v,
+        Err(e) => {
+            eprintln!("afreval-onprem: {e}");
+            std::process::exit(2);
+        }
+    };
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .manage(Vault::from_env())
+        .manage(vault)
         .invoke_handler(tauri::generate_handler![
             score_report,
             validate_tool_call,

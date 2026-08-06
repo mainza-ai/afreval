@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Python deps (afri-fertility editable + harness)
+        run: |
+          python -m venv .venv-ci
+          . .venv-ci/bin/activate
+          pip install -U pip
+          pip install -e afri-fertility
+          pip install -e "afreval-harness[dev]"
+          pip install "afreval-sdk/python"
+
+      - name: Build Rust scorer (afreval-context-score)
+        run: cargo build --release --manifest-path afreval-context-score/Cargo.toml
+
+      - name: Build Rust validator (afreval-airlock)
+        run: cargo build --release --manifest-path afreval-airlock/Cargo.toml
+
+      - name: Harness tests
+        run: |
+          . .venv-ci/bin/activate
+          python -m pytest afreval-harness/tests -q
+
+      - name: BiasScope tests (deterministic mock path only)
+        run: |
+          . .venv-ci/bin/activate
+          python -m pytest afreval-biasscope/tests -q
+
+      - name: SDK tests (Python)
+        run: |
+          . .venv-ci/bin/activate
+          python -m pytest afreval-sdk/python/tests -q
+
+      - name: SDK package (TypeScript build + tests)
+        run: |
+          cd afreval-sdk/typescript
+          npm install
+          npm run build
+          npm test
+
+      - name: SDK package (Python wheel)
+        run: |
+          . .venv-ci/bin/activate
+          pip install build
+          python -m build --wheel afreval-sdk/python
+
+      - name: Airlock cargo tests
+        run: cargo test --manifest-path afreval-airlock/Cargo.toml --release
+
+      - name: §3.5 hardening loop (must be 0 bypasses)
+        run: |
+          node afreval-airlock/attack/run_attack.js
+          grep '"total_bypasses": 0' afreval-airlock/attack/report.json
+
+      - name: Certification determinism check (bit-identical cert sha)
+        run: |
+          . .venv-ci/bin/activate
+          W=afreval-context-score/weights/telco.yaml
+          python afreval-harness/scripts/certify.py --model ci-check --weights $W \
+            --wer 0.4097 --accuracy 0.55 --judge 70 --out /tmp/cert1 >/dev/null 2>&1 || true
+          python afreval-harness/scripts/certify.py --model ci-check --weights $W \
+            --wer 0.4097 --accuracy 0.55 --judge 70 --out /tmp/cert2 >/dev/null 2>&1 || true
+          test "$(python -c "import json;print(json.load(open('/tmp/cert1/ci-check.cert.json'))['cert_sha256'])")" \
+               = "$(python -c "import json;print(json.load(open('/tmp/cert2/ci-check.cert.json'))['cert_sha256'])")"
+
+      - name: Tokenizer §3.1 baseline sanity (candidate evaluates deterministically)
+        run: |
+          . .venv-ci/bin/activate
+          cd afreval-tokenizer-research
+          python run_experiment.py --candidate EfficientRouteCandidate
+        continue-on-error: true

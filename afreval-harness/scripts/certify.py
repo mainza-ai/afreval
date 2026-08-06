@@ -52,9 +52,12 @@ def main() -> int:
     ap.add_argument("--tokenizer-candidate", default="",
                     help="§3.1 research candidate class (EfficientRouteCandidate/ScriptAwareCandidate) "
                          "from afreval-tokenizer-research — certifies with the loop's best tokenizer")
-    ap.add_argument("--wer", type=float, default=0.38, help="WAXAL macro WER (acoustic pipeline)")
+    ap.add_argument("--wer", type=float, default=None, help="WAXAL macro WER (overrides --auto-inputs)")
     ap.add_argument("--accuracy", type=float, default=0.62, help="AfroBench-LITE mean accuracy")
     ap.add_argument("--judge", type=float, default=78.0, help="BiasScope-corrected judge score")
+    ap.add_argument("--auto-inputs", action="store_true",
+                    help="pull WER from the frozen QA baseline (eval_baseline.py --from-qa) and judge "
+                         "from §3.3 bias_correct.py instead of manual flags")
     ap.add_argument("--bias-correct-from", default="",
                     help="dir of §3.3 run_*.json results; when set, applies the §3.3 "
                          "acceptance-delta correction to --judge before scoring "
@@ -84,6 +87,25 @@ def main() -> int:
         tok = load_tokenizer(args.tokenizer)
     tok_result = TokenizerEval().evaluate(tok, suite)
 
+    # Auto-inputs: pull WER from the frozen QA baseline and the judge from
+    # §3.3 bias correction, instead of hand-supplied flags (gap-analysis A2).
+    auto_sources: dict[str, str] = {}
+    if args.auto_inputs:
+        if args.wer is not None:
+            print("--auto-inputs: --wer override ignored", file=sys.stderr)
+        if args.bias_correct_from:
+            print("--auto-inputs: --bias-correct-from redundant (implied)", file=sys.stderr)
+        waxal_net = REPO / "afreval-waxal-net"
+        sys.path.insert(0, str(waxal_net))
+        import importlib.util as _ilu
+        spec = _ilu.spec_from_file_location("eval_baseline", waxal_net / "eval_baseline.py")
+        mod = _ilu.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        baseline = mod.aggregate_qa_baseline()
+        args.wer = baseline["language_macro_wer"]
+        auto_sources["wer"] = f"eval_baseline.py --from-qa (n={baseline['n_languages']})"
+        args.bias_correct_from = str(REPO / "afreval-biasscope" / "results")
+
     judge_score = args.judge
     bias_correction = None
     if args.bias_correct_from:
@@ -103,6 +125,7 @@ def main() -> int:
             "bias_penalty_weight": mod.BIAS_PENALTY_WEIGHT,
             "note": "computed by afreval-biasscope/bias_correct.py from §3.3 run results",
         }
+        auto_sources["judge"] = "afreval-biasscope/bias_correct.py from results/"
 
     report = report_from_eval(
         args.model,
@@ -136,6 +159,7 @@ def main() -> int:
         "report": report,
         "score": json.loads(scored.stdout),
         "bias_correction": bias_correction,
+        "input_sources": auto_sources if auto_sources else None,
         "harness_pins": {
             "afri_fertility": af_pin["pinned_version"],
             "afrobench_lite": ab_pin["harness_submodule"],

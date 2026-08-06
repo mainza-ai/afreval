@@ -28,6 +28,8 @@ enum Cmd {
         tool: String,
         #[arg(long, name = "age-secs")]
         age_secs: u64,
+        #[arg(long)]
+        call_hash: Option<String>,
     },
     Sanitize {
         #[arg(long)]
@@ -82,7 +84,7 @@ fn run(cli: Cli) -> i32 {
                 1
             }
         }
-        Cmd::Grant { policy, tool, age_secs } => {
+        Cmd::Grant { policy, tool, age_secs, call_hash } => {
             let policy = match load_policy(&policy) {
                 Ok(p) => p,
                 Err(e) => {
@@ -90,7 +92,12 @@ fn run(cli: Cli) -> i32 {
                     return 2;
                 }
             };
-            match clearance::sign(&tool, clearance::now_secs().saturating_sub(age_secs), &policy.clearance) {
+            let iat = clearance::now_secs().saturating_sub(age_secs);
+            let result = match call_hash {
+                Some(h) => clearance::sign_for_call(&tool, &h, iat, &policy.clearance),
+                None => clearance::sign(&tool, iat, &policy.clearance),
+            };
+            match result {
                 Ok(g) => {
                     println!("{g}");
                     0
@@ -144,7 +151,11 @@ fn validate_batch(policy: &Policy) -> i32 {
         }
     };
     let now = clearance::now_secs();
-    let verdicts: Vec<_> = calls.iter().map(|c| afreval_airlock::validate(c, policy, now)).collect();
+    let mut guard = clearance::ReplayGuard::new();
+    let verdicts: Vec<_> = calls
+        .iter()
+        .map(|c| afreval_airlock::validate_guarded(c, policy, now, &mut guard))
+        .collect();
     println!("{}", serde_json::to_string_pretty(&verdicts).unwrap());
     0
 }

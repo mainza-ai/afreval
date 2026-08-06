@@ -33,6 +33,10 @@ pub struct Policy {
     pub output_max_bytes: usize,
     pub clearance: clearance::ClearancePolicy,
     pub reauth_tools: Vec<String>,
+    /// When true, a grant must be bound to the exact call (canonical hash of
+    /// tool+args), not just the tool — closes grant redirection across calls.
+    #[serde(default)]
+    pub grant_call_binding: bool,
 }
 
 #[derive(Debug, Clone, Serialize, PartialEq)]
@@ -101,6 +105,43 @@ fn require_reauth(reason: String) -> Verdict {
 }
 
 pub fn validate(call: &ToolCall, policy: &Policy, now_secs: u64) -> Verdict {
+    validate_impl(call, policy, now_secs, None)
+}
+
+/// Canonical hash of a tool call (tool + sorted arguments). Used to bind a
+/// grant to one exact call (seam-4 replay protection, 2026-08-05).
+pub fn canonical_call_hash(call: &ToolCall) -> String {
+    use std::collections::BTreeMap;
+    let mut args = BTreeMap::new();
+    if let Some(obj) = call.arguments.as_object() {
+        for (k, v) in obj {
+            args.insert(k.clone(), v.clone());
+        }
+    }
+    let canonical = serde_json::json!({"tool": call.tool, "arguments": args});
+    let input = serde_json::to_string(&canonical).unwrap_or_default();
+    let digest = <sha2::Sha256 as sha2::Digest>::digest(input.as_bytes());
+    format!("{digest:x}")
+}
+
+/// Validate with seam-4 replay protection: each grant's `jti` may be consumed
+/// once. A replayed (or jti-less) grant fails closed to RequireReauth.
+pub fn validate_guarded(
+    call: &ToolCall,
+    policy: &Policy,
+    now_secs: u64,
+    guard: &mut clearance::ReplayGuard,
+) -> Verdict {
+    let verdict = validate_impl(call, policy, now_secs, Some(guard));
+    verdict
+}
+
+fn validate_impl(
+    call: &ToolCall,
+    policy: &Policy,
+    now_secs: u64,
+    mut guard: Option<&mut clearance::ReplayGuard>,
+) -> Verdict {
     if !policy.allowed_tools.contains(&call.tool) {
         return deny(format!("tool '{}' not in deny-by-default allowlist", call.tool));
     }
@@ -108,7 +149,19 @@ pub fn validate(call: &ToolCall, policy: &Policy, now_secs: u64) -> Verdict {
         match &call.grant {
             None => return require_reauth("no context grant supplied for sensitive tool".into()),
             Some(g) => {
-                if !clearance::verify_grant(g, &policy.clearance, &call.tool, now_secs) {
+                if let Some(gr) = guard.as_deref_mut() {
+                    // replay guard is enforced: jti must be fresh AND present
+                    if !gr.consume(g) {
+                        return require_reauth("context grant is a replay (jti already consumed)".into());
+                    }
+                }
+                let ok = if policy.grant_call_binding {
+                    let h = canonical_call_hash(call);
+                    clearance::verify_grant_bound(g, &policy.clearance, &call.tool, &h, now_secs)
+                } else {
+                    clearance::verify_grant(g, &policy.clearance, &call.tool, now_secs)
+                };
+                if !ok {
                     return require_reauth("context grant verification failed".into());
                 }
             }

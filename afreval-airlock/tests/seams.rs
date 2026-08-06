@@ -33,6 +33,7 @@ fn policy() -> Policy {
             max_age_secs: 300,
         },
         reauth_tools: vec!["send_sms".into(), "get_balance".into()],
+        grant_call_binding: false,
     }
 }
 

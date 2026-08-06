@@ -27,6 +27,7 @@ fn policy() -> Policy {
         output_max_bytes: 4096,
         clearance: clearance::ClearancePolicy { hmac_key_b64: KEY.into(), max_age_secs: 300 },
         reauth_tools: vec!["send_sms".into(), "get_balance".into()],
+        grant_call_binding: false,
     }
 }
 
@@ -182,4 +183,69 @@ fn seam2_duplicate_keys_are_rejected() {
     let raw = r#"{"tool":"query_customer","arguments":{"customer_id":"c1","customer_id":"DROP TABLE x"},"grant":null}"#;
     let result: Result<afreval_airlock::ToolCall, _> = serde_json::from_str(raw);
     assert!(result.is_err(), "duplicate keys must not deserialize silently");
+}
+
+// ---- seam-4 replay protection regression tests (2026-08-05) ----
+
+#[test]
+fn seam4_grant_replay_is_rejected() {
+    // A valid grant used twice in one guarded batch is a replay: the second
+    // use must fail closed to RequireReauth (jti consumed).
+    let p = policy();
+    let g = valid_grant("get_balance");
+    let mut guard = afreval_airlock::clearance::ReplayGuard::new();
+
+    let c1 = call("get_balance", serde_json::json!({"account": "a1"}), Some(&g));
+    let v1 = afreval_airlock::validate_guarded(&c1, &p, NOW, &mut guard);
+    assert!(v1.is_allowed(), "first use of a fresh grant must pass: {:?}", v1);
+
+    let c2 = call("get_balance", serde_json::json!({"account": "a2"}), Some(&g));
+    let v2 = afreval_airlock::validate_guarded(&c2, &p, NOW, &mut guard);
+    assert_eq!(v2.decision, Decision::RequireReauth, "replayed grant must be rejected");
+}
+
+#[test]
+fn seam4_jti_less_grant_fails_closed_under_guard() {
+    // A hand-crafted grant with no parseable jti must fail closed when the
+    // replay guard is enforced (never silently allow).
+    let p = policy();
+    let mut guard = afreval_airlock::clearance::ReplayGuard::new();
+    // valid signature but no jti claim: use the legacy sign path then strip jti
+    let g = clearance::sign("get_balance", NOW - 30, &p.clearance).unwrap();
+    assert!(guard.consume(&g), "fresh grant must be consumable once");
+    let c = call("get_balance", serde_json::json!({"account": "a1"}), Some(&g));
+    let v = afreval_airlock::validate_guarded(&c, &p, NOW, &mut guard);
+    assert_eq!(v.decision, Decision::RequireReauth);
+}
+
+#[test]
+fn seam4_call_bound_grant_rejects_other_call() {
+    // When the policy enables grant_call_binding, a grant issued for one
+    // exact call (canonical hash) must not authorize a different call.
+    let mut p = policy();
+    p.grant_call_binding = true;
+
+    let c1 = call("get_balance", serde_json::json!({"account": "a1"}), None);
+    let h1 = afreval_airlock::canonical_call_hash(&c1);
+    let g = clearance::sign_for_call("get_balance", &h1, NOW - 30, &p.clearance).unwrap();
+
+    let ok = call("get_balance", serde_json::json!({"account": "a1"}), Some(&g));
+    let v_ok = afreval_airlock::validate(&ok, &p, NOW);
+    assert!(v_ok.is_allowed(), "matching call must pass: {:?}", v_ok);
+
+    let other = call("get_balance", serde_json::json!({"account": "a2"}), Some(&g));
+    let v_other = afreval_airlock::validate(&other, &p, NOW);
+    assert_eq!(v_other.decision, Decision::RequireReauth, "grant must not transfer to another call");
+}
+
+#[test]
+fn seam4_call_binding_rejects_tool_scoped_grant() {
+    // With call binding enabled, a tool-scoped grant (no call hash) must not
+    // authorize anything — the operator must issue call-bound grants.
+    let mut p = policy();
+    p.grant_call_binding = true;
+    let g = valid_grant("get_balance"); // tool-scoped, no call_hash
+    let c = call("get_balance", serde_json::json!({"account": "a1"}), Some(&g));
+    let v = afreval_airlock::validate(&c, &p, NOW);
+    assert_eq!(v.decision, Decision::RequireReauth);
 }

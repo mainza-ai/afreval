@@ -1,12 +1,16 @@
 ---
 type: subsystem
 tags: [context-score, calibration, certification, rust, GOAL.md, §3.2]
-updated: 2026-07-31
+updated: 2026-08-05
 ---
 
 # Subsystem §3.2 — Context Score Calibration Loop
 
 Tunes the weighting function of the [Context Score](../concepts/context-score.md) — AfrEval's core IP. The weights are per-industry (`weights/{vertical}.yaml` — telco weights fluidity/latency, bank weights security/alignment) and are today presumably hand-set. **That's a search problem.**
+
+## Status: certification reflects the §3.1 tokenizer win (2026-08-05)
+
+`certify.py` gained `--tokenizer-candidate` so certification can use the §3.1 loop's current best tokenizer. Re-certified `zero-shot-baseline` with the SIB-200 candidate — **same model, same WER/accuracy/judge, only the tokenizer changed**: Context Score **53.88 → 61.55**, structural-economics vector **37.25 → 62.82** (the African Language Tax penalty nearly halved). Cert `certs/zero-shot-baseline-sib200.cert.json` (sha256 `516d0530`), **bit-identical across runs** — determinism preserved. This is the first end-to-end §3.1→§3.2.1 effect: tokenizer-search output directly improving certified scores.
 
 | Field | Spec |
 |---|---|

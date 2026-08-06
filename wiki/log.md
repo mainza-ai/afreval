@@ -151,6 +151,16 @@ All 11 target repos now have in-tree presence (see the entry above).
 
 Train-split download hit **HF Xet storage 404s** at pinned revision `e0a62aa` (resolve + CAS reconstruction both fail for train blobs; Stage A val/test pulled fine). Retry loop killed; resumable from cached shards when HF recovers. **Stage B is a Phase 4 substrate, not a Phase 0 blocker** (Phase 0 frozen). Recorded in `pins/waxal.yaml` + `data/waxal/stageb.log` (commit `cea785ca`).
 
+## [2026-08-05] impl | §3.2.1 certification reflects the §3.1 win
+
+`certify.py` gains `--tokenizer-candidate` (loads the §3.1 loop's current best from `afreval-tokenizer-research`). Re-certified the zero-shot-baseline model with the SIB-200 tokenizer — **same model, same WER/accuracy/judge, only the tokenizer changed**:
+
+- Context Score **53.88 → 61.55** (still fail below telco 70, but a +7.7 move)
+- structural economics **37.25 → 62.82** — the African Language Tax penalty nearly halved
+- cert sha256 `516d0530` (`certs/zero-shot-baseline-sib200.cert.json`), **bit-identical across runs** (determinism preserved)
+
+This closes the loop §3.1→§3.2.1: the tokenizer search's output now directly improves certified Context Scores. Dashboard state.json regenerated (3 certs + latest security report: 31 variants, 0 bypasses).
+
 ## [2026-08-05] impl | §3.5 hardening round — 2 bypasses found, both fixed
 
 Expanded the `afreval-airlock` attack catalogue 20 → 31 variants (unicode homoglyphs, fullwidth confusables, nested-ghost smuggling, capitalized/homoglyph params). The loop found **two real bypasses**, both promoted to permanent regression tests and fixed:

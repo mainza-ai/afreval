@@ -49,6 +49,9 @@ def main() -> int:
     ap.add_argument("--model", required=True)
     ap.add_argument("--weights", required=True, help="path to weights/{vertical}.yaml")
     ap.add_argument("--tokenizer", default="openai/o200k_base")
+    ap.add_argument("--tokenizer-candidate", default="",
+                    help="§3.1 research candidate class (EfficientRouteCandidate/ScriptAwareCandidate) "
+                         "from afreval-tokenizer-research — certifies with the loop's best tokenizer")
     ap.add_argument("--wer", type=float, default=0.38, help="WAXAL macro WER (acoustic pipeline)")
     ap.add_argument("--accuracy", type=float, default=0.62, help="AfroBench-LITE mean accuracy")
     ap.add_argument("--judge", type=float, default=78.0, help="BiasScope-corrected judge score")
@@ -63,7 +66,19 @@ def main() -> int:
     wax_pin = load_pin("waxal.yaml")
 
     suite = load_reference_suite()
-    tok_result = TokenizerEval().evaluate(load_tokenizer(args.tokenizer), suite)
+    if args.tokenizer_candidate:
+        # §3.1 loop winner: the efficient-route candidate trained on SIB-200
+        # (latin premium 1.55→1.29, ethiopic 3.38→2.83). Loaded from the
+        # research repo so certification reflects the loop's current best.
+        research = REPO / "afreval-tokenizer-research"
+        sys.path.insert(0, str(research))
+        import importlib
+        spec = importlib.import_module("candidates.tokenizer_candidate")
+        cls = getattr(spec, args.tokenizer_candidate)
+        tok = cls() if isinstance(cls, type) else cls
+    else:
+        tok = load_tokenizer(args.tokenizer)
+    tok_result = TokenizerEval().evaluate(tok, suite)
 
     report = report_from_eval(
         args.model,

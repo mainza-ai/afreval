@@ -55,6 +55,7 @@ Content catalog for the Milimo AfrEval wiki. Organized by category. Read this fi
 - [Phases](build-plan/phases.md) — Phase 0–5 with gates and acceptance criteria
 - [Risk Register](build-plan/risk-register.md) — risks and mitigations beyond the platform caveat
 - [Repository Layout](build-plan/repository-layout.md) — the eleven planned repos
+- [Gap Analysis & Plan](build-plan/gap-analysis.md) — 2026-08-05 cross-repo audit: gaps, missing functionality, implementation plan
 
 ## Reports
 
@@ -65,4 +66,4 @@ Content catalog for the Milimo AfrEval wiki. Organized by category. Read this fi
 - [Implementation Bible](sources/implementation-bible.md) — build spec, v1.0, source-of-truth for implementation
 - [Implementation Research](sources/implementation-research.md) — the original architectural & strategic blueprint
 
-**Page count: 31** · maintained on every ingest/lint per [AGENTS.md](AGENTS.md).
+**Page count: 32** · maintained on every ingest/lint per [AGENTS.md](AGENTS.md).

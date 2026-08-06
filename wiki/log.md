@@ -151,6 +151,10 @@ All 11 target repos now have in-tree presence (see the entry above).
 
 Train-split download hit **HF Xet storage 404s** at pinned revision `e0a62aa` (resolve + CAS reconstruction both fail for train blobs; Stage A val/test pulled fine). Retry loop killed; resumable from cached shards when HF recovers. **Stage B is a Phase 4 substrate, not a Phase 0 blocker** (Phase 0 frozen). Recorded in `pins/waxal.yaml` + `data/waxal/stageb.log` (commit `cea785ca`).
 
+## [2026-08-05] audit | Cross-repo gap analysis + implementation plan
+
+Audited all 11 repos against the Bible + phases. Wrote `build-plan/gap-analysis.md`: 16 cross-cutting/subsystem gaps (G1–G5, H1–H3, C1–C2, T1–T2, A1–A3, B1–B4, L1–L2, W1–W2, F1, D1, S1–S2, O1–O2), 3 spec-vs-implementation gaps (code-mixing metrics, OOD protocol, threshold calibration), each tagged **UNBLOCKED** (actionable now) or **BLOCKED** (external dep). Prioritized implementation plan in 5 phases: A integrity/automation (CI, auto cert inputs, SDK packaging), B correctness/coverage (N'Ko scoring, airlock replay protection, BiasScope config/mock fidelity, compliance registry, trust-root hygiene), C the certification API layer (unblocks the whole SaaS surface), D data-gated (Stage B → MLX fine-tune, calibration loop, field-app), E server-class hardening (gVisor/Firecracker/Envoy, Stronghold). Highest-value unblocked items: **A1 CI**, **A2 automated certification inputs**, **B2 airlock replay protection**.
+
 ## [2026-08-05] impl | §3.3→§3.2.1 bias-correction bridge wired into certification
 
 The certification pipeline consumed a "BiasScope-corrected judge score" but nothing computed it. Added `afreval-biasscope/bias_correct.py`: converts the **worst-case acceptance-rate delta** across live probe runs into the correction — `corrected = raw × (1 − min(delta,1) × 0.5)` (conservative default; tunable per-vertical by the §3.2 calibration loop). Wired into `certify.py --bias-correct-from <results dir>`, with the correction provenance embedded in the cert.

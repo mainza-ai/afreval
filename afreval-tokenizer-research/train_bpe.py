@@ -33,6 +33,10 @@ OUT = HERE / "candidates" / "trained_bpe.json"
 # lacks in usable volume (yor/hau/ibo/swh are WAXAL TTS-only). The reference
 # suite's own SIB-200/flores codes come from the pinned language registry.
 _SIB200_AFRICAN_LATIN = ["yor_Latn", "hau_Latn", "ibo_Latn", "swh_Latn", "lin_Latn", "lug_Latn"]
+# N'Ko is the third §3.1 script (worst tax, up to ~9×) but the reference suite
+# has zero N'Ko text (nko premium is nan). SIB-200's nqo_Nkoo gives the BPE
+# real N'Ko merges (gap-analysis B1, 2026-08-05).
+_SIB200_NKO = ["nqo_Nkoo"]
 
 
 def waxal_transcriptions(sample: int, seed: int) -> list[str]:
@@ -60,7 +64,7 @@ def sib200_african_latin(sample_per_lang: int, seed: int) -> list[str]:
     except ImportError:
         print("datasets not installed — skipping SIB-200 corpus")
         return []
-    for code in _SIB200_AFRICAN_LATIN:
+    for code in _SIB200_AFRICAN_LATIN + _SIB200_NKO:
         try:
             for split in ("test", "train"):
                 ds = load_dataset("Davlan/sib200", code, split=split, trust_remote_code=False)

@@ -21,6 +21,10 @@ The prior best candidates ([script-aware](tokenizer-search.md), efficient-route)
 
 All five African-Latin reference-suite languages now route to the BPE (yor 0.63×, ibo 0.82×, hau 0.85×, swh 0.93×, fra/eng stay on o200k via min-routing). English CPT is held at baseline by the min() routing. Logged in `results.tsv` (`candidate/bpe-sib200-v0..v4`, merges 500→8000).
 
+## N'Ko third number now measured (2026-08-05)
+
+The reference suite has zero N'Ko text, so the harness's nko premium was always `nan` — the §3.1 "three numbers, not one" was effectively two. Added `nqo_Nkoo` (SIB-200, 204 sentences) to the BPE training mix and a supplementary scorer (`score_nko.py`) using the same frozen harness path. Result: **N'Ko premium 1.5317** (SIB-200 N'Ko corpus) — far better than the ~9× worst case in the docs. Tradeoff: the N'Ko merge budget nudged Latin (1.2876→1.3264) and Ethiopic (2.8255→2.8482) slightly up, both still well below baseline → PASS held. The N'Ko number is supplementary (the frozen eval suite is unchanged).
+
 | Field | Spec |
 |---|---|
 | **Frozen harness** | `harness/tokenizer_eval.py` — loads pinned FLORES-200+/SIB-200/MAFAND-MT corpora, re-tokenizes with candidate vocab, computes CPT/BPT per language and per script (**Latin/Ge'ez/N'Ko stratified, never aggregated blind**) |

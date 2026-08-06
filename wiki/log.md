@@ -152,7 +152,6 @@ All 11 target repos now have in-tree presence (see the entry above).
 Train-split download hit **HF Xet storage 404s** at pinned revision `e0a62aa` (resolve + CAS reconstruction both fail for train blobs; Stage A val/test pulled fine). Retry loop killed; resumable from cached shards when HF recovers. **Stage B is a Phase 4 substrate, not a Phase 0 blocker** (Phase 0 frozen). Recorded in `pins/waxal.yaml` + `data/waxal/stageb.log` (commit `cea785ca`).
 
 ## [2026-08-05] audit | Cross-repo gap analysis + implementation plan
-
 Audited all 11 repos against the Bible + phases. Wrote `build-plan/gap-analysis.md`: 16 cross-cutting/subsystem gaps (G1–G5, H1–H3, C1–C2, T1–T2, A1–A3, B1–B4, L1–L2, W1–W2, F1, D1, S1–S2, O1–O2), 3 spec-vs-implementation gaps (code-mixing metrics, OOD protocol, threshold calibration), each tagged **UNBLOCKED** (actionable now) or **BLOCKED** (external dep). Prioritized implementation plan in 5 phases: A integrity/automation (CI, auto cert inputs, SDK packaging), B correctness/coverage (N'Ko scoring, airlock replay protection, BiasScope config/mock fidelity, compliance registry, trust-root hygiene), C the certification API layer (unblocks the whole SaaS surface), D data-gated (Stage B → MLX fine-tune, calibration loop, field-app), E server-class hardening (gVisor/Firecracker/Envoy, Stronghold). Highest-value unblocked items: **A1 CI**, **A2 automated certification inputs**, **B2 airlock replay protection**.
 
 ## [2026-08-05] impl | §3.3→§3.2.1 bias-correction bridge wired into certification
@@ -195,3 +194,14 @@ The documented §3.1 open problem was that Latin premiums stayed at baseline bec
 - **english_cpt exactly at baseline 5.7349 (PASS held)**
 
 All five African-Latin reference-suite languages now route to the BPE (yor 0.63×, ibo 0.82×, hau 0.85×, swh 0.93×); eng/fra stay on o200k via min() routing. Logged in `results.tsv` (`candidate/bpe-sib200-v0..v4`). This is the first candidate to improve Latin AND Ethiopic simultaneously. Stage B (WAXAL train) remains blocked upstream — fine-tuning unaffected by this loop.
+
+## [2026-08-05] impl | Gap-analysis Phase A+B implemented (CI, replay protection, trust-root, auto-inputs, SDK packaging, N'Ko)
+
+Executed the top unblocked items from `build-plan/gap-analysis.md`:
+
+- **A1 — GitHub Actions CI** (`.github/workflows/ci.yml`): harness (20) + biasscope (11) + SDK (2) pytest, airlock cargo tests (25), §3.5 hardening loop (fail on any bypass), certification determinism check (bit-identical sha), TypeScript build+test, Python wheel build. All steps verified locally.
+- **B2 — airlock seam-4 replay protection**: grants now carry a `jti` nonce; `ReplayGuard` rejects a grant used twice (fail closed, jti-less grants rejected under guard); optional `grant_call_binding` policy binds a grant to the exact call via canonical hash (`sign_for_call`/`canonical_call_hash`). 4 new regression tests (25 airlock total). 31 attack variants still 0 bypasses.
+- **B5 — on-prem trust-root hygiene**: `Vault::from_env` reads `AFREVAL_TRUST_KEY_FILE` then `AFREVAL_TRUST_KEY`; the dev-fallback key is **debug-only** — release builds fail closed (exit 2) with no configured key.
+- **A2 — automated certification inputs**: `certify.py --auto-inputs` pulls WER from the frozen QA baseline (`eval_baseline.py`, n=18) and the judge from §3.3 bias correction; provenance recorded in the cert's `input_sources`.
+- **A3 — SDK packaging**: TypeScript gains `tsconfig.json` + build + node:test suite (injectable fetch) + wheel; Python wheel builds.
+- **B1 — N'Ko third number measured**: added SIB-200 `nqo_Nkoo` to the training mix + `score_nko.py` supplementary scorer. **N'Ko premium 1.5317** (vs ~9× documented worst case). Tradeoff: Latin 1.2876→1.3264 and Ethiopic 2.8255→2.8482 (N'Ko merges crowded the budget), both still below baseline → PASS held.

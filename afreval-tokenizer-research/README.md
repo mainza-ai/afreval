@@ -46,6 +46,19 @@ African-Latin text through the BPE: **latin premium 1.5456→1.2876 (−16.7%)**
 ethiopic 3.377→2.8255 (−16.3%), English CPT unchanged at 5.7349 → **PASS**.
 See `results.tsv` for the full trajectory (merges 500→8000).
 
+## N'Ko third number (2026-08-05)
+
+The reference suite has no N'Ko text, so the harness nko premium was `nan`.
+Adding SIB-200 `nqo_Nkoo` to the training mix and scoring with `score_nko.py`
+measures it: **N'Ko premium 1.5317** (far below the ~9× worst case). The N'Ko
+merges nudge Latin/Ethiopic slightly up (1.3264/2.8482) but both stay below
+baseline → PASS holds.
+
+```bash
+afreval-harness/.venv/bin/python train_bpe.py --merges 8000 --sib200-per-lang 701  # includes nqo_Nkoo
+afreval-harness/.venv/bin/python score_nko.py --candidate EfficientRouteCandidate
+```
+
 ## Layout
 
 ```

@@ -1,0 +1,6 @@
+# Build artifacts (SDK packaging, gap-analysis A3)
+dist/
+build/
+dist-test/
+node_modules/
+*.egg-info/

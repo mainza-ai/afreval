@@ -4,10 +4,15 @@
   "description": "Milimo AfrEval client SDK (TypeScript)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": ["dist"],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "tsc -p tsconfig.test.json && node --test dist-test/test/*.test.js",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
+    "@types/node": "^22",
     "typescript": "^5"
   }
 }

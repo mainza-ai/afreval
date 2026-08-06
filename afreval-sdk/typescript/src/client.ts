@@ -36,7 +36,14 @@ export interface SecurityReport {
 }
 
 export class AfrevalClient {
-  constructor(private readonly baseUrl: string) {}
+  private readonly fetchImpl: typeof fetch;
+
+  constructor(
+    private readonly baseUrl: string,
+    opts?: { fetch?: typeof fetch },
+  ) {
+    this.fetchImpl = opts?.fetch ?? fetch;
+  }
 
   async certify(req: CertRequest): Promise<Cert> {
     return this.post("/v1/certify", req);
@@ -47,16 +54,22 @@ export class AfrevalClient {
   }
 
   private async post<T>(path: string, body: unknown): Promise<T> {
-    const r = await fetch(`${this.baseUrl}${path}`, {
+    const r = await this.fetchImpl(`${this.baseUrl}${path}`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body),
     });
+    if (!r.ok) {
+      throw new Error(`POST ${path} failed: HTTP ${r.status}`);
+    }
     return r.json() as Promise<T>;
   }
 
   private async get<T>(path: string): Promise<T> {
-    const r = await fetch(`${this.baseUrl}${path}`);
+    const r = await this.fetchImpl(`${this.baseUrl}${path}`);
+    if (!r.ok) {
+      throw new Error(`GET ${path} failed: HTTP ${r.status}`);
+    }
     return r.json() as Promise<T>;
   }
 }

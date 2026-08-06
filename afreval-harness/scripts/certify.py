@@ -55,6 +55,10 @@ def main() -> int:
     ap.add_argument("--wer", type=float, default=0.38, help="WAXAL macro WER (acoustic pipeline)")
     ap.add_argument("--accuracy", type=float, default=0.62, help="AfroBench-LITE mean accuracy")
     ap.add_argument("--judge", type=float, default=78.0, help="BiasScope-corrected judge score")
+    ap.add_argument("--bias-correct-from", default="",
+                    help="dir of §3.3 run_*.json results; when set, applies the §3.3 "
+                         "acceptance-delta correction to --judge before scoring "
+                         "(afreval-biasscope/bias_correct.py)")
     ap.add_argument("--out", default=str(HERE / "certs"))
     args = ap.parse_args()
 
@@ -80,12 +84,32 @@ def main() -> int:
         tok = load_tokenizer(args.tokenizer)
     tok_result = TokenizerEval().evaluate(tok, suite)
 
+    judge_score = args.judge
+    bias_correction = None
+    if args.bias_correct_from:
+        # §3.3 -> §3.2.1 bridge: worst-case acceptance-rate delta across the
+        # live probe runs scales the raw judge score down (Cultural Safety).
+        bc = REPO / "afreval-biasscope" / "bias_correct.py"
+        sys.path.insert(0, str(bc.parent))
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("bias_correct", bc)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        delta = mod.worst_case_delta(Path(args.bias_correct_from))
+        judge_score = mod.corrected_score(args.judge, delta)
+        bias_correction = {
+            "raw_judge_score": args.judge,
+            "worst_case_acceptance_delta": round(delta, 4),
+            "bias_penalty_weight": mod.BIAS_PENALTY_WEIGHT,
+            "note": "computed by afreval-biasscope/bias_correct.py from §3.3 run results",
+        }
+
     report = report_from_eval(
         args.model,
         tok_result,
         waxal_macro_wer=args.wer,
         afrobench_lite_accuracy=args.accuracy,
-        bias_corrected_judge_score=args.judge,
+        bias_corrected_judge_score=judge_score,
         pins={
             "afri_fertility_pin": af_pin["pinned_version"],
             "afrobench_lite_pin": ab_pin["harness_submodule"],
@@ -111,6 +135,7 @@ def main() -> int:
         "model": args.model,
         "report": report,
         "score": json.loads(scored.stdout),
+        "bias_correction": bias_correction,
         "harness_pins": {
             "afri_fertility": af_pin["pinned_version"],
             "afrobench_lite": ab_pin["harness_submodule"],

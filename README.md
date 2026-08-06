@@ -14,7 +14,7 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 | Phase 1 — Context Score core | `afreval-context-score/` | ✅ Deterministic Rust scorer (bit-identical repeated runs — the acceptance criterion) + deterministic certification pipeline with auditable sha256 certs; **§3.1 SIB-200 win flows through: zero-shot baseline re-certified 53.88→61.55 (structural economics 37.25→62.82)** |
 | Phase 1 — tokenizer search | `afreval-tokenizer-research/` | ✅ §3.1 search loop with trained BPE candidates; **script-aware candidate PASSES** (Ethiopic premium 7.83→3.38 at zero English-CPT regression); **SIB-200 corpus mix closes the Latin-African gap** (latin 1.55→1.29, ethiopic 3.38→2.83, English CPT unchanged) |
 | Phase 2 — execution boundary | `afreval-airlock/` | ✅ Four defensive seams incl. JWS HS256 clearance; §3.5 red-team hardening loop — **31 attack variants, 0 bypasses, 21 tests** (2026-08-05 round fixed 2 real bypasses: unicode-confusable PII + duplicate-key smuggling) |
-| Phase 2 — evaluation bias | `afreval-biasscope/` | ✅ §3.3 probe loop (mock/omlx judge backends; acceptance-rate-gap metric) + **first live run vs Qwen3.6-35B (2026-08-05)** — genuine cross-language gap (delta up to 1.0; direction varies by perturbation style) |
+| Phase 2 — evaluation bias | `afreval-biasscope/` | ✅ §3.3 probe loop (mock/omlx judge backends; acceptance-rate-gap metric) + **live run vs Qwen3.6-35B** — genuine gap (delta up to 1.0); **bias-correction bridge wired into certification** (delta → cultural-safety penalty) |
 | Phase 2 — compliance | `afreval-compliance/` | ✅ §3.6 citation-currency loop — **100% current (4/4)**: AU AI Strategy + Malabo Convention sourced from official au.int pages, Kenya ODPC + Nigeria NDPC current |
 | Phase 4 — edge ASR | `afreval-waxal-net/` | ✅ Loop scaffolding + **zero-shot baseline 41.0% macro-WER**; real cert on frozen data scores 53.88 (fail). Fine-tuning gates on Stage B train pull (blocked on upstream HF Xet 404s) |
 | Phase 4 — field app | `afreval-field-app/` | ✅ Flutter scaffold (elicitation UI + on-device telemetry; needs Flutter SDK to build) |
@@ -22,7 +22,7 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 | Phase 5 — dashboard | `afreval-dashboard/` | ✅ Certification + security web surface (build-target-agnostic) |
 | Phase 5 — SDK | `afreval-sdk/` | ✅ Python client SDK (working) + TypeScript client shape (gates on live API) |
 
-**Current status:** Phase 0 **closed** (all harnesses frozen, WAXAL QA-approved at 72,145 clips). Phases 1–2 core built + §3.3 live run complete, compliance 100% citation-current (4/4), §3.1 Latin-African gap closed (SIB-200 mix); Phase 4 WAXAL-NET scaffolding live (baseline 41.0% macro-WER to beat) with Stage B train pull blocked on upstream HF Xet 404s.
+**Current status:** Phase 0 **closed** (all harnesses frozen, WAXAL QA-approved at 72,145 clips). Phases 1–2 core built + §3.3 live run complete with **bias-correction wired into certification**, compliance 100% citation-current (4/4), §3.1 Latin-African gap closed (SIB-200 mix); Phase 4 WAXAL-NET scaffolding live (baseline 41.0% macro-WER to beat) with Stage B train pull blocked on upstream HF Xet 404s.
 
 ## Repository structure
 

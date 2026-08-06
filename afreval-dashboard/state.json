@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-06T00:59:47.330Z",
+  "generated_at": "2026-08-06T15:37:41.033Z",
   "certifications": [
     {
       "model": "demo-model",
@@ -11,6 +11,17 @@
         "structural_economics": 37.24828399217854
       },
       "cert_sha256": "9e99cbb781feab20820a3a49e31382dd1d0eef2f012113201136427f4c91f7c3"
+    },
+    {
+      "model": "zero-shot-baseline-sib200-bc",
+      "context_score": 54.55481472985069,
+      "pass": false,
+      "vectors": {
+        "cultural_safety": 35,
+        "linguistic_fidelity": 57.418000000000006,
+        "structural_economics": 62.81938243283562
+      },
+      "cert_sha256": "74f21c5b9f26327a606f97c8cce9b2f12cc449eeee83155782d80f409e43df77"
     },
     {
       "model": "zero-shot-baseline-sib200",

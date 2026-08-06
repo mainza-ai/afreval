@@ -151,6 +151,12 @@ All 11 target repos now have in-tree presence (see the entry above).
 
 Train-split download hit **HF Xet storage 404s** at pinned revision `e0a62aa` (resolve + CAS reconstruction both fail for train blobs; Stage A val/test pulled fine). Retry loop killed; resumable from cached shards when HF recovers. **Stage B is a Phase 4 substrate, not a Phase 0 blocker** (Phase 0 frozen). Recorded in `pins/waxal.yaml` + `data/waxal/stageb.log` (commit `cea785ca`).
 
+## [2026-08-05] impl | §3.3→§3.2.1 bias-correction bridge wired into certification
+
+The certification pipeline consumed a "BiasScope-corrected judge score" but nothing computed it. Added `afreval-biasscope/bias_correct.py`: converts the **worst-case acceptance-rate delta** across live probe runs into the correction — `corrected = raw × (1 − min(delta,1) × 0.5)` (conservative default; tunable per-vertical by the §3.2 calibration loop). Wired into `certify.py --bias-correct-from <results dir>`, with the correction provenance embedded in the cert.
+
+Full end-to-end cert (2026-08-05): zero-shot-baseline, SIB-200 tokenizer + BiasScope correction (delta 1.0 → raw judge 70 → 35) → **Context Score 54.55** (was 61.55 without correction, 53.88 with baseline tokenizer). Cert `certs/zero-shot-baseline-sib200-bc.cert.json` (sha `74f21c5b`), **bit-identical across runs**. This is the first cert that exercises all three closed loops: §3.1 tokenizer → §3.2.1 scorer → §3.3 cultural-safety correction. Dashboard state regenerated (4 certs).
+
 ## [2026-08-05] impl | §3.2.1 certification reflects the §3.1 win
 
 `certify.py` gains `--tokenizer-candidate` (loads the §3.1 loop's current best from `afreval-tokenizer-research`). Re-certified the zero-shot-baseline model with the SIB-200 tokenizer — **same model, same WER/accuracy/judge, only the tokenizer changed**:

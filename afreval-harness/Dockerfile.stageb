@@ -1,0 +1,10 @@
+# Stage-B pull retry container — resumes the WAXAL train-split pull when
+# upstream HF Xet recovers (Phase D1, 2026-08-05).
+# Run as a scheduled one-shot: docker run --rm afreval-stageb --once
+FROM python:3.12-slim
+WORKDIR /srv
+COPY afreval-harness/ afreval-harness/
+COPY afri-fertility/ afri-fertility/
+RUN pip install -q -e afri-fertility -e "afreval-harness[waxal]"
+WORKDIR /srv/afreval-harness
+ENTRYPOINT ["python", "scripts/retry_stageb.py"]

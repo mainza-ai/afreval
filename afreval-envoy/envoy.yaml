@@ -1,0 +1,70 @@
+# Envoy credential-injection sidecar (§4 "credential handling" — Phase E1).
+#
+# Stands up the seam the isolation tiers require: a tool-calling agent must
+# NEVER hold real credentials; instead the sidecar injects a synthetic,
+# per-request credential at request time. This is the Docker-testable part of
+# the gVisor/Firecracker/Envoy tier.
+#
+# The HTTP connection manager uses envoy.filters.http.header_mutation to add:
+#   X-AfrEval-Synthetic-Cred   (the injected credential, from env)
+#   X-AfrEval-Credential-Hint  = "injected-by-envoy-sidecar"
+# before forwarding to the upstream tool service (cred_service:9000). The
+# credential is injected at the boundary and never given to the agent under
+# test (matches wiki infrastructure/isolation-tiers.md).
+#
+# Run:  docker compose -f afreval-envoy/compose.yml up
+# Test: curl -s -H 'host: cred_service' http://localhost:10000/hello
+
+static_resources:
+  listeners:
+    - name: cred_injection_listener
+      address:
+        socket_address:
+          address: 0.0.0.0
+          port_value: 10000
+      filter_chains:
+        - filters:
+            - name: envoy.filters.network.http_connection_manager
+              typed_config:
+                "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+                stat_prefix: cred_injection
+                codec_type: AUTO
+                route_config:
+                  name: local_route
+                  virtual_hosts:
+                    - name: cred_service
+                      domains: ["*"]
+                      routes:
+                        - match: { prefix: "/" }
+                          route: { cluster: cred_service }
+                http_filters:
+                  - name: envoy.filters.http.header_mutation
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.header_mutation.v3.HeaderMutation
+                      mutations:
+                        request_mutations:
+                          - append:
+                              header:
+                                key: "X-AfrEval-Synthetic-Cred"
+                                value: "synd-8f3k2h9q-waxal-net"
+                          - append:
+                              header:
+                                key: "X-AfrEval-Credential-Hint"
+                                value: "injected-by-envoy-sidecar"
+                  - name: envoy.filters.http.router
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+  clusters:
+    - name: cred_service
+      connect_timeout: 5s
+      type: STRICT_DNS
+      lb_policy: ROUND_ROBIN
+      load_assignment:
+        cluster_name: cred_service
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: cred_service
+                      port_value: 9000

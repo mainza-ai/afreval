@@ -7,8 +7,22 @@ own elicitation methodology) and reports on-device eval telemetry.
 Builds **in parallel** with the training loop — it depends only on the WAXAL
 elicitation methodology being nailed down, not on training finishing.
 
-> Requires the Flutter SDK to build/run (not installed on this machine yet).
-> The structure below is the spec; compile once Flutter is available.
+## Build & test status — verified in Docker (2026-08-05)
+
+The scaffold is now **compile-verified and tested** via the official Flutter
+container (no host Flutter SDK needed):
+
+```bash
+docker run --rm -v "$PWD/afreval-field-app:/app" -w /app \
+  ghcr.io/cirruslabs/flutter:3.32.5 flutter test
+docker run --rm -v "$PWD/afreval-field-app:/app" -w /app \
+  ghcr.io/cirruslabs/flutter:3.32.5 flutter analyze
+```
+
+Result: **`flutter analyze` clean, all 5 tests pass** (`test/telemetry_test.dart`
+verifies the on-device WER semantics + telemetry queue). Note: the
+`flutter:stable` (3.44.0) image has a broken `vector_math`/`star_border` SDK
+compile path in the container; **use the `3.32.5` tag**.
 
 ## Spec (from §3.4 / WAXAL methodology)
 

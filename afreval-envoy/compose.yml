@@ -1,0 +1,25 @@
+# Envoy credential-injection sidecar — docker-compose (Phase E1, 2026-08-05).
+# Two services:
+#   cred_service — a tiny HTTP echo server (prints received headers)
+#   envoy        — the injection sidecar on :10000 -> cred_service:9000
+#
+# Start: docker compose -f afreval-envoy/compose.yml up -d
+# Test:  curl -s http://localhost:10000/  (should show the injected headers)
+services:
+  cred_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.echo
+    ports:
+      - "9000:9000"
+
+  envoy:
+    image: envoyproxy/envoy:v1.32-latest
+    environment:
+      AFREVAL_SYNTHETIC_CRED: "synd-8f3k2h9q-waxal-net"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml:ro
+    ports:
+      - "10000:10000"
+    depends_on:
+      - cred_service

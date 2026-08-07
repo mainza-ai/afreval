@@ -58,6 +58,12 @@ jobs:
           . .venv-ci/bin/activate
           python -m pytest afreval-sdk/python/tests -q
 
+      - name: API tests (Phase C)
+        run: |
+          . .venv-ci/bin/activate
+          pip install -e "afreval-api[dev]"
+          python -m pytest afreval-api/tests -q
+
       - name: SDK package (TypeScript build + tests)
         run: |
           cd afreval-sdk/typescript

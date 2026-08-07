@@ -1,0 +1,54 @@
+{
+  "model": "api-e2e",
+  "report": {
+    "model_id": "api-e2e",
+    "harness": {
+      "afri_fertility_pin": "0.1.0",
+      "afrobench_lite_pin": "EleutherAI/lm-evaluation-harness@f4d4b3de3ee6741a7151a9fe74945ee515262f4c",
+      "waxal_pin": "2026-08-01-qa2"
+    },
+    "linguistic_fidelity": {
+      "waxal_macro_wer": 0.4097,
+      "afrobench_lite_accuracy": 0.62
+    },
+    "cultural_safety": {
+      "bias_corrected_judge_score": 35.0
+    },
+    "structural_economics": {
+      "mean_fertility_premium": 1.63442989986072,
+      "script_premiums": {
+        "latin": 1.3264027091305863,
+        "ethiopic": 2.8481631443808024
+      }
+    }
+  },
+  "score": {
+    "context_score": 55.464023976590546,
+    "model_id": "api-e2e",
+    "pass": false,
+    "threshold": 70.0,
+    "vectors": {
+      "cultural_safety": 35.0,
+      "linguistic_fidelity": 60.218,
+      "structural_economics": 61.183413255301815
+    },
+    "vertical": "telco",
+    "weights_version": 1
+  },
+  "bias_correction": {
+    "raw_judge_score": 70.0,
+    "worst_case_acceptance_delta": 1.0,
+    "bias_penalty_weight": 0.5,
+    "note": "computed by afreval-biasscope/bias_correct.py from \u00a73.3 run results"
+  },
+  "input_sources": {
+    "wer": "eval_baseline.py --from-qa (n=18)",
+    "judge": "afreval-biasscope/bias_correct.py from results/"
+  },
+  "harness_pins": {
+    "afri_fertility": "0.1.0",
+    "afrobench_lite": "EleutherAI/lm-evaluation-harness@f4d4b3de3ee6741a7151a9fe74945ee515262f4c",
+    "waxal": "2026-08-01-qa2"
+  },
+  "cert_sha256": "91758a9b851e316a83fa08ca61b59ae4d4321cf5853f25f474269765cf00fb7a"
+}

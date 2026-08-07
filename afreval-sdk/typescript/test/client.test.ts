@@ -4,7 +4,7 @@ import { AfrevalClient } from "../src/client";
 
 // Smoke test against a mock fetch: verifies the client shapes the request
 // correctly and parses responses. No network, no live API.
-test("certify posts the request and parses the cert", async () => {
+test("certifyApi posts the request and parses the cert", async () => {
   const calls: Array<{ path: string; body: unknown }> = [];
   const client = new AfrevalClient("https://example.invalid", {
     fetch: (input, init) => {
@@ -12,14 +12,12 @@ test("certify posts the request and parses the cert", async () => {
       return Promise.resolve(
         new Response(
           JSON.stringify({
-            modelId: "m1",
-            vertical: "telco",
-            contextScore: 61.5,
-            linguisticFidelity: 57.4,
-            culturalSafety: 35.0,
-            structuralEconomics: 62.8,
-            pass: false,
-            certSha256: "abc123",
+            model: "m1",
+            context_score: 61.5,
+            vectors: { linguistic_fidelity: 57.4, cultural_safety: 35.0, structural_economics: 62.8 },
+            pass_: false,
+            cert_sha256: "abc123",
+            input_sources: { wer: "eval_baseline.py --from-qa (n=18)" },
           }),
           { status: 200, headers: { "content-type": "application/json" } },
         ),
@@ -27,21 +25,18 @@ test("certify posts the request and parses the cert", async () => {
     },
   });
 
-  const cert = await client.certify({
-    modelId: "m1",
-    waxalMacroWer: 0.4097,
-    afrobenchLiteAccuracy: 0.55,
-    biasCorrectedJudgeScore: 35.0,
-    meanFertilityPremium: 1.59,
-    harnessPins: { afri_fertility_pin: "p", afrobench_lite_pin: "p", waxal_pin: "p" },
-    weightsYaml: "vertical: telco\n",
+  const cert = await client.certifyApi({
+    model_id: "m1",
+    tokenizer_candidate: "EfficientRouteCandidate",
+    bias_corrected_judge_score: 35.0,
+    auto_inputs: true,
   });
 
   assert.strictEqual(calls.length, 1);
   assert.strictEqual(calls[0].path, "https://example.invalid/v1/certify");
-  assert.strictEqual(cert.contextScore, 61.5);
-  assert.strictEqual(cert.certSha256, "abc123");
-  assert.strictEqual(cert.pass, false);
+  assert.strictEqual(cert.context_score, 61.5);
+  assert.strictEqual(cert.cert_sha256, "abc123");
+  assert.strictEqual(cert.pass_, false);
 });
 
 test("securityReport gets /v1/security", async () => {
@@ -53,4 +48,12 @@ test("securityReport gets /v1/security", async () => {
   });
   const r = await client.securityReport();
   assert.strictEqual(r.totalVariants, 31);
+});
+
+test("compliance gets /v1/compliance", async () => {
+  const client = new AfrevalClient("https://example.invalid", {
+    fetch: () => Promise.resolve(new Response(JSON.stringify({ exit: 0, lines: [], current: true }))),
+  });
+  const r = await client.compliance();
+  assert.strictEqual(r.current, true);
 });

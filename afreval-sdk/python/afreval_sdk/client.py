@@ -1,5 +1,10 @@
-"""Milimo AfrEval Python SDK — programmatic certification via the deterministic
-Rust scorer. Same bit-identical guarantee as the CLI; each cert is auditable.
+"""Milimo AfrEval Python SDK — programmatic certification.
+
+Two modes:
+  - local: deterministic Rust scorer (same bit-identical guarantee as the CLI)
+  - api:   the Phase C certification HTTP API (afreval-api) — pass base_url
+
+Each cert is auditable (sha256).
 """
 from __future__ import annotations
 
@@ -7,6 +12,7 @@ import hashlib
 import json
 import subprocess
 import tempfile
+import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -42,12 +48,45 @@ def _canonical(obj) -> str:
 
 
 class AfrevalClient:
-    def __init__(self, scorer_bin: Path | None = None):
+    def __init__(self, scorer_bin: Path | None = None, base_url: str | None = None, timeout: int = 120):
+        """base_url set → API mode; otherwise local scorer mode."""
+        self.base_url = base_url
+        self.timeout = timeout
         self.scorer = scorer_bin or SCORER
-        if not self.scorer.exists():
+        if not base_url and not self.scorer.exists():
             raise FileNotFoundError(
-                f"scorer not built at {self.scorer}; run cargo build --release in afreval-context-score"
+                f"scorer not built at {self.scorer}; run cargo build --release in afreval-context-score "
+                "or pass base_url to use the certification API"
             )
+
+    # ---- API mode (Phase C) ----
+
+    def _api(self, method: str, path: str, body: dict | None = None) -> dict:
+        url = f"{self.base_url.rstrip('/')}{path}"
+        data = json.dumps(body).encode() if body is not None else None
+        req = urllib.request.Request(url, data=data, method=method,
+                                     headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+            return json.loads(resp.read())
+
+    def certify_api(self, model_id: str, tokenizer_candidate: str = "",
+                    auto_inputs: bool = True, bias_corrected_judge_score: float = 78.0) -> dict:
+        """Run the full certification pipeline via the API (auto-inputs)."""
+        return self._api("POST", "/v1/certify", {
+            "model_id": model_id,
+            "weights_yaml": "",
+            "tokenizer_candidate": tokenizer_candidate,
+            "auto_inputs": auto_inputs,
+            "bias_corrected_judge_score": bias_corrected_judge_score,
+        })
+
+    def security_report(self) -> dict:
+        return self._api("GET", "/v1/security")
+
+    def compliance(self) -> dict:
+        return self._api("GET", "/v1/compliance")
+
+    # ---- local scorer mode ----
 
     def score(self, report: dict, weights_yaml: str) -> dict:
         with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as rf, \

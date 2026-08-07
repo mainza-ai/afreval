@@ -1,0 +1,43 @@
+"""Phase C API tests — health/security/compliance (no certification run, which
+needs the Rust scorer binary and full harness — covered by CI separately)."""
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from fastapi.testclient import TestClient  # noqa: E402
+
+from api import app  # noqa: E402
+
+client = TestClient(app)
+
+
+def test_health():
+    r = client.get("/v1/health")
+    assert r.status_code == 200
+    assert r.json()["status"] == "ok"
+
+
+def test_security_report_available():
+    # report.json is committed; the endpoint must return per-seam rates
+    r = client.get("/v1/security")
+    assert r.status_code == 200
+    body = r.json()
+    assert "total_bypasses" in body
+    assert "per_seam" in body
+
+
+def test_compliance_endpoint():
+    r = client.get("/v1/compliance")
+    assert r.status_code == 200
+    assert "current" in r.json()
+
+
+def test_certify_requires_scorer():
+    # If the scorer is absent the API must fail closed (503), not crash.
+    import api
+    if not api.SCORER.exists():
+        r = client.post("/v1/certify", json={
+            "model_id": "t", "weights_yaml": "", "auto_inputs": True,
+        })
+        assert r.status_code == 503

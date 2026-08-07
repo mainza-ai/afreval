@@ -218,3 +218,17 @@ Second implementation pass over the unblocked gaps:
 - **OOD protocol (§3.4)**: `ood_protocol.py` defines and measures OOD generalization — per-language silence-tercile split of the frozen eval split, both numbers reported (in-dist 37.56% vs OOD 37.60% balanced; global split shows 36.4% vs 41.8% but drops languages — protocol finding logged). Acceptance: beat baseline macro-WER AND no OOD regression >5 pts.
 
 **Test totals: 52 Python + 25 Rust + 3 TypeScript, all passing.** Remaining blocked: Stage B (HF Xet 404), §3.2 calibration (labeled-outcome data), field-app (Flutter), server tiers (gVisor/Firecracker/Envoy), Stronghold.
+
+## [2026-08-05] impl | Open-source-first: Ollama judge + Docker-unblocked D3/E1/D1
+
+**Ollama (open-source judge)** — the project is open-source, so the earlier live BiasScope run (proprietary `omlx`) now has a fully open, reproducible replacement:
+- Added `OllamaJudge` (native `/api/chat`, `think:false` — qwen3.6's reasoning otherwise empties content on the OpenAI-compatible `/v1` path) + `api`/`ollama` backends in `run_probe.py`. `bias_correct.py` accepts both `omlx` and `ollama` real-judge runs.
+- **Live open-source run**: qwen3.6 via Ollama — **acceptance-rate delta 1.0 on all 4 perturbation styles**; the classic §3.3 generosity pattern reproduced (eng rejected 50, all African languages accepted 85–100 on style=none), with direction varying by style. Cert `zero-shot-baseline-ollama.cert.json` (sha `627a59f2`, cultural safety 35.0 after delta-1.0 correction), deterministic.
+- Fixed a real bug my A2 change introduced: `certify.py --wer` default became `None`, so a run without `--auto-inputs` emitted `null` WER → scorer parse failure. Restored default 0.38.
+
+**Docker (available on this machine) unblocks 3 items**:
+- **D3 — Flutter field-app verified in a container**: `flutter analyze` clean + **all 5 tests pass** (WER semantics + telemetry queue) via `ghcr.io/cirruslabs/flutter:3.32.5`. Note: `flutter:stable` (3.44) has a broken `vector_math`/`star_border` SDK compile in the container — use 3.32.5.
+- **E1 — Envoy credential-injection sidecar live** (`afreval-envoy/`): docker-compose Envoy on :10000 injects `X-AfrEval-Synthetic-Cred` + `X-AfrEval-Credential-Hint` into every request before forwarding to the upstream tool service — verified via echo server (the agent never holds the credential, matching §4). Schema notes recorded (header_mutation filter, no `%ENV%` in header values). gVisor/Firecracker remain infeasible in Docker Desktop (no KVM).
+- **D1 — Stage-B retry**: `scripts/retry_stageb.py` (polls upstream, resumes the resumable train pull when HF recovers; `--once` for cron/Docker) + `Dockerfile.stageb`. Verified it correctly reports the 404 and exits cleanly.
+
+**Tests: 53 Python (OllamaJudge test added) + 25 Rust + 3 TS.** Still blocked: Stage B data (upstream), §3.2 calibration (data), gVisor/Firecracker (server-class), Stronghold (post-MVP).

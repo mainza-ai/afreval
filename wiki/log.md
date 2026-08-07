@@ -232,3 +232,7 @@ Second implementation pass over the unblocked gaps:
 - **D1 — Stage-B retry**: `scripts/retry_stageb.py` (polls upstream, resumes the resumable train pull when HF recovers; `--once` for cron/Docker) + `Dockerfile.stageb`. Verified it correctly reports the 404 and exits cleanly.
 
 **Tests: 53 Python (OllamaJudge test added) + 25 Rust + 3 TS.** Still blocked: Stage B data (upstream), §3.2 calibration (data), gVisor/Firecracker (server-class), Stronghold (post-MVP).
+
+## [2026-08-05] infra | Docker feasibility + Podman/seccomp substitute for gVisor
+
+Investigated what Docker (Docker Desktop, aarch64, runc-only, no KVM) can unblock. Firecracker and gVisor `runsc` both require `/dev/kvm` — infeasible in Docker Desktop. Envoy already verified live. **Chose Podman + seccomp/AppArmor as the open-source, Docker-compatible standard-tier substitute** (shared-kernel, reduced guarantee vs gVisor, but the strongest isolation without KVM; gVisor/Firecracker remain the server-class target). Documented in `infrastructure/isolation-tiers.md`. Implementation lands in `afreval-isolation/`.

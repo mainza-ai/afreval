@@ -233,6 +233,10 @@ Second implementation pass over the unblocked gaps:
 
 **Tests: 53 Python (OllamaJudge test added) + 25 Rust + 3 TS.** Still blocked: Stage B data (upstream), §3.2 calibration (data), gVisor/Firecracker (server-class), Stronghold (post-MVP).
 
-## [2026-08-05] infra | Docker feasibility + Podman/seccomp substitute for gVisor
+## [2026-08-05] infra | Podman/seccomp isolation tier built + verified in Docker
 
-Investigated what Docker (Docker Desktop, aarch64, runc-only, no KVM) can unblock. Firecracker and gVisor `runsc` both require `/dev/kvm` — infeasible in Docker Desktop. Envoy already verified live. **Chose Podman + seccomp/AppArmor as the open-source, Docker-compatible standard-tier substitute** (shared-kernel, reduced guarantee vs gVisor, but the strongest isolation without KVM; gVisor/Firecracker remain the server-class target). Documented in `infrastructure/isolation-tiers.md`. Implementation lands in `afreval-isolation/`.
+Implemented `afreval-isolation/` — the open-source, Docker-runnable standard tier (gVisor substitute). `seccomp/deny-network.json`: network syscalls → SCMP_ACT_ERRNO, dangerous syscalls (reboot/ptrace/mount/chroot/setns/…) → SCMP_ACT_KILL, everything else allowed (so the container runtime's own init works). Verified on Docker Desktop (aarch64):
+- `--verify`: compute + file IO allowed, network connect **denied** → PASS
+- `--verify-kill`: a `reboot(2)` attempt is **terminated** (Bad system call) → PASS
+
+Same profile works under `podman run --security-opt seccomp=…` on a real Linux host. This is the strongest no-KVM boundary (shared kernel + syscall filtering); gVisor/Firecracker remain the server-class target. Docs: isolation-tiers.md, phases.md, gap-analysis E1, README updated.

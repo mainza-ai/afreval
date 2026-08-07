@@ -22,9 +22,10 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 | Phase 5 — dashboard | `afreval-dashboard/` | ✅ Certification + security web surface (build-target-agnostic) |
 | Phase 5 — SDK | `afreval-sdk/` | ✅ Python client SDK (local scorer + **API mode**) + TypeScript client (buildable, tested); both packaged (wheel / npm build) — now call the **Phase C certification API** |
 | Phase C — certification API | `afreval-api/` | ✅ `/v1/certify` + `/v1/security` + `/v1/compliance` — the tollbooth surface wrapping the deterministic pipeline (auto-inputs WER/judge server-side) |
-| Phase E — Envoy sidecar | `afreval-envoy/` | ✅ **Credential-injection sidecar verified in Docker** — injects synthetic cred at the boundary before the upstream tool service (gVisor/Firecracker remain server-class) |
+| Phase E — Envoy sidecar | `afreval-envoy/` | ✅ **Credential-injection sidecar verified in Docker** — injects synthetic cred at the boundary before the upstream tool service |
+| Phase E — isolation tier | `afreval-isolation/` | ✅ **Podman/seccomp sandbox tier verified in Docker** — deny-network + KILL syscall classes (gVisor/Firecracker remain server-class, need KVM) |
 
-**Current status:** Phase 0 **closed** (all harnesses frozen, WAXAL QA-approved at 72,145 clips). Phases 1–2 core built + §3.3 live run via **open-source Ollama judge** with bias-correction wired in, compliance **7/7 citation-current** (binding-flagged), §3.1 Latin-African gap closed + N'Ko measured, airlock at 25 tests/0 bypasses with replay protection, **CI + SDK packaging + Phase C certification API live**, code-mixing metrics + OOD protocol in, **field-app verified in Docker, Envoy credential-injection sidecar live in Docker**. Phase 4 WAXAL-NET scaffolding live (baseline 41.0% macro-WER to beat) with Stage B train pull blocked on upstream HF Xet 404s (resumable retry in place).
+**Current status:** Phase 0 **closed** (all harnesses frozen, WAXAL QA-approved at 72,145 clips). Phases 1–2 core built + §3.3 live run via **open-source Ollama judge** with bias-correction wired in, compliance **7/7 citation-current** (binding-flagged), §3.1 Latin-African gap closed + N'Ko measured, airlock at 25 tests/0 bypasses with replay protection, **CI + SDK packaging + Phase C certification API live**, code-mixing metrics + OOD protocol in, **field-app verified in Docker, Envoy credential-injection + Podman/seccomp isolation tiers verified in Docker**. Phase 4 WAXAL-NET scaffolding live (baseline 41.0% macro-WER to beat) with Stage B train pull blocked on upstream HF Xet 404s (resumable retry in place).
 
 ## Repository structure
 
@@ -42,6 +43,7 @@ afreval/
 ├── afreval-dashboard/        # certification & security dashboard
 ├── afreval-api/              # Phase C certification HTTP API (the tollbooth surface)
 ├── afreval-envoy/            # Envoy credential-injection sidecar (docker-compose, Phase E)
+├── afreval-isolation/        # Podman/seccomp sandbox tier (Docker-verified, Phase E)
 ├── autoresearch/             # vendored karpathy/autoresearch — flattened for re-engineering
 ├── AfroBench/                # vendored McGill-NLP/AfroBench — flattened
 │   └── lm-evaluation-harness/  # git submodule (EleutherAI)

@@ -131,8 +131,8 @@ Also closed 2026-08-05: **code-mixing metrics** (`harness/code_mixing.py` — CM
 14. **D3. Field-app build** once Flutter SDK present; verify recording/telemetry. Closes F1.
 
 ### Phase E — Production hardening (server-class, not laptop-buildable)
-15. **E1. gVisor/Firecracker/Envoy isolation tiers.**
-16. **E2. Stronghold vault** for seam-4 key material.
+15. **E1. gVisor/Firecracker/Envoy isolation tiers.** — **PARTIAL 2026-08-05**: Envoy credential-injection sidecar live in Docker (`afreval-envoy/`); **Podman/seccomp substitute built + verified** in Docker (`afreval-isolation/` — deny-network + KILL classes). gVisor/Firecracker remain server-class (need KVM, absent in Docker Desktop).
+16. **E2. Stronghold vault** for seam-4 key material. (deferred — open-source alternatives: Stronghold itself, age, SOPS, Vault, all Docker-runnable)
 
 ---
 

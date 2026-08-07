@@ -52,7 +52,8 @@ def main() -> int:
     ap.add_argument("--tokenizer-candidate", default="",
                     help="§3.1 research candidate class (EfficientRouteCandidate/ScriptAwareCandidate) "
                          "from afreval-tokenizer-research — certifies with the loop's best tokenizer")
-    ap.add_argument("--wer", type=float, default=None, help="WAXAL macro WER (overrides --auto-inputs)")
+    ap.add_argument("--wer", type=float, default=0.38,
+                    help="WAXAL macro WER (ignored when --auto-inputs pulls it from the QA baseline)")
     ap.add_argument("--accuracy", type=float, default=0.62, help="AfroBench-LITE mean accuracy")
     ap.add_argument("--judge", type=float, default=78.0, help="BiasScope-corrected judge score")
     ap.add_argument("--auto-inputs", action="store_true",

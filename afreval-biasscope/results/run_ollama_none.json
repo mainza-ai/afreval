@@ -1,0 +1,38 @@
+{
+  "backend": "ollama",
+  "style": "none",
+  "judge_calls": 7,
+  "threshold": 60.0,
+  "per_language": {
+    "amh": {
+      "acceptance_rate": 1.0,
+      "mean_score": 85.0
+    },
+    "eng": {
+      "acceptance_rate": 0.0,
+      "mean_score": 50.0
+    },
+    "fra": {
+      "acceptance_rate": 1.0,
+      "mean_score": 95.0
+    },
+    "hau": {
+      "acceptance_rate": 1.0,
+      "mean_score": 85.0
+    },
+    "ibo": {
+      "acceptance_rate": 1.0,
+      "mean_score": 85.0
+    },
+    "swh": {
+      "acceptance_rate": 1.0,
+      "mean_score": 85.0
+    },
+    "yor": {
+      "acceptance_rate": 1.0,
+      "mean_score": 100.0
+    }
+  },
+  "acceptance_rate_delta": 1.0,
+  "note": "the 43% gap is the \u00a73.3 existence proof \u2014 a large delta under high pairwise accuracy is the blind spot"
+}

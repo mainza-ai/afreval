@@ -18,7 +18,7 @@ sys.path.insert(0, str(HERE))
 HARNESS = HERE.parent / "afreval-harness"
 sys.path.insert(0, str(HARNESS))
 
-from judge.backends import ApiJudge, MockJudge, OmlxJudge, load_config  # noqa: E402
+from judge.backends import ApiJudge, MockJudge, OllamaJudge, OmlxJudge, load_config  # noqa: E402
 from probes.perturbation_program import build_probe_set  # noqa: E402
 from harness.tokenizer_eval import load_reference_suite  # noqa: E402
 
@@ -28,7 +28,7 @@ RESULTS = HERE / "results"
 def main() -> int:
     cfg = load_config()
     ap = argparse.ArgumentParser(description="§3.3 BiasScope probe runner")
-    ap.add_argument("--backend", choices=["mock", "omlx", "api"], default="mock")
+    ap.add_argument("--backend", choices=["mock", "omlx", "api", "ollama"], default="mock")
     ap.add_argument("--style", default="none", help="perturbation style (see perturbation_program)")
     ap.add_argument("--max-calls", type=int, default=cfg.get("max_calls", 0),
                     help=f"judge-call budget (0 = unlimited; config default {cfg.get('max_calls', 0)})")
@@ -39,6 +39,8 @@ def main() -> int:
         judge = MockJudge()
     elif args.backend == "omlx":
         judge = OmlxJudge(model=args.model)
+    elif args.backend == "ollama":
+        judge = OllamaJudge(model=args.model)
     else:
         judge = ApiJudge(model=args.model)
 

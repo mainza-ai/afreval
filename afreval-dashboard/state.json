@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-07T17:11:40.254Z",
+  "generated_at": "2026-08-07T17:42:17.902Z",
   "certifications": [
     {
       "model": "api-e2e",
@@ -22,6 +22,17 @@
         "structural_economics": 37.24828399217854
       },
       "cert_sha256": "9e99cbb781feab20820a3a49e31382dd1d0eef2f012113201136427f4c91f7c3"
+    },
+    {
+      "model": "zero-shot-baseline-ollama",
+      "context_score": 54.955023976590546,
+      "pass": false,
+      "vectors": {
+        "cultural_safety": 35,
+        "linguistic_fidelity": 59.2,
+        "structural_economics": 61.183413255301815
+      },
+      "cert_sha256": "627a59f2e2a2a26a67bf169c61e6fcd6d2fea61966d13f2a98e871d07f9ad5c7"
     },
     {
       "model": "zero-shot-baseline-sib200-bc",

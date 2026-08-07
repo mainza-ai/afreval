@@ -4,7 +4,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from judge.backends import MockJudge, load_config  # noqa: E402
+from judge.backends import MockJudge, OllamaJudge, load_config  # noqa: E402
 from probes.perturbation_program import perturb, seed_from_reference_suite  # noqa: E402
 
 
@@ -44,6 +44,33 @@ def test_config_yaml_present_and_parseable():
     assert cfg["threshold"] == 60.0
     assert "code_switch" in cfg["styles"]
     assert cfg["mock"]["direction"] in ("generosity", "strictness")
+
+
+def test_ollama_judge_parses_numeric_reply(monkeypatch):
+    # No network in tests: monkeypatch urlopen with a fake /api/chat reply
+    # and verify numeric parsing + threshold.
+    import json as _json
+    import urllib.request
+
+    class FakeResp:
+        def read(self):
+            return _json.dumps({"model": "m", "message": {"role": "assistant", "content": "85"}}).encode()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+    def fake_urlopen(req, timeout=90):
+        assert "/api/chat" in req.full_url
+        return FakeResp()
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    j = OllamaJudge(endpoint="http://ollama:11434/api/chat")
+    v = j.judge("some response", "eng")
+    assert v.score == 85.0
+    assert v.accepted  # >= threshold 60
 
 
 def test_perturb_none_is_identity():

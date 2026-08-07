@@ -61,7 +61,9 @@ def worst_case_delta(results_dir: Path) -> float:
             d = json.loads(f.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
             continue
-        if d.get("backend") != "omlx":
+        # omlx and ollama are both real-judge backends (open-source-first:
+        # ollama is the reproducible, local judge). mock is excluded (CI shape).
+        if d.get("backend") not in ("omlx", "ollama"):
             continue
         best = max(best, acceptance_rate_delta(d))
     return best

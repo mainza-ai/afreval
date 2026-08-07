@@ -20,9 +20,10 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 | Phase 4 — field app | `afreval-field-app/` | ✅ Flutter scaffold (elicitation UI + on-device telemetry; needs Flutter SDK to build) |
 | Phase 5 — on-prem client | `afreval-onprem/` | 🚧 Tauri 2 skeleton embedding scorer + airlock; **trust-root vault fails closed without a configured key** (dev key debug-only); Stronghold, dashboard reuse, local MCP server: post-MVP |
 | Phase 5 — dashboard | `afreval-dashboard/` | ✅ Certification + security web surface (build-target-agnostic) |
-| Phase 5 — SDK | `afreval-sdk/` | ✅ Python client SDK (working) + TypeScript client (buildable, tested); both packaged (wheel / npm build) — client shapes gate on the Phase C live certification API |
+| Phase 5 — SDK | `afreval-sdk/` | ✅ Python client SDK (local scorer + **API mode**) + TypeScript client (buildable, tested); both packaged (wheel / npm build) — now call the **Phase C certification API** |
+| Phase C — certification API | `afreval-api/` | ✅ `/v1/certify` + `/v1/security` + `/v1/compliance` — the tollbooth surface wrapping the deterministic pipeline (auto-inputs WER/judge server-side) |
 
-**Current status:** Phase 0 **closed** (all harnesses frozen, WAXAL QA-approved at 72,145 clips). Phases 1–2 core built + §3.3 live run complete with **bias-correction wired into certification**, compliance 100% citation-current (4/4), §3.1 Latin-African gap closed (SIB-200 mix) + **N'Ko measured**, airlock hardening at 25 tests/0 bypasses with **seam-4 replay protection**, **CI + SDK packaging in place**; Phase 4 WAXAL-NET scaffolding live (baseline 41.0% macro-WER to beat) with Stage B train pull blocked on upstream HF Xet 404s.
+**Current status:** Phase 0 **closed** (all harnesses frozen, WAXAL QA-approved at 72,145 clips). Phases 1–2 core built + §3.3 live run with **bias-correction wired into certification**, compliance **7/7 citation-current** (incl. AU/ECOWAS/SADC, binding-flagged), §3.1 Latin-African gap closed + N'Ko measured, airlock at 25 tests/0 bypasses with **replay protection**, **CI + SDK packaging + the Phase C certification API live**, **code-mixing metrics implemented**, **OOD protocol defined**. Phase 4 WAXAL-NET scaffolding live (baseline 41.0% macro-WER to beat) with Stage B train pull blocked on upstream HF Xet 404s.
 
 ## Repository structure
 
@@ -38,6 +39,7 @@ afreval/
 ├── afreval-compliance/       # §3.6 citation-currency loop
 ├── afreval-onprem/           # Tauri 2 air-gapped client (skeleton)
 ├── afreval-dashboard/        # certification & security dashboard
+├── afreval-api/              # Phase C certification HTTP API (the tollbooth surface)
 ├── autoresearch/             # vendored karpathy/autoresearch — flattened for re-engineering
 ├── AfroBench/                # vendored McGill-NLP/AfroBench — flattened
 │   └── lm-evaluation-harness/  # git submodule (EleutherAI)

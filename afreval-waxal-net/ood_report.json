@@ -1,0 +1,56 @@
+{
+  "protocol": "per-language silence-tercile split of the frozen QA-approved eval split",
+  "in_distribution": {
+    "n_languages": 18,
+    "language_macro_wer": 0.3756,
+    "languages": {
+      "ach": 0.335,
+      "aka": 0.3151,
+      "amh": 0.3093,
+      "dag": 0.3376,
+      "dga": 0.3381,
+      "ewe": 0.3876,
+      "ful": 0.4576,
+      "kpo": 0.6484,
+      "lin": 0.3282,
+      "lug": 0.2111,
+      "mlg": 0.192,
+      "nyn": 0.3855,
+      "orm": 0.4002,
+      "sid": 0.4254,
+      "sna": 0.2935,
+      "sog": 0.502,
+      "tir": 0.4243,
+      "wal": 0.47
+    }
+  },
+  "out_of_distribution": {
+    "n_languages": 18,
+    "language_macro_wer": 0.376,
+    "languages": {
+      "ach": 0.3517,
+      "aka": 0.378,
+      "amh": 0.3479,
+      "dag": 0.3279,
+      "dga": 0.3458,
+      "ewe": 0.3752,
+      "ful": 0.4556,
+      "kpo": 0.6426,
+      "lin": 0.3322,
+      "lug": 0.1986,
+      "mlg": 0.185,
+      "nyn": 0.383,
+      "orm": 0.3734,
+      "sid": 0.3808,
+      "sna": 0.2982,
+      "sog": 0.4904,
+      "tir": 0.4427,
+      "wal": 0.4596
+    }
+  },
+  "n_clips": {
+    "ind": 48098,
+    "ood": 24047
+  },
+  "acceptance_note": "fine-tuned model must beat the zero-shot baseline macro-WER AND not regress OOD-WER > 5 relative points vs baseline OOD"
+}

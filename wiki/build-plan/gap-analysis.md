@@ -112,16 +112,18 @@ Cross-repo audit of what exists vs. what the [Implementation Bible](../sources/i
 3. **A3. SDK packaging** — add `tsconfig.json` + build + smoke test for TS; `python -m build` + wheel for Python; make Python SDK call the certify pipeline path (not just raw scorer). Closes G4/S1/S2.
 
 ### Phase B — Correctness & coverage (all UNBLOCKED)
-4. **B1. N'Ko scoring** — vendor a small N'Ko corpus so the third §3.1 number is real. Closes T1.
-5. **B2. Airlock replay protection** — grant nonce + call binding; regression test. Closes A1.
-6. **B3. BiasScope config + mock fidelity** — add `config.yaml` (budget/threshold/styles), direction-aware mock modes, `ApiJudge` shape. Closes B1/B2/B3.
-7. **B4. Compliance registry expansion** — add regional/sectoral instruments; document that the AU AI Strategy is non-binding. Closes L1.
-8. **B5. On-prem trust-root hygiene** — fail closed if `AFREVAL_TRUST_KEY` unset in non-dev build; remove shared dev key from the airlock demo policy. Closes G3/O1.
-9. **B6. Hardcode target-hardware-class definition** for §3.4. Closes W2.
+4. **B1. N'Ko scoring** — vendor a small N'Ko corpus so the third §3.1 number is real. Closes T1. ✅ **DONE 2026-08-05** (premium 1.53 via SIB-200 `nqo_Nkoo` + `score_nko.py`)
+5. **B2. Airlock replay protection** — grant nonce + call binding; regression test. Closes A1. ✅ **DONE 2026-08-05** (`jti` + `ReplayGuard` + `grant_call_binding`)
+6. **B3. BiasScope config + mock fidelity** — add `config.yaml` (budget/threshold/styles), direction-aware mock modes, `ApiJudge` shape. Closes B1/B2/B3. ✅ **DONE 2026-08-05** (config.yaml, strictness direction, real ApiJudge)
+7. **B4. Compliance registry expansion** — add regional/sectoral instruments; document that the AU AI Strategy is non-binding. Closes L1. ✅ **DONE 2026-08-05** (7/7 citations, binding-flagged)
+8. **B5. On-prem trust-root hygiene** — fail closed if `AFREVAL_TRUST_KEY` unset in non-dev build; remove shared dev key from the airlock demo policy. Closes G3/O1. ✅ **DONE 2026-08-05** (fail-closed vault)
+9. **B6. Hardcode target-hardware-class definition** for §3.4. Closes W2. ✅ **DONE 2026-08-05** (numeric spec + `assert_hardware.py`)
 
 ### Phase C — The API layer (UNBLOCKED; unblocks the entire Phase-5 surface)
-10. **C1. Minimal certification HTTP API** (FastAPI or Rust `axum`) wrapping `certify.py` + the security report; versioned `/v1/certify`, `/v1/security`, `/v1/compliance`.
-11. **C2. Point both SDKs at it** — Python becomes a real network client; TypeScript is buildable against the live contract. This is the moment the "tollbooth" stops being a metaphor. Closes G2.
+10. **C1. Minimal certification HTTP API** (FastAPI or Rust `axum`) wrapping `certify.py` + the security report; versioned `/v1/certify`, `/v1/security`, `/v1/compliance`. ✅ **DONE 2026-08-05** (`afreval-api/`, verified end-to-end)
+11. **C2. Point both SDKs at it** — Python becomes a real network client; TypeScript is buildable against the live contract. This is the moment the "tollbooth" stops being a metaphor. Closes G2. ✅ **DONE 2026-08-05** (both SDKs in API mode)
+
+Also closed 2026-08-05: **code-mixing metrics** (`harness/code_mixing.py` — CMI/enhanced CMI/I-index/M-index) and the **OOD generalization protocol** (`afreval-waxal-net/ood_protocol.py`).
 
 ### Phase D — Data-gated (BLOCKED externally)
 12. **D1. Stage B pull** (retry when HF Xet recovers) → **MLX fine-tune loop** → ONNX/TFLite export → OOD protocol. Closes W1.

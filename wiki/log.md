@@ -196,7 +196,6 @@ The documented §3.1 open problem was that Latin premiums stayed at baseline bec
 All five African-Latin reference-suite languages now route to the BPE (yor 0.63×, ibo 0.82×, hau 0.85×, swh 0.93×); eng/fra stay on o200k via min() routing. Logged in `results.tsv` (`candidate/bpe-sib200-v0..v4`). This is the first candidate to improve Latin AND Ethiopic simultaneously. Stage B (WAXAL train) remains blocked upstream — fine-tuning unaffected by this loop.
 
 ## [2026-08-05] impl | Gap-analysis Phase A+B implemented (CI, replay protection, trust-root, auto-inputs, SDK packaging, N'Ko)
-
 Executed the top unblocked items from `build-plan/gap-analysis.md`:
 
 - **A1 — GitHub Actions CI** (`.github/workflows/ci.yml`): harness (20) + biasscope (11) + SDK (2) pytest, airlock cargo tests (25), §3.5 hardening loop (fail on any bypass), certification determinism check (bit-identical sha), TypeScript build+test, Python wheel build. All steps verified locally.
@@ -205,3 +204,17 @@ Executed the top unblocked items from `build-plan/gap-analysis.md`:
 - **A2 — automated certification inputs**: `certify.py --auto-inputs` pulls WER from the frozen QA baseline (`eval_baseline.py`, n=18) and the judge from §3.3 bias correction; provenance recorded in the cert's `input_sources`.
 - **A3 — SDK packaging**: TypeScript gains `tsconfig.json` + build + node:test suite (injectable fetch) + wheel; Python wheel builds.
 - **B1 — N'Ko third number measured**: added SIB-200 `nqo_Nkoo` to the training mix + `score_nko.py` supplementary scorer. **N'Ko premium 1.5317** (vs ~9× documented worst case). Tradeoff: Latin 1.2876→1.3264 and Ethiopic 2.8255→2.8482 (N'Ko merges crowded the budget), both still below baseline → PASS held.
+
+## [2026-08-05] impl | Gap-analysis B3/B4/B6 + Phase C API + code-mixing + OOD
+
+Second implementation pass over the unblocked gaps:
+
+- **B3 — BiasScope config + mock fidelity**: `config.yaml` (threshold/budget/styles/mock-direction) now exists (program.md referenced it but it was missing); `MockJudge` gains a `strictness` direction (low-resource scored lower — the live-observed opposite of generosity); `ApiJudge` is a real OpenAI-compatible hosted backend (`AFREVAL_JUDGE_URL`/`KEY`). run_probe defaults now read config. 14 biascope tests.
+- **B4 — compliance registry expansion**: 4 → **7 citations**, adding AfCFTA (binding) + ECOWAS/SADC (non-binding); every instrument now carries a `binding`/`non-binding` flag surfaced by `check_currency.py` so a strategy is never presented as law. **7/7 current** online.
+- **B6 — §3.4 hardware class**: `fine_tune.yaml` gains a numeric `hardware_class` spec (device, ≤4GB RAM, ≤350MB model, RTF≤1.0) + `assert_hardware.py` device-layer assertion (fails loud on mismatch / `--on-gpu`).
+- **C1 — certification HTTP API** (`afreval-api/`): FastAPI `/v1/health`, `/v1/certify` (auto-inputs WER/judge server-side), `/v1/security`, `/v1/compliance`. End-to-end verified (api-e2e cert via auto-inputs + SIB-200 + bias correction → 55.46). 4 API tests.
+- **C2 — SDKs point at the API**: Python `AfrevalClient(base_url=...)` adds `certify_api`/`security_report`/`compliance` (network mode) alongside the local-scorer mode; TypeScript adds `certifyApi` + `compliance` matching the `/v1/*` contract. Python SDK 5 tests, TS 3 tests.
+- **Code-mixing metrics**: `harness/code_mixing.py` implements **CMI, enhanced CMI (α·switch + β·legacy), I-index, M-index** (the Research-doc formulas the Bible lacked). 6 tests. Closes the synthesis flagged gap.
+- **OOD protocol (§3.4)**: `ood_protocol.py` defines and measures OOD generalization — per-language silence-tercile split of the frozen eval split, both numbers reported (in-dist 37.56% vs OOD 37.60% balanced; global split shows 36.4% vs 41.8% but drops languages — protocol finding logged). Acceptance: beat baseline macro-WER AND no OOD regression >5 pts.
+
+**Test totals: 52 Python + 25 Rust + 3 TypeScript, all passing.** Remaining blocked: Stage B (HF Xet 404), §3.2 calibration (labeled-outcome data), field-app (Flutter), server tiers (gVisor/Firecracker/Envoy), Stronghold.

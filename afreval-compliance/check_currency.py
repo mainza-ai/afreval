@@ -51,6 +51,7 @@ def main() -> int:
                 r = check_citation(cit, args.offline)
                 r["jurisdiction"] = j["jurisdiction"]
                 r["instrument"] = inst["name"]
+                r["binding"] = inst.get("binding", "binding")
                 results.append(r)
 
     status_counts: dict[str, int] = {}
@@ -60,7 +61,7 @@ def main() -> int:
     score = current / len(results) if results else 0.0
 
     for r in sorted(results, key=lambda x: (x["jurisdiction"], x["instrument"])):
-        print(f"  [{r['status']:10s}] {r['jurisdiction']} / {r['instrument']} — {r['label']} ({r['url'][:40]})")
+        print(f"  [{r['status']:10s}] {r['jurisdiction']} / {r['instrument']} — {r['label']} ({r['url'][:40]}) [{r['binding']}]")
 
     print(f"citation-currency: {score:.0%} ({current}/{len(results)} current)")
     ok = status_counts.get("current", 0) == len(results)

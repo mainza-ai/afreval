@@ -2,12 +2,17 @@
 # Each citation must resolve (HTTP 200) AND contain its key_phrase at the
 # authoritative source. url: TBD = not yet sourced (the checker reports it as
 # unverified — that is a failure state, not a passing one).
+#
+# `binding`: binding = directly enforceable law/treaty; non-binding = strategy/
+# guideline (e.g. the AU Continental AI Strategy is a strategy, not a law —
+# flagged explicitly so a compliance report never presents it as binding law).
 
 jurisdictions:
   - jurisdiction: AU
     instruments:
       - name: Continental AI Strategy
         adopted: 2024-07
+        binding: non-binding
         requirement: ethical AI development, human rights, digital sovereignty
         citations:
           - { label: AU-AI-Strategy, url: "https://au.int/en/documents/20240809/continental-artificial-intelligence-strategy", key_phrase: "Continental Artificial Intelligence Strategy" }
@@ -16,13 +21,42 @@ jurisdictions:
     instruments:
       - name: Malabo Convention
         adopted: 2014
+        binding: binding
         requirement: continental baseline for cybersecurity and personal data protection
         citations:
           - { label: Malabo-Convention, url: "https://au.int/en/treaties/african-union-convention-cyber-security-and-personal-data-protection", key_phrase: "Cyber Security and Personal Data Protection" }
 
+  - jurisdiction: AU
+    instruments:
+      - name: African Continental Free Trade Area (AfCFTA)
+        adopted: 2019
+        binding: binding
+        requirement: cross-border data flows and digital trade rules among member states
+        citations:
+          - { label: AfCFTA, url: "https://au.int/en/treaties/agreement-establishing-african-continental-free-trade-area", key_phrase: "Continental Free Trade" }
+
+  - jurisdiction: ECOWAS
+    instruments:
+      - name: ECOWAS framework
+        adopted: 2022
+        binding: non-binding
+        requirement: regional digital economy and data governance coordination
+        citations:
+          - { label: ECOWAS-Digital, url: "https://www.ecowas.int/", key_phrase: "ECOWAS" }
+
+  - jurisdiction: SADC
+    instruments:
+      - name: SADC framework
+        adopted: 2021
+        binding: non-binding
+        requirement: regional ICT and data governance harmonisation
+        citations:
+          - { label: SADC-ICT, url: "https://www.sadc.int/", key_phrase: "SADC" }
+
   - jurisdiction: Kenya
     instruments:
       - name: Data Protection Act (ODPC)
+        binding: binding
         requirement: data localization for protected data; ODPC enforcement
         citations:
           - { label: Kenya-ODPC, url: "https://www.odpc.go.ke/", key_phrase: "Data Protection" }
@@ -30,6 +64,7 @@ jurisdictions:
   - jurisdiction: Nigeria
     instruments:
       - name: Data Protection Commission (NDPC)
+        binding: binding
         requirement: NDPC guidelines on data protection
         citations:
           - { label: Nigeria-NDPC, url: "https://ndpc.gov.ng/", key_phrase: "Data Protection" }

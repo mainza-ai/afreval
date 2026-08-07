@@ -1,0 +1,34 @@
+# §3.3 BiasScope — frozen run configuration (the harness config).
+# Referenced by program.md as part of the FROZEN set. Budget, decision
+# threshold, styles, and the judge backend live here so the loop's cost
+# boundary is version-controlled rather than CLI-only.
+# (gap-analysis B3, 2026-08-05)
+
+threshold: 60.0            # fixed accept/reject decision threshold
+max_calls: 40              # default per-run judge-call budget (cost-bound)
+judge_model: "Qwen3.6-35B-A3B-bf16"
+
+# The perturbation styles the probe agent may select from. Each is a distinct
+# technique; the live run (2026-08-05) showed the judge's bias direction
+# VARIES by style — hence the direction-aware mock (see judge/backends.py).
+styles:
+  - none
+  - code_switch
+  - colloquial
+  - formal
+  - high_perplexity
+
+# Mock judge bias model. `direction` mirrors the two observed shapes:
+#   generosity — low-resource languages scored HIGHER (the classic 43% gap)
+#   strictness — low-resource languages scored LOWER (also observed live)
+# The default `generosity` preserves the deterministic CI contract.
+mock:
+  direction: generosity
+  resource_level:
+    eng: 1.0
+    fra: 0.9
+    swh: 0.5
+    yor: 0.4
+    hau: 0.4
+    ibo: 0.4
+    amh: 0.3

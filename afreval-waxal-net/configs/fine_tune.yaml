@@ -23,7 +23,19 @@ data:
 eval:
   metric: [wer, cer]
   ood_secondary: true
-  hardware_class: low-end-mobile   # asserted by the device layer; fail-loud on mismatch
+  # TARGET hardware class (gap-analysis B6, 2026-08-05) — numeric, not a label.
+  # The device layer asserts this at run time and FAILS LOUD on mismatch.
+  # Reference device: a low-end 2023-2025 Android/feature phone (the WAXAL-NET
+  # collection target class). The bound below is the WORST case a run may
+  # execute on; a run on anything faster invalidates the Phase-4 claim.
+  hardware_class:
+    name: low-end-mobile
+    device: "low-end Android (e.g. 4GB RAM class, 2-4 Cortex-A7x-class cores, no NPU/GPU offload)"
+    runtime_memory_mb_max: 4096        # peak RSS while running the exported model
+    model_file_mb_max: 350             # exported ONNX/TFLite size cap for the edge artifact
+    realtime_factor_max: 1.0           # RTF <= 1.0 on the reference device (audio longer than realtime fails)
+    inference_footprint: "int8/FP16 quantized; no fp32 inference on-device"
+    assertion: "fail-loud if the detected device exceeds these bounds (e.g. a workstation GPU or Apple-Silicon MLX run)"
 
 export:
   format: [onnx, tflite]

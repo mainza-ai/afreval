@@ -15,7 +15,7 @@ Attack suite expanded 20 → 31 variants (unicode homoglyphs, fullwidth confusab
 1. **Seam 3 — unicode confusable PII evasion**: `alice@corp.ｉｏ` (fullwidth `ｉ`/dot) evaded the ASCII-only email regex and leaked unmasked. Fixed by **NFKC normalization** before masking.
 2. **Seam 2 — duplicate-key smuggling**: `{"customer_id":"c1","customer_id":"DROP TABLE x"}` deserialized **last-wins** (RFC 8259: duplicate keys are undefined behavior), silently letting the injected value through with no ghost-arg strip. Fixed by a **StrictArgs deserializer** that rejects duplicate keys at parse time.
 
-The dup-key case is a wire-level defense (not transmittable through the JS harness, whose `JSON.parse` collapses the keys first — the regression test covers the raw wire). Rebuilt: **31 variants, 0 bypasses, 21 tests passing.**
+The dup-key case is a wire-level defense (not transmittable through the JS harness, whose `JSON.parse` collapses the keys first — the regression test covers the raw wire). Rebuilt: **31 variants, 0 bypasses, 25 tests passing.** A later round (2026-08-05) added **seam-4 replay protection** — grants carry a `jti` nonce, a `ReplayGuard` rejects reuse (fail closed, jti-less grants rejected under guard), and an optional `grant_call_binding` policy pins a grant to the exact call hash (`sign_for_call`/`canonical_call_hash`).
 
 ## Dependency strategy — the one deliberate exception
 

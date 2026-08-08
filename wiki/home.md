@@ -1,7 +1,7 @@
 ---
 type: overview
 tags: [afreval, home, milimo]
-updated: 2026-08-03
+updated: 2026-08-07
 ---
 
 # Milimo AfrEval — Wiki Home
@@ -53,4 +53,4 @@ Start with [index.md](index.md) (content catalog) or [log.md](log.md) (activity 
 
 ## Repository status
 
-The workspace lives in the [`mainza-ai/afreval`](https://github.com/mainza-ai/afreval) GitHub repo. **Phase 0 is complete** (all three harness pins frozen; WAXAL QA-approved at 72,145 clips / 18 languages) and **all 11 target repos are implemented in-tree** — see [repository-layout](build-plan/repository-layout.md) for the full status table. Structure: `wiki/` (this knowledge base), `dev-docs/` (raw sources), the eleven `afreval-*` subsystem repos, and the three substrate repos vendored in-repo — `autoresearch/`, `AfroBench/`, and `afri-fertility/` are **flattened** (no local git history) so their loop artifacts can be re-engineered and committed directly; `AfroBench/lm-evaluation-harness/` is a **git submodule** of EleutherAI/lm-evaluation-harness pinned to upstream HEAD. Clone with `git clone --recursive`. See [README.md](../README.md) for structure and sync commands. This state is current as of the latest [log](log.md) entry.
+The workspace lives in the [`mainza-ai/afreval`](https://github.com/mainza-ai/afreval) GitHub repo. **Phase 0 is complete** (all three harness pins frozen; WAXAL QA-approved at 72,145 clips / 18 languages) and **all 11 target repos are implemented in-tree** — see [repository-layout](build-plan/repository-layout.md) for the full status table. **Certs now carry a Context Profile** (per-language/per-script vector + methodology + rubric manifest) and the API exposes `/v1/certs`, `/v1/diff`, and `/v1/certs/stale` (review remediation R1–R5, 2026-08-07). Structure: `wiki/` (this knowledge base), `dev-docs/` (raw sources), the eleven `afreval-*` subsystem repos, and the three substrate repos vendored in-repo — `autoresearch/`, `AfroBench/`, and `afri-fertility/` are **flattened** (no local git history) so their loop artifacts can be re-engineered and committed directly; `AfroBench/lm-evaluation-harness/` is a **git submodule** of EleutherAI/lm-evaluation-harness pinned to upstream HEAD. Clone with `git clone --recursive`. See [README.md](../README.md) for structure and sync commands. This state is current as of the latest [log](log.md) entry.

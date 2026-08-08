@@ -1,7 +1,7 @@
 ---
 type: build-plan
 tags: [phases, milestones, roadmap, plan]
-updated: 2026-08-05
+updated: 2026-08-07
 ---
 
 # Phased Build Plan
@@ -52,7 +52,7 @@ Requires the MLX/ONNX-mobile fork lineage ([platform caveat](../concepts/karpath
 
 [§3.6 compliance loop](../subsystems/compliance-loop.md) plus the TypeScript/JavaScript enterprise dashboard, developer SDK, and MCP-based enterprise integrations. **This is the revenue surface — build it last, after the scoring core is trustworthy, not first.**
 
-**§3.6 loop live:** citation-currency at **100% (7/7 current)** — AU Continental AI Strategy (non-binding) + Malabo (binding) + AfCFTA (binding), Kenya ODPC + Nigeria NDPC, plus regional ECOWAS/SADC frameworks (non-binding, binding-flagged). `afreval-dashboard` (cert + security web surface) and `afreval-sdk` (Python working + packaged wheel + **API mode**; TypeScript buildable + tested, calling the live API) scaffolded; `afreval-onprem` Tauri skeleton embeds scorer + airlock with a **trust-root vault that fails closed without a configured key** (Stronghold post-MVP). **Phase C — the certification API (`afreval-api`) is live**: `/v1/certify` (auto-inputs WER/judge server-side) + `/v1/security` + `/v1/compliance`, called by both SDKs. Remaining: on-prem dashboard reuse, and the MCP-based enterprise integrations.
+**§3.6 loop live:** citation-currency at **100% (7/7 current)** — AU Continental AI Strategy (non-binding) + Malabo (binding) + AfCFTA (binding), Kenya ODPC + Nigeria NDPC, plus regional ECOWAS/SADC frameworks (non-binding, binding-flagged). `afreval-dashboard` (cert + security web surface + **Context Profile table**) and `afreval-sdk` (Python working + packaged wheel + **API mode**; TypeScript buildable + tested, calling the live API) scaffolded; `afreval-onprem` Tauri skeleton embeds scorer + airlock with a **trust-root vault that fails closed without a configured key** (Stronghold post-MVP). **Phase C — the certification API (`afreval-api`) is live**: `/v1/certify` (auto-inputs WER/judge + **Context Profile**), `/v1/security`, `/v1/compliance`, `/v1/certs`, `/v1/diff` (per-language/script/vector deltas), `/v1/certs/stale`, called by both SDKs. **Certs carry `profile` + `methodology` + `rubric_manifest`** (review remediation R1–R5, 2026-08-07). Remaining: on-prem dashboard reuse, and the MCP-based enterprise integrations.
 
 ## Related
 

@@ -244,6 +244,10 @@ Four independent reviews converged on the same critiques: the scalar Context Sco
 
 **Determinism preserved** (bit-identical certs across runs). **63 Python + 25 Rust + 4 TS tests passing.** Rust scorer untouched.
 
+## [2026-08-07] docs | README + wiki sync for R1–R5 remediation
+
+README: Phase 1 row notes certs carry a Context Profile + methodology + rubric manifest; Phase C row lists `/v1/certs`, `/v1/diff`, `/v1/certs/stale`; SDK row notes diff/list/stale methods; current-status line updated. Wiki: home.md (profile/diff/staleness), phases.md Phase 5 (profile + endpoints), repository-layout.md (7/7 compliance, afreval-isolation added, all repos), compliance-loop.md corrected 4/4 → **7/7** with binding flags. All frontmatter dates → 2026-08-07.
+
 ## [2026-08-05] infra | Podman/seccomp isolation tier built + verified in Docker
 
 Implemented `afreval-isolation/` — the open-source, Docker-runnable standard tier (gVisor substitute). `seccomp/deny-network.json`: network syscalls → SCMP_ACT_ERRNO, dangerous syscalls (reboot/ptrace/mount/chroot/setns/…) → SCMP_ACT_KILL, everything else allowed (so the container runtime's own init works). Verified on Docker Desktop (aarch64):

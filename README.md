@@ -1,8 +1,23 @@
 # Milimo AfrEval
 
+**Author:** [Mainza Kangombe](https://www.linkedin.com/in/mainza-kangombe-6214295/)
+
 Autonomous, context-aware alignment & benchmarking infrastructure for AI in Africa. An enterprise "tollbooth" API layer that routes every AI agent through a certification pipeline before it touches a production database — issuing a **Context Score** that guarantees the model is linguistically accurate, culturally safe, economically viable, and functionally secure inside a zero-trust sandbox.
 
+
+![AfrEval African AI Benchmarking Infographic](assets/AfrEval_African_AI_Benchmarking_Infographic.png)
+
 Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact → instruction file → metric → budget), with every subsystem — tokenizer search, Context Score calibration, BiasScope probing, edge ASR, execution-boundary hardening, compliance — running as an autonomous loop over three frozen data substrates: WAXAL, AfroBench, and afri-fertility.
+
+## Assets & Presentations
+
+Visual assets and presentations detailing the AfrEval architecture and Secure AI Gateway:
+
+- **Benchmarking Infographic**: [AfrEval_African_AI_Benchmarking_Infographic.png](assets/AfrEval_African_AI_Benchmarking_Infographic.png) — High-resolution diagram illustrating African AI benchmarking, zero-trust sandbox execution, and the Context Score pipeline.
+- **Secure AI Gateway Slide Deck**:
+  - [PDF Deck](assets/slide-deck/AfrEval_Secure_AI_Gateway.pdf) — Complete 15-slide presentation on the AfrEval Secure AI Gateway architecture.
+  - [PowerPoint Deck (.pptx)](assets/slide-deck/AfrEval_Secure_AI_Gateway.pptx) — Editable slide deck.
+  - [Exported Slide Images](assets/slide-deck/AfrEval_Secure_AI_Gateway/) — Individual slide frame exports (JPEG format, slides 001–015).
 
 ## Implementation status
 
@@ -31,6 +46,9 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 
 ```
 afreval/
+├── assets/                   # Architecture infographics & presentation slide decks
+│   ├── AfrEval_African_AI_Benchmarking_Infographic.png
+│   └── slide-deck/           # AfrEval Secure AI Gateway presentation (PPTX, PDF, JPEG slides)
 ├── wiki/                     # LLM-maintained knowledge base — start at wiki/home.md
 ├── dev-docs/                 # raw source documents (Implementation Bible, Research blueprint)
 ├── afreval-harness/          # Phase 0 frozen harnesses + WAXAL acquisition/QA tooling
@@ -79,3 +97,8 @@ git -C autoresearch fetch upstream && git -C autoresearch merge upstream/main
 - [Build plan](wiki/build-plan/phases.md) — Phase 0–5 roadmap with live status
 - [Risk register](wiki/build-plan/risk-register.md) — known risks and mitigations
 - [Repository layout](wiki/build-plan/repository-layout.md) — the eleven planned repos
+
+## Author & Contact
+
+- **Author**: Mainza Kangombe
+- **LinkedIn**: [Mainza Kangombe on LinkedIn](https://www.linkedin.com/in/mainza-kangombe-6214295/)

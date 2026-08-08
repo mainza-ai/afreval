@@ -33,6 +33,7 @@ REPO = HERE.parent
 sys.path.insert(0, str(HERE))
 
 from harness.pins import load_pin  # noqa: E402
+from harness.profile import build_profile  # noqa: E402
 from harness.report import report_from_eval  # noqa: E402
 from harness.tokenizer_eval import TokenizerEval, load_reference_suite  # noqa: E402
 from afri_fertility import load_tokenizer  # noqa: E402
@@ -64,6 +65,8 @@ def main() -> int:
                          "acceptance-delta correction to --judge before scoring "
                          "(afreval-biasscope/bias_correct.py)")
     ap.add_argument("--out", default=str(HERE / "certs"))
+    ap.add_argument("--re-cert-days", type=int, default=90,
+                    help="recommended re-certification cadence (profile.re_cert_after)")
     args = ap.parse_args()
 
     af_pin = load_pin("afri_fertility.yaml")
@@ -91,6 +94,7 @@ def main() -> int:
     # Auto-inputs: pull WER from the frozen QA baseline and the judge from
     # §3.3 bias correction, instead of hand-supplied flags (gap-analysis A2).
     auto_sources: dict[str, str] = {}
+    per_lang_wer: dict[str, float] = {}
     if args.auto_inputs:
         if args.wer is not None:
             print("--auto-inputs: --wer override ignored", file=sys.stderr)
@@ -104,6 +108,7 @@ def main() -> int:
         spec.loader.exec_module(mod)
         baseline = mod.aggregate_qa_baseline()
         args.wer = baseline["language_macro_wer"]
+        per_lang_wer = baseline["languages"]
         auto_sources["wer"] = f"eval_baseline.py --from-qa (n={baseline['n_languages']})"
         args.bias_correct_from = str(REPO / "afreval-biasscope" / "results")
 
@@ -154,17 +159,39 @@ def main() -> int:
     if scored.returncode not in (0, 1):
         print(scored.stderr, file=sys.stderr)
         return 2
+    cert_score = json.loads(scored.stdout)
 
     cert = {
         "model": args.model,
         "report": report,
-        "score": json.loads(scored.stdout),
+        "score": cert_score,
         "bias_correction": bias_correction,
         "input_sources": auto_sources if auto_sources else None,
+        "profile": build_profile(
+            tok_result,
+            waxal_per_language_wer=per_lang_wer or None,
+            bias_corrected_judge_score=judge_score,
+            re_cert_after_days=args.re_cert_days,
+        ),
         "harness_pins": {
             "afri_fertility": af_pin["pinned_version"],
             "afrobench_lite": ab_pin["harness_submodule"],
             "waxal": wax_pin.get("pinned_version", wax_pin.get("status", "pending")),
+        },
+        "methodology": {
+            "tokenizer_candidate": args.tokenizer_candidate or args.tokenizer,
+            "wer_source": auto_sources.get("wer", "manual flag"),
+            "judge_source": auto_sources.get("judge", "manual flag"),
+            "bias_probe_styles": ["none", "code_switch", "colloquial", "formal", "high_perplexity"],
+            "ood_protocol": "silence-tercile split of the frozen QA-approved eval split",
+        },
+        "rubric_manifest": {
+            "vertical": Path(args.weights).stem,
+            "threshold": cert_score.get("threshold"),
+            "weights_version": cert_score.get("weights_version"),
+            "bias_penalty_weight": (bias_correction or {}).get("bias_penalty_weight", 0.5),
+            "judge_model": "qwen3.6:latest",
+            "human_sign_off_ref": "wiki/log.md#2026-08-05",
         },
     }
     cert["cert_sha256"] = hashlib.sha256(canonical_json(cert).encode()).hexdigest()

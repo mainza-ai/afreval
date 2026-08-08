@@ -1,0 +1,176 @@
+{
+  "model": "profile-test",
+  "report": {
+    "model_id": "profile-test",
+    "harness": {
+      "afri_fertility_pin": "0.1.0",
+      "afrobench_lite_pin": "EleutherAI/lm-evaluation-harness@f4d4b3de3ee6741a7151a9fe74945ee515262f4c",
+      "waxal_pin": "2026-08-01-qa2"
+    },
+    "linguistic_fidelity": {
+      "waxal_macro_wer": 0.4097,
+      "afrobench_lite_accuracy": 0.55
+    },
+    "cultural_safety": {
+      "bias_corrected_judge_score": 35.0
+    },
+    "structural_economics": {
+      "mean_fertility_premium": 1.63442989986072,
+      "script_premiums": {
+        "latin": 1.3264027091305863,
+        "ethiopic": 2.8481631443808024
+      }
+    }
+  },
+  "score": {
+    "context_score": 54.06402397659055,
+    "model_id": "profile-test",
+    "pass": false,
+    "threshold": 70.0,
+    "vectors": {
+      "cultural_safety": 35.0,
+      "linguistic_fidelity": 57.418000000000006,
+      "structural_economics": 61.183413255301815
+    },
+    "vertical": "telco",
+    "weights_version": 1
+  },
+  "bias_correction": {
+    "raw_judge_score": 70.0,
+    "worst_case_acceptance_delta": 1.0,
+    "bias_penalty_weight": 0.5,
+    "note": "computed by afreval-biasscope/bias_correct.py from \u00a73.3 run results"
+  },
+  "input_sources": {
+    "wer": "eval_baseline.py --from-qa (n=18)",
+    "judge": "afreval-biasscope/bias_correct.py from results/"
+  },
+  "profile": {
+    "languages": {
+      "eng": {
+        "fertility": 1.085,
+        "cpt": 5.7349,
+        "premium": 1.0
+      },
+      "yor": {
+        "fertility": 1.7409,
+        "cpt": 2.9762,
+        "premium": 1.6046
+      },
+      "hau": {
+        "fertility": 1.5124,
+        "cpt": 3.6645,
+        "premium": 1.394
+      },
+      "ibo": {
+        "fertility": 1.3189,
+        "cpt": 3.6721,
+        "premium": 1.2156
+      },
+      "swh": {
+        "fertility": 1.7125,
+        "cpt": 3.7007,
+        "premium": 1.5784
+      },
+      "amh": {
+        "fertility": 3.0902,
+        "cpt": 1.5225,
+        "premium": 2.8482,
+        "wer": 0.3283
+      },
+      "fra": {
+        "fertility": 1.2649,
+        "cpt": 5.141,
+        "premium": 1.1658
+      },
+      "ach": {
+        "wer": 0.3617
+      },
+      "aka": {
+        "wer": 0.3412
+      },
+      "dag": {
+        "wer": 0.3384
+      },
+      "dga": {
+        "wer": 0.3577
+      },
+      "ewe": {
+        "wer": 0.3949
+      },
+      "ful": {
+        "wer": 0.4644
+      },
+      "kpo": {
+        "wer": 0.7995
+      },
+      "lin": {
+        "wer": 0.465
+      },
+      "lug": {
+        "wer": 0.2069
+      },
+      "mlg": {
+        "wer": 0.2287
+      },
+      "nyn": {
+        "wer": 0.3933
+      },
+      "orm": {
+        "wer": 0.3994
+      },
+      "sid": {
+        "wer": 0.4217
+      },
+      "sna": {
+        "wer": 0.3311
+      },
+      "sog": {
+        "wer": 0.5049
+      },
+      "tir": {
+        "wer": 0.5318
+      },
+      "wal": {
+        "wer": 0.505
+      }
+    },
+    "scripts": {
+      "latin": 1.3264,
+      "ethiopic": 2.8482
+    },
+    "dimensions": {
+      "english_cpt": 5.7349,
+      "cultural_safety_judge": 35.0
+    },
+    "as_of": "2026-08-07",
+    "re_cert_after": "2026-11-05"
+  },
+  "harness_pins": {
+    "afri_fertility": "0.1.0",
+    "afrobench_lite": "EleutherAI/lm-evaluation-harness@f4d4b3de3ee6741a7151a9fe74945ee515262f4c",
+    "waxal": "2026-08-01-qa2"
+  },
+  "methodology": {
+    "tokenizer_candidate": "EfficientRouteCandidate",
+    "wer_source": "eval_baseline.py --from-qa (n=18)",
+    "judge_source": "afreval-biasscope/bias_correct.py from results/",
+    "bias_probe_styles": [
+      "none",
+      "code_switch",
+      "colloquial",
+      "formal",
+      "high_perplexity"
+    ],
+    "ood_protocol": "silence-tercile split of the frozen QA-approved eval split"
+  },
+  "rubric_manifest": {
+    "vertical": "telco",
+    "threshold": 70.0,
+    "weights_version": 1,
+    "bias_penalty_weight": 0.5,
+    "judge_model": "qwen3.6:latest",
+    "human_sign_off_ref": "wiki/log.md#2026-08-05"
+  },
+  "cert_sha256": "bccf2242d1bf2666773c061962464c440f5664003398618f3154eca585ae915c"
+}

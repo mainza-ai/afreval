@@ -13,6 +13,7 @@ Built on the generalized **Karpathy Loop** (frozen harness → mutable artifact 
 
 Visual assets and presentations detailing the AfrEval architecture and Secure AI Gateway:
 
+- **Video Explainer**: [Building the Milimo AfrEval Tollbooth - A Zero Trust Architecture for Context Aware AI](https://youtu.be/PQfQb-v0Ayg)
 - **Benchmarking Infographic**: [AfrEval_African_AI_Benchmarking_Infographic.png](assets/AfrEval_African_AI_Benchmarking_Infographic.png) — High-resolution diagram illustrating African AI benchmarking, zero-trust sandbox execution, and the Context Score pipeline.
 - **Secure AI Gateway Slide Deck**:
   - [PDF Deck](assets/slide-deck/AfrEval_Secure_AI_Gateway.pdf) — Complete 15-slide presentation on the AfrEval Secure AI Gateway architecture.

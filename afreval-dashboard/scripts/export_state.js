@@ -29,6 +29,7 @@ const state = {
     pass: c.score.pass,
     vectors: c.score.vectors,
     cert_sha256: c.cert_sha256,
+    profile: c.profile || null,
   })),
   security,
 };

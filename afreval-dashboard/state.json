@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-07T17:42:17.902Z",
+  "generated_at": "2026-08-08T03:42:51.095Z",
   "certifications": [
     {
       "model": "api-e2e",
@@ -10,7 +10,8 @@
         "linguistic_fidelity": 60.218,
         "structural_economics": 61.183413255301815
       },
-      "cert_sha256": "91758a9b851e316a83fa08ca61b59ae4d4321cf5853f25f474269765cf00fb7a"
+      "cert_sha256": "91758a9b851e316a83fa08ca61b59ae4d4321cf5853f25f474269765cf00fb7a",
+      "profile": null
     },
     {
       "model": "demo-model",
@@ -21,7 +22,120 @@
         "linguistic_fidelity": 62,
         "structural_economics": 37.24828399217854
       },
-      "cert_sha256": "9e99cbb781feab20820a3a49e31382dd1d0eef2f012113201136427f4c91f7c3"
+      "cert_sha256": "9e99cbb781feab20820a3a49e31382dd1d0eef2f012113201136427f4c91f7c3",
+      "profile": null
+    },
+    {
+      "model": "profile-test",
+      "context_score": 54.06402397659055,
+      "pass": false,
+      "vectors": {
+        "cultural_safety": 35,
+        "linguistic_fidelity": 57.418000000000006,
+        "structural_economics": 61.183413255301815
+      },
+      "cert_sha256": "bccf2242d1bf2666773c061962464c440f5664003398618f3154eca585ae915c",
+      "profile": {
+        "languages": {
+          "eng": {
+            "fertility": 1.085,
+            "cpt": 5.7349,
+            "premium": 1
+          },
+          "yor": {
+            "fertility": 1.7409,
+            "cpt": 2.9762,
+            "premium": 1.6046
+          },
+          "hau": {
+            "fertility": 1.5124,
+            "cpt": 3.6645,
+            "premium": 1.394
+          },
+          "ibo": {
+            "fertility": 1.3189,
+            "cpt": 3.6721,
+            "premium": 1.2156
+          },
+          "swh": {
+            "fertility": 1.7125,
+            "cpt": 3.7007,
+            "premium": 1.5784
+          },
+          "amh": {
+            "fertility": 3.0902,
+            "cpt": 1.5225,
+            "premium": 2.8482,
+            "wer": 0.3283
+          },
+          "fra": {
+            "fertility": 1.2649,
+            "cpt": 5.141,
+            "premium": 1.1658
+          },
+          "ach": {
+            "wer": 0.3617
+          },
+          "aka": {
+            "wer": 0.3412
+          },
+          "dag": {
+            "wer": 0.3384
+          },
+          "dga": {
+            "wer": 0.3577
+          },
+          "ewe": {
+            "wer": 0.3949
+          },
+          "ful": {
+            "wer": 0.4644
+          },
+          "kpo": {
+            "wer": 0.7995
+          },
+          "lin": {
+            "wer": 0.465
+          },
+          "lug": {
+            "wer": 0.2069
+          },
+          "mlg": {
+            "wer": 0.2287
+          },
+          "nyn": {
+            "wer": 0.3933
+          },
+          "orm": {
+            "wer": 0.3994
+          },
+          "sid": {
+            "wer": 0.4217
+          },
+          "sna": {
+            "wer": 0.3311
+          },
+          "sog": {
+            "wer": 0.5049
+          },
+          "tir": {
+            "wer": 0.5318
+          },
+          "wal": {
+            "wer": 0.505
+          }
+        },
+        "scripts": {
+          "latin": 1.3264,
+          "ethiopic": 2.8482
+        },
+        "dimensions": {
+          "english_cpt": 5.7349,
+          "cultural_safety_judge": 35
+        },
+        "as_of": "2026-08-07",
+        "re_cert_after": "2026-11-05"
+      }
     },
     {
       "model": "zero-shot-baseline-ollama",
@@ -32,7 +146,8 @@
         "linguistic_fidelity": 59.2,
         "structural_economics": 61.183413255301815
       },
-      "cert_sha256": "627a59f2e2a2a26a67bf169c61e6fcd6d2fea61966d13f2a98e871d07f9ad5c7"
+      "cert_sha256": "627a59f2e2a2a26a67bf169c61e6fcd6d2fea61966d13f2a98e871d07f9ad5c7",
+      "profile": null
     },
     {
       "model": "zero-shot-baseline-sib200-bc",
@@ -43,7 +158,8 @@
         "linguistic_fidelity": 57.418000000000006,
         "structural_economics": 62.81938243283562
       },
-      "cert_sha256": "74f21c5b9f26327a606f97c8cce9b2f12cc449eeee83155782d80f409e43df77"
+      "cert_sha256": "74f21c5b9f26327a606f97c8cce9b2f12cc449eeee83155782d80f409e43df77",
+      "profile": null
     },
     {
       "model": "zero-shot-baseline-sib200",
@@ -54,7 +170,8 @@
         "linguistic_fidelity": 57.418000000000006,
         "structural_economics": 62.81938243283562
       },
-      "cert_sha256": "516d0530cee58ef690a75350f8950efb8c2e10a8e03dbb6b4e982cf9829d7ede"
+      "cert_sha256": "516d0530cee58ef690a75350f8950efb8c2e10a8e03dbb6b4e982cf9829d7ede",
+      "profile": null
     },
     {
       "model": "zero-shot-baseline",
@@ -65,7 +182,8 @@
         "linguistic_fidelity": 57.418000000000006,
         "structural_economics": 37.24828399217854
       },
-      "cert_sha256": "f52acbb8effbcd44ae588da28f390770821242dc342407e3eca6545d49b8f4ef"
+      "cert_sha256": "f52acbb8effbcd44ae588da28f390770821242dc342407e3eca6545d49b8f4ef",
+      "profile": null
     }
   ],
   "security": {

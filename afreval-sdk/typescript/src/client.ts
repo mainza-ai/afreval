@@ -46,6 +46,15 @@ export interface CertifyApiResponse {
   cert_sha256: string;
   bias_correction?: Record<string, unknown> | null;
   input_sources?: Record<string, string> | null;
+  profile?: {
+    languages: Record<string, { fertility: number; cpt: number; premium: number; wer?: number }>;
+    scripts: Record<string, number>;
+    dimensions: Record<string, number>;
+    as_of: string;
+    re_cert_after: string | null;
+  } | null;
+  methodology?: Record<string, unknown> | null;
+  rubric_manifest?: Record<string, unknown> | null;
 }
 
 export interface SecurityReport {
@@ -76,6 +85,22 @@ export class AfrevalClient {
 
   async compliance(): Promise<{ exit: number; lines: string[]; current: boolean }> {
     return this.get("/v1/compliance");
+  }
+
+  async listCerts(): Promise<{ certifications: Array<Record<string, unknown>>; count: number }> {
+    return this.get("/v1/certs");
+  }
+
+  async getCert(shaOrModel: string): Promise<Record<string, unknown>> {
+    return this.get(`/v1/certs/${encodeURIComponent(shaOrModel)}`);
+  }
+
+  async diff(base: string, target: string): Promise<Record<string, unknown>> {
+    return this.get(`/v1/diff?base=${encodeURIComponent(base)}&target=${encodeURIComponent(target)}`);
+  }
+
+  async staleCerts(): Promise<{ stale: Array<Record<string, unknown>>; count: number }> {
+    return this.get("/v1/certs/stale");
   }
 
   private async post<T>(path: string, body: unknown): Promise<T> {

@@ -38,4 +38,25 @@ function render(state) {
   document.querySelector("#security-meta").textContent = sec.timestamp
     ? `Last hardening-loop run: ${sec.timestamp} — ${sec.total_bypasses} bypasses across ${sec.total_variants} variants.`
     : "No security report yet (run afreval-airlock/attack/run_attack.js).";
+
+  // Context Profile (R1): per-language / per-script breakdown behind the scalar.
+  const profileSel = document.querySelector("#profile");
+  if (profileSel) {
+    const model = (state.certifications || [])[0];
+    const p = model && model.profile;
+    if (!p) {
+      profileSel.textContent = "No profile yet (re-certify with the profile-enabled pipeline).";
+      return;
+    }
+    const rows = Object.entries(p.languages || {})
+      .map(([lang, v]) => `<tr><td>${esc(lang)}</td>
+          <td>${(v.premium ?? 0).toFixed(3)}</td>
+          <td>${v.wer !== undefined ? v.wer.toFixed(3) : "—"}</td>
+          <td>${(v.cpt ?? 0).toFixed(2)}</td></tr>`)
+      .join("");
+    const scripts = Object.entries(p.scripts || {}).map(([s, val]) => `${esc(s)}=${val.toFixed(3)}`).join(", ");
+    profileSel.innerHTML =
+      `<p><strong>${esc(model.model)}</strong> — as of ${esc(p.as_of)}, re-cert after ${esc(p.re_cert_after || "—")}. Scripts: ${scripts}</p>
+       <table><thead><tr><th>Lang</th><th>Premium</th><th>WER</th><th>CPT</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
 }

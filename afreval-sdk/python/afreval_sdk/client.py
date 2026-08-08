@@ -30,6 +30,9 @@ class Cert:
     structural_economics: float
     pass_: bool
     cert_sha256: str
+    profile: dict = field(default_factory=dict)
+    methodology: dict = field(default_factory=dict)
+    rubric_manifest: dict = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -85,6 +88,20 @@ class AfrevalClient:
 
     def compliance(self) -> dict:
         return self._api("GET", "/v1/compliance")
+
+    def list_certs(self) -> dict:
+        """List stored certs with score/sha/staleness."""
+        return self._api("GET", "/v1/certs")
+
+    def get_cert(self, sha_or_model: str) -> dict:
+        return self._api("GET", f"/v1/certs/{sha_or_model}")
+
+    def diff(self, base: str, target: str) -> dict:
+        """Per-language/script/vector deltas between two certs."""
+        return self._api("GET", f"/v1/diff?base={base}&target={target}")
+
+    def stale_certs(self) -> dict:
+        return self._api("GET", "/v1/certs/stale")
 
     # ---- local scorer mode ----
 

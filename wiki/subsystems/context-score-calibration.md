@@ -12,6 +12,10 @@ Tunes the weighting function of the [Context Score](../concepts/context-score.md
 
 `certify.py` gained `--tokenizer-candidate` so certification can use the §3.1 loop's current best tokenizer. Re-certified `zero-shot-baseline` with the SIB-200 candidate — **same model, same WER/accuracy/judge, only the tokenizer changed**: Context Score **53.88 → 61.55**, structural-economics vector **37.25 → 62.82** (the African Language Tax penalty nearly halved). Cert `certs/zero-shot-baseline-sib200.cert.json` (sha256 `516d0530`), **bit-identical across runs** — determinism preserved. This is the first end-to-end §3.1→§3.2.1 effect: tokenizer-search output directly improving certified scores.
 
+## Context Profile — the vector behind the scalar (2026-08-05, review-remediation R1)
+
+The scalar Context Score is a rollup; the per-language/per-script view lives in the cert's **`profile`** (`harness/profile.py`): per-language fertility/premium/CPT (and WER for the 18 covered languages), per-script premiums, `as_of`, and `re_cert_after`. A model can no longer "pass on aggregate while failing in Wolof health contexts" without that showing in the profile. The API exposes it (`/v1/certify`, `/v1/certs`), and `/v1/diff` shows per-language/script/vector deltas between certs (review-remediation R2).
+
 | Field | Spec |
 |---|---|
 | **Frozen harness** | The three scoring pipelines from §2 — WAXAL WER, AfroBench-LITE, afri-fertility — deterministic and version-pinned |

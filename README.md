@@ -2,7 +2,9 @@
 
 **Author:** [Mainza Kangombe](https://www.linkedin.com/in/mainza-kangombe-6214295/)
 
-Autonomous, context-aware alignment & benchmarking infrastructure for AI in Africa. An enterprise "tollbooth" API layer that routes every AI agent through a certification pipeline before it touches a production database — issuing a **Context Score** that guarantees the model is linguistically accurate, culturally safe, economically viable, and functionally secure inside a zero-trust sandbox.
+Autonomous, context-aware evaluation & benchmarking infrastructure for AI in Africa. An enterprise **pre-deployment compliance harness** ("tollbooth") that routes every AI agent through a certification pipeline before it touches a production database — producing an **evidence-linked Context Score** (plus a per-language/per-script **Context Profile**) that measures how linguistically accurate, culturally safe, economically viable, and functionally secure the model is inside a zero-trust sandbox.
+
+> **What it is / what it isn't:** AfrEval produces an auditable, evidence-linked evaluation signal — it is a *credible signal and compliance harness*, not a government certificate. Authority comes from ecosystem adoption; the score is the measurement, and the methodology behind it (which probes, which judges, which corpora) is published in every cert.
 
 
 ![AfrEval African AI Benchmarking Infographic](assets/AfrEval_African_AI_Benchmarking_Infographic.png)

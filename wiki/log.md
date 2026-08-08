@@ -233,6 +233,17 @@ Second implementation pass over the unblocked gaps:
 
 **Tests: 53 Python (OllamaJudge test added) + 25 Rust + 3 TS.** Still blocked: Stage B data (upstream), §3.2 calibration (data), gVisor/Firecracker (server-class), Stronghold (post-MVP).
 
+## [2026-08-07] impl | Review remediation R1–R5: Context Profile, diff/staleness, reframe
+
+Four independent reviews converged on the same critiques: the scalar Context Score is reductive, "certification" overclaims authority, one-shot certs decay, and the methodology isn't published. Implemented:
+
+- **R1 — Context Profile** (`harness/profile.py`): the cert now carries per-language fertility/premium/CPT (+WER for 18 langs), per-script premiums, `as_of`, `re_cert_after`. Exposed in `/v1/certify` + `/v1/certs`; dashboard renders the profile table. 6 tests.
+- **R2 — Diff + staleness**: `/v1/diff?base&target` (per-language/script/vector deltas), `/v1/certs/stale`, `/v1/certs/{sha|model}`; Python + TS SDKs gained `diff`/`list_certs`/`get_cert`/`stale_certs`. 4 API tests, 1 TS test.
+- **R3/R5 — Reframe + methodology manifest**: README reworded from "guarantees" → "evidence-linked signal / pre-deployment compliance harness" with a "what it is / isn't" note; certs now carry `methodology` (tokenizer, WER/judge source, bias probe styles, OOD protocol) + `rubric_manifest` (vertical, threshold, weights version, bias weight, judge model, sign-off ref).
+- **R6 — live proprietary layer**: deferred pending scope decision (needs a design choice on which corpora to grow).
+
+**Determinism preserved** (bit-identical certs across runs). **63 Python + 25 Rust + 4 TS tests passing.** Rust scorer untouched.
+
 ## [2026-08-05] infra | Podman/seccomp isolation tier built + verified in Docker
 
 Implemented `afreval-isolation/` — the open-source, Docker-runnable standard tier (gVisor substitute). `seccomp/deny-network.json`: network syscalls → SCMP_ACT_ERRNO, dangerous syscalls (reboot/ptrace/mount/chroot/setns/…) → SCMP_ACT_KILL, everything else allowed (so the container runtime's own init works). Verified on Docker Desktop (aarch64):
